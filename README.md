@@ -1,6 +1,6 @@
 # UFLANews
 
-Este é um projeto realizado para a disciplina GCC132 - Modelagem e Implementação de Software na Universidade Federal de Lavras (UFLA). O objetivo do projeto é desenvolver um aplicativo contendo boletins eletrônicos feito por órgãos da UFLA, tais como empresas júniors e pró-reitorias.
+Este é um projeto realizado para a disciplina GCC132 - Modelagem e Implementação de Software na Universidade Federal de Lavras (UFLA). O objetivo do projeto é desenvolver um aplicativo contendo boletins eletrônicos feito por órgãos da UFLA, tais como empresas júniors e pró-reitorias. A maior motivação para a realização deste projeto é que muitos da comunidade UFLA recebem notícias fora de seu interesse, ao mesmo tempo que perdem muitas das que julgam significativas devido a grande quantidade de informações recebidas.
 
 ## Principais Funcionalidades
 
@@ -22,3 +22,12 @@ As notícias dos publicadores serão em formato de boletins eletrônicos, cada u
 ## Modo de Instalação
 
 *Ainda não definido*
+
+## Desenvolvedores
+
+* Arthur Henrique Sousa Cruz
+* Breno Gomes Cardoso
+* Eduardo Fernando de Lima
+* Gabriel Ribeiro Oliveira
+* João Pedro Teodoro Silva
+* Pedro Silveira Lopes
