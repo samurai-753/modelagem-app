@@ -14,6 +14,8 @@ As notícias dos publicadores serão em formato de boletins eletrônicos, cada u
 ## Documentação
 
 * [Casos de Uso](https://github.com/samurai-753/ufla-news-app/blob/master/documentacao/casos_de_uso.png)
+* [Documento de Requisitos](https://github.com/samurai-753/ufla-news-app/blob/master/documentacao/documento_de_requisitos.pdf)
+* [Protótipo](https://github.com/samurai-753/ufla-news-app/tree/master/documentacao/prototipo)
 
 ## Ferramentas Utilizadas
 
