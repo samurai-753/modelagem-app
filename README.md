@@ -13,7 +13,7 @@ As notícias dos publicadores serão em formato de boletins eletrônicos, cada u
 
 ## Documentação
 
-*Ainda não iniciada*
+* [Casos de Uso](https://github.com/samurai-753/ufla-news-app/blob/master/documentacao/casos_de_uso.png)
 
 ## Ferramentas Utilizadas
 
