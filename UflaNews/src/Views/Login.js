@@ -4,7 +4,8 @@ import {
   View,
   TouchableOpacity,
   Image,
-  Text
+  Text,
+  KeyboardAvoidingView
 } from 'react-native';
 
 import CustomTextInput from '../Components/CustomTextInput';
