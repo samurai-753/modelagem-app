@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React from 'react';
+import React, {Component} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  KeyboardAvoidingView
 } from 'react-native';
 
 import {
@@ -26,20 +27,20 @@ import {
 
 import Login from './src/Views/Login'
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      {/* <StatusBar barStyle="dark-content" />
-      <SafeAreaView> */}
-        <View>
-          <Login> </Login>
-        </View>
-      {/* </SafeAreaView> */}
-    </>
-  );
-};
+class App extends Component {
+  render(){
+    return (
+      <View style={styles.rootContainer}>
+        <Login/>
+      </View>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1
+  },
   scrollView: {
     backgroundColor: Colors.lighter,
   },
