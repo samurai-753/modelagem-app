@@ -1,3 +1,6 @@
 {
-  "/publicadores/:id": "/publicadors/:id"
+  "/publicadores/:id": "/publicadors/:id",
+  "/publicadores/": "/publicadors/",
+  "/boletins/:id": "/boletims/:id",
+  "/boletins/": "/boletims/"
 }
