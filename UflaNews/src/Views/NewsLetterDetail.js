@@ -38,14 +38,14 @@ export default class NewsLetterDetail extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFEEEE'
+        backgroundColor: '#f0f0f0'
     },
     toolbar: {
         height: 50,
         marginTop: 0,
         padding: 10,
         flexDirection: 'row',
-        backgroundColor: "#73abf0"
+        backgroundColor: "#00B6E9"
     },
     logo: {
         alignSelf: 'flex-start',
@@ -60,22 +60,22 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginLeft: 10,
         fontWeight: 'bold',
-        color: '#365070'
+        color: '#fff'
     },
     body: {
         padding: 10,
     },
     newsletter: {
         height: 350,
-        width: 300,
+        width: 'auto',
         borderRadius: 2,
         borderColor: '#000',
         alignSelf: "center",
     },
     comments: {
         marginTop: 20,
-        marginHorizontal: 20,
         backgroundColor: "#00FF00",
-        height: 60
+        height: 60,
+        width: 'auto'
     }
 })

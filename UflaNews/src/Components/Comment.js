@@ -17,7 +17,7 @@ export default class Comment extends Component {
                 <View style={styles.lineone} >
                     <View style={styles.user}>
                         <Image source={require('../Assets/noticia.jpg')} style={styles.logo}/>
-                        <Text style={styles.username} > João Pedro</Text>
+                        <Text style={styles.username} > Pedro Silvera</Text>
                     </View>
                     <Text>17/09</Text>
                 </View>
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     comment: {
         flex: 1,
         padding: 3,
-        backgroundColor: '#FCFCFC',
+        backgroundColor: '#fff',
     },
     lineone: {
         flex: 1,

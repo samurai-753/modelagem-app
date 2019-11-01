@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 3,
         alignContent: 'space-between',
-        backgroundColor: '#FCFCFC',
+        backgroundColor: '#fff',
     },
     lineone: {
         flex: 1,
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 30,
         fontWeight: 'bold',
-        color: '#000'
+        color: '#00B6E9'
     },
     image: {
         height: 200,
