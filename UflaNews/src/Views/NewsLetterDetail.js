@@ -20,8 +20,8 @@ export default class NewsLetterDetail extends Component {
     render () {
         return (
             <SafeAreaView style={styles.container}>
+                <ToolBar/>
                 <ScrollView>                    
-                    <ToolBar/>
                     <View style={styles.body}>
                         <View style={styles.newsletter}>
                             <News/>
