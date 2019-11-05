@@ -20,6 +20,8 @@ export default class Comment extends Component {
                         <Text style={styles.username} > Pedro Silvera</Text>
                     </View>
                     <Text>17/09</Text>
+                    <Image source={require('../Assets/delete-icon.png')} style={styles.icon}/>
+
                 </View>
                 <Text>Cometário sobre a notícia aqui</Text>
             </View>
@@ -31,6 +33,7 @@ const styles = StyleSheet.create({
     comment: {
         flex: 1,
         padding: 3,
+        margin: 2,
         backgroundColor: '#fff',
     },
     lineone: {
@@ -59,5 +62,10 @@ const styles = StyleSheet.create({
     },
     data: {
         marginEnd: 3
-    }
+    },
+    icon: {
+        width: 25,
+        height: 25,
+        margin: 2
+    },
 })
