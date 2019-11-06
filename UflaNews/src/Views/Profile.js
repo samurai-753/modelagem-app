@@ -3,12 +3,14 @@ import{
     View,
     Text,
     Image,
-    StyleSheet
+    StyleSheet,
+    ScrollView
 } from 'react-native';
 
 import Toolbar from '../Components/Toolbar'
 import ProfileHeader from '../Components/ProfileHeader'
 import FollowingInfo from '../Components/FollowingInfo'
+import ProfileInfoEdit from '../Components/ProfileInfoEdit'
 
 
 
@@ -32,13 +34,14 @@ export default class Profile extends Component {
     render(){
         const {profile} = this.state
         return (
-            <View>
+            <ScrollView>
                 <Toolbar/>
                 <View>
                     <ProfileHeader profile={profile}/>
                     <FollowingInfo profile={profile}/>
+                    <ProfileInfoEdit profile={profile}/>
                 </View>
-            </View>
+            </ScrollView>
 
         )
     }

@@ -33,12 +33,13 @@ export default class FollowingInfo extends Component {
 const styles = StyleSheet.create({
     followersContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignItems: 'center',
         height: 60,
-        borderBottomWidth: 2,
-        borderBottomColor: '#a1a1a1'
-
+        borderBottomWidth: 1,
+        borderBottomColor: '#a1a1a1',
+        marginLeft: 10,
+        marginRight: 10
     },
     followingCount: {
         fontSize: 20,
