@@ -8,21 +8,20 @@ import{
 } from 'react-native';
 
 
-export default class ProfileHeader extends Component {
+export default class PublisherHeader extends Component {
     constructor(props) {
         super(props)
     }
 
 
     render(){
-        const {simple_name, email, photo_url, background_photo,} = this.props.profile
+        const {name, photo_url, background_photo} = this.props.profile
         console.log(photo_url)
         return (
             <ImageBackground source={{uri: background_photo}} style={styles.backgroundImage}>
                 <Image source={{uri: photo_url}} style={styles.profilePhoto} />
                 <View style={styles.textContainer}>
-                    <Text style={styles.profileName}>{simple_name}</Text>
-                    <Text style={styles.profileEmail}>{email}</Text>
+                    <Text style={styles.profileName}>{name}</Text>
                 </View>
             </ImageBackground>
 
