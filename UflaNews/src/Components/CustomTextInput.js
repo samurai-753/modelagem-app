@@ -23,6 +23,7 @@ export default class CustomTextInput extends Component {
 
 const styles = StyleSheet.create({
     textInputCustom: {
+        flex: 1,
         // backgroundColor: 'white',
         borderRadius: 10,
         // marginLeft: 25,

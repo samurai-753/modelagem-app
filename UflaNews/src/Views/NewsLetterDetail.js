@@ -6,11 +6,12 @@ import{
     StyleSheet
 } from 'react-native';
 
+import CustomTextInput from '../Components/CustomTextInput'
 import Comment from '../Components/Comment';
 import News from '../Components/News';
 import ToolBar from '../Components/ToolBar';
 import { SafeAreaView } from 'react-navigation';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
 
 export default class NewsLetterDetail extends Component {
     constructor(props) {
@@ -30,9 +31,13 @@ export default class NewsLetterDetail extends Component {
                             <Comment/>
                             <Comment/>
                             <Comment/>
-                            <Comment/>
-                            <Comment/>
-                            <Comment/>
+                            <View style={styles.commentField}>
+                                <CustomTextInput style={styles.textInputComentar}
+                                    placeholder="Comentar"/>
+                                <TouchableHighlight style={styles.buttonComment}>
+                                    <Image source={require('../Assets/right-arrow.png')} style={styles.imageButton}/>
+                                </TouchableHighlight>
+                            </View>
                         </View>
                     </View>
                 </ScrollView>
@@ -60,5 +65,17 @@ const styles = StyleSheet.create({
     comments: {
         flex: 0,
         marginTop: 20,
+    },
+    textInputComentar: {
+    },
+    buttonComment: {
+        alignSelf: 'center'
+    },
+    imageButton: {
+        height: 28,
+        width: 28,
+    },
+    commentField: {
+        flexDirection: 'row'
     }
 })
