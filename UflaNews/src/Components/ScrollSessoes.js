@@ -15,19 +15,15 @@ export default class ScrollSessoes extends Component {
         super(props);
         this.state = {
             width: 0,
-            height: 0,
             page: 0,
 
         };
     }
 
     onLayout = event => {
-        let {width, height} = event.nativeEvent.layout;
+        let {width} = event.nativeEvent.layout;
         if (this.state.width != width){
             this.setState({width});
-        }
-        if (this.state.height != height){
-            this.setState({height});
         }
     }
 
@@ -92,7 +88,7 @@ export default class ScrollSessoes extends Component {
                                 index == 0?
                                 <Image source={require("../Assets/icons/arrow-head-left.png")} opacity={0.3} style={styles.arrow} />
                                 :
-                                <TouchableOpacity style={{height: "100%", width: ARROW_SIZE, paddingTop: (this.state.height/2) - (ARROW_SIZE/2)}} onPress={this.prevItem}>
+                                <TouchableOpacity style={styles.arrow_button} onPress={this.prevItem}>
                                     <Image source={require("../Assets/icons/arrow-head-left.png")} style={styles.arrow} />
                                 </TouchableOpacity>
                             }
@@ -108,7 +104,7 @@ export default class ScrollSessoes extends Component {
                                 index == sessoes.length - 1?
                                 <Image source={require("../Assets/icons/arrow-head-right.png")} opacity={0.3} style={styles.arrow} />                                
                                 :
-                                <TouchableOpacity style={{height: "100%", width: ARROW_SIZE, paddingTop: (this.state.height/2) - (ARROW_SIZE/2)}} onPress={this.nextItem}>
+                                <TouchableOpacity style={styles.arrow_button} onPress={this.nextItem}>
                                     <Image source={require("../Assets/icons/arrow-head-right.png")} style={styles.arrow} />
                                 </TouchableOpacity>
                             }
@@ -177,5 +173,11 @@ const styles = StyleSheet.create({
         width: ARROW_SIZE, 
         height: ARROW_SIZE,
         resizeMode: "contain",
-    }
+    },
+    arrow_button:{
+        height: ARROW_SIZE + 30, 
+        width: ARROW_SIZE, 
+        alignItems: "center", 
+        justifyContent: "center"
+    },
 })

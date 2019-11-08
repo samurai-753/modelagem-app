@@ -47,7 +47,6 @@ export default class LoginScreen extends Component {
                             goToBoletim={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.item.id})}
                         />
                     }
-                    // contentContainerStyle={}
                 />
             </View>
         )
