@@ -213,6 +213,7 @@ export async function getPublicadores(){
     return db.publicadors;
 }
 
-export async function handleLogin() {
-
+export async function login(email) {
+    let url = `${SERVER_URL}/usuarios?email=${email}`        
+    return fetch(url, { headers: { "cache-control": "no-cache" } })
 }

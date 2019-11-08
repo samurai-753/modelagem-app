@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import CustomTextInput from '../Components/CustomTextInput';
-import { SERVER_URL } from '../Server';
+import * as Server from '../Server';
 
 
 export default class LoginScreen extends Component {
@@ -21,30 +21,28 @@ export default class LoginScreen extends Component {
         }
     }
 
-    handleLogin = () => {
+    handleLogin = async () => {
         const {email, password} = this.state
 
-        let url = `${SERVER_URL}/usuarios?email=${email}`        
-        fetch(url, { headers: { "cache-control": "no-cache" } })
-            .then((res) => {
-                res.json().then((json)=> {
-                    let user = json[0];
-
-                    if(user.senha === password) {
-                        this.props.navigation.navigate("Feed");
-                        console.log('Logado')
-                    } else {
-                        throw "";
-                    }
-                }).catch((error) => {
-                    alert('Email ou senha inválidos');
-                })
+        let res = await Server.login(email)
+        if(res){
+            res.json().then((json)=> {
+                let user = json[0];
+                if(user.senha === password) {
+                    this.props.navigation.navigate("Feed");
+                    console.log('Logado')
+                } else {
+                    throw "";
+                }
             })
+            .catch((error) => {
+                alert('Email ou senha inválidos');
+            })
+        }
     }
 
     handleSingup = () => {
-        this.props.navigation.navigate("Register")
-        // alert("Indo para a tela de login")
+        this.props.navigation.navigate("Registrar")
     }
 
     render() {

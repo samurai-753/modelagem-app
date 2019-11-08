@@ -21,20 +21,26 @@ export default class RegisterScreen extends Component {
         super(props)
 
         this.state = {
-            user: '',
+            name: '',
+            email: '',
             password: '',
             passwordCheck: '',
-            email: '',
         }
     }
 
     handleCadastro = () => {
-        const {user, password} = this.state
-        alert(`Fazendo o login do user ${user} com a senha ${password}`)
+        const {email, password, passwordCheck} = this.state
+
+        if(password !== passwordCheck) {
+            alert('Digite a mesma senha');
+            return;
+        }
+
+        // fetch()
     }
 
     render() {
-        const { user, password, email, passwordCheck } = this.state;
+        const { name, password, email, passwordCheck } = this.state;
         const { navigation } = this.props;
         return (
             <ScrollView contentContainerStyle={styles.container}>
@@ -51,10 +57,10 @@ export default class RegisterScreen extends Component {
                     </Text>
                 </View>
                 <View style={styles.inputsContainer}>
-                    <CustomTextInput placeholder="Usuário" value={user} onChangeText={user => this.setState({user})}/>
-                    <CustomTextInput placeholder="E-mail" value={email} onChangeText={email => this.setState({email})}/>
-                    <CustomTextInput placeholder="Senha" value={password} onChangeText={password => this.setState({password})} secureTextEntry={true}/>
-                    <CustomTextInput placeholder="Confirme sua senha" value={passwordCheck} onChangeText={passwordCheck => this.setState({passwordCheck})} secureTextEntry={true}/>
+                    <CustomTextInput white={false} placeholder="Nome" value={name} onChangeText={name => this.setState({name})}/>
+                    <CustomTextInput white={false} placeholder="E-mail" value={email} onChangeText={email => this.setState({email})}/>
+                    <CustomTextInput white={false} placeholder="Senha" value={password} onChangeText={password => this.setState({password})} secureTextEntry={true}/>
+                    <CustomTextInput white={false} placeholder="Confirme sua senha" value={passwordCheck} onChangeText={passwordCheck => this.setState({passwordCheck})} secureTextEntry={true}/>
                     <TouchableOpacity style={styles.loginButtonContainer} onPress={this.handleCadastro}>
                         <Text style={styles.txtButton}>CADASTRAR</Text>
                     </TouchableOpacity>
@@ -103,7 +109,8 @@ const styles = StyleSheet.create({
         // flex: 1,
         justifyContent: "center",
         paddingRight: 10,
-        paddingLeft: 10
+        paddingLeft: 10,
+        // color: "#e62"
     },
     buttonsContainer: {
         // flex: 1,
