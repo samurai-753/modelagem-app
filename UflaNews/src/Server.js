@@ -206,3 +206,7 @@ export async function getPublicador(id){
     }
     return db.publicadors[0];
 }
+
+export async function getPublicadores(){
+    return db.publicadors;
+}

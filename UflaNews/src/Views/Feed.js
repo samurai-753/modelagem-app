@@ -13,6 +13,7 @@ import Header from '../Components/Header';
 import Boletim from '../Components/Boletim';
 
 import * as Server from "../Server";
+import Publicador from '../Components/PublicadorItem';
 
 export default class LoginScreen extends Component {
     constructor(props) {
@@ -20,24 +21,117 @@ export default class LoginScreen extends Component {
 
         this.state = {
             boletins: [],
+            boletinsFiltrados: [],
+            publicadores: [],
+            publicadoresFiltrados: [],
+            busca: "",
         }
     }
 
     componentDidMount(){
         this.getBoletins();
+        this.getPublicadores();
     }
 
     async getBoletins(){
         let boletins = await Server.getBoletins();
-        this.setState({boletins})
+        this.setState({boletins}, ()=>this.filtrar("pol"))
+    }
+
+    async getPublicadores(){
+        let publicadores = await Server.getPublicadores();
+        this.setState({publicadores})
+    }
+    
+    filtrar(busca){
+        // let busca = this.state.busca;
+        this.setState({ busca });
+        let boletins = this.state.boletins;
+        let publicadores = this.state.publicadores;
+
+        let boletinsFiltrados = boletins.filter((boletim)=>{
+            return boletim.titulo.toLowerCase().includes(busca.toLowerCase());
+        })
+
+        let publicadoresFiltrados = publicadores.filter((publicador)=>{
+            return publicador.nome.toLowerCase().includes(busca.toLowerCase());
+        })
+
+        this.setState({ boletinsFiltrados, publicadoresFiltrados });
     }
 
     render() {
+        const { busca, boletins, boletinsFiltrados, publicadoresFiltrados } = this.state;
         return (
             <View style={styles.container}>
+                <ScrollView>
+                    <Header 
+                        style={{marginBottom: 10}} 
+                        pesquisar={true} 
+                        onChangeText={(txt)=>this.filtrar(txt)} 
+                        value={this.state.busca}
+                    />
+                    {
+                        this.state.busca == "" &&
+                        boletins.map((boletim, index)=>
+                            <Boletim 
+                                key={"feed"+index}
+                                style={{marginLeft: 20, marginRight: 20}}
+                                boletim={boletim}
+                                encurtar={true}
+                                goToBoletim={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.id})}
+                            />
+                        )
+                    }
+
+                    {
+                        this.state.busca != "" &&
+                        publicadoresFiltrados.length > 0 &&
+                        <View style={{marginLeft: 20, marginRight: 20}}>
+                            <Text style={styles.tituloLista}>Publicadores:</Text>
+                            {
+                                publicadoresFiltrados.map((publicador, index)=>
+                                    // <Text>{publicador.nome}</Text>
+                                    <Publicador publicador={publicador} />
+                                    // <Boletim 
+                                    //     key={"feed"+index}
+                                    //     publicador={publicador}
+                                    //     encurtar={true}
+                                    //     goToBoletim={()=>this.props.navigation.navigate("VisualizarBoletim", {id: publicador.id})}
+                                    // />
+                                )
+                            }
+                        </View>
+                    }
+                    {
+                        this.state.busca != "" &&
+                        boletinsFiltrados.length > 0 &&
+                        <View style={{marginLeft: 20, marginRight: 20}}>
+                            <Text style={styles.tituloLista}>Boletins:</Text>
+                            {
+                                boletinsFiltrados.map((boletim, index)=>
+                                    <Boletim 
+                                        key={"feed"+index}
+                                        boletim={boletim}
+                                        encurtar={true}
+                                        goToBoletim={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.id})}
+                                    />
+                                )
+                            }
+                        </View>
+                    }
+                </ScrollView>
+                {/* 
                 <FlatList 
-                    ListHeaderComponent={<Header style={{marginBottom: 20}} pesquisar={true}/>}
-                    data={this.state.boletins}
+                    ListHeaderComponent={
+                        <Header 
+                            style={{marginBottom: 20}} 
+                            pesquisar={true} 
+                            onChangeText={(txt)=>this.filtrar(txt)} 
+                            value={this.state.busca}
+                        />
+                    }
+                    data={busca == ""? boletins : boletinsFiltrados}
                     keyboardShouldPersistTaps="always"
                     renderItem={(boletim)=> 
                         <Boletim 
@@ -47,7 +141,8 @@ export default class LoginScreen extends Component {
                             goToBoletim={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.item.id})}
                         />
                     }
-                />
+                /> 
+                */}
             </View>
         )
     }
@@ -99,5 +194,12 @@ const styles = StyleSheet.create({
     },
     txtButton:{
         color: "#00B6E9"
+    },
+    tituloLista: {
+        fontSize: 16, 
+        fontWeight: "700", 
+        color: "#ACB8BB",
+        marginTop: 20, 
+        marginBottom: 10
     }
 })
