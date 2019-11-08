@@ -3,8 +3,9 @@ import {
     View,
     Image,
     Text,
-    StyleSheet
+    StyleSheet,
 } from 'react-native'
+
 
 export default class News extends Component {
     constructor(props) {
@@ -12,6 +13,8 @@ export default class News extends Component {
     }
 
     render() {
+        var text = "Aqui está a grande notícia que vai deixar o público chocado, pois é muita fofoca, mas vocês não estão entendendo, é uma parada muita doida que vai além do entendimento humano de tão doido! Valeu é nóis"
+        var data = "17 de outubro de 2019 - 18:00"
         return (
             <View style={styles.container}>
                 <View style={styles.user}>
@@ -20,9 +23,13 @@ export default class News extends Component {
                 </View>
                 <Text style={styles.title}>NEW SYSTEM </Text>
                 <Image source={require('../Assets/noticia.jpg')} style={styles.image}></Image>
-                <Text style={styles.description}>Aqui está a grande notícia que vai deixar o público chocado, pois é muita fofoca</Text>
+                <Text style={styles.description}>{text}</Text>
                 <View style={styles.infos}>
-                    <Text style={styles.data}>17/09</Text>
+                    <Text style={styles.data}>{data}</Text>
+                    <View style={styles.icons}>
+                        <Image source={require('../Assets/comment-icon.png')} style={styles.icon}/>
+                        <Image source={require('../Assets/like_icon.png')} style={styles.icon}/>                        
+                    </View>
                 </View>
             </View>
         )
@@ -31,7 +38,7 @@ export default class News extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 0,
         padding: 3,
         alignContent: 'space-between',
         backgroundColor: '#fff',
@@ -75,10 +82,21 @@ const styles = StyleSheet.create({
     },
     infos: {
         margin: 2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         borderTopColor:"#000",
         borderTopWidth: 4,
     },
     data: {
         margin: 3
+    },
+    icon: {
+        width: 25,
+        height: 25,
+        margin: 2
+    },
+    icons: {
+        flexDirection: 'row',
+        padding: 2
     }
 })
