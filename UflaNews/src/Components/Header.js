@@ -20,12 +20,18 @@ export default class Header extends Component {
 
     render() {
         const { user, password } = this.state;
-        const { pesquisar } = this.props;
+        const { pesquisar, onChangeText } = this.props;
         if(pesquisar){
             return (
                 <View style={[styles.container, this.props.style]}>
                     <Image source={require('../Assets/ufla-white.png')} style={[styles.logo, {marginRight: 10}]}></Image>
-                    <CustomTextInput white={true} placeholder="Pesquisar" value={user} onChangeText={user => this.setState({user})} style={{flex: 1}}/>                
+                    <CustomTextInput 
+                        white={true} 
+                        placeholder="Pesquisar" 
+                        value={this.props.value} 
+                        onChangeText={onChangeText} 
+                        style={{flex: 1}}
+                    />
                     <Image source={require('../Assets/icons/search.png')} style={styles.logo}></Image>
                 </View>
             );
