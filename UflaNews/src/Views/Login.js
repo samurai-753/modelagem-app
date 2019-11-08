@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import CustomTextInput from '../Components/CustomTextInput';
+import { SERVER_URL } from '../Server';
 
 
 export default class LoginScreen extends Component {
@@ -15,15 +16,30 @@ export default class LoginScreen extends Component {
         super(props)
 
         this.state = {
-            user: '',
-            password: ''
+            email: 'k4t0mono@samurai.io',
+            password: 'birb'
         }
     }
 
     handleLogin = () => {
-        const {user, password} = this.state
-        alert(`Fazendo o login do user ${user} com a senha ${password}`)
-        this.props.navigation.navigate("ViewNewsLetter")
+        const {email, password} = this.state
+
+        let url = `${SERVER_URL}/usuarios?email=${email}`        
+        fetch(url, { headers: { "cache-control": "no-cache" } })
+            .then((res) => {
+                res.json().then((json)=> {
+                    let user = json[0];
+
+                    if(user.senha === password) {
+                        this.props.navigation.navigate("Feed");
+                        console.log('Logado')
+                    } else {
+                        throw "";
+                    }
+                }).catch((error) => {
+                    alert('Email ou senha inválidos');
+                })
+            })
     }
 
     handleSingup = () => {
@@ -32,13 +48,13 @@ export default class LoginScreen extends Component {
     }
 
     render() {
-        const { user, password } = this.state;
+        const { email, password } = this.state;
         return (
             <View style={styles.container}>
                 <View style={{height: 10}}/>
                 <View style={styles.inputsContainer}>
                     <Image source={require('../Assets/ufla-white.png')} style={styles.logo}></Image>
-                    <CustomTextInput white={true} placeholder="Usuário" value={user} onChangeText={user => this.setState({user})}/>
+                    <CustomTextInput white={true} placeholder="Email" value={email} onChangeText={email => this.setState({email})}/>
                     <CustomTextInput white={true} placeholder="Senha" value={password} onChangeText={password => this.setState({password})} secureTextEntry={true}/>
                     <TouchableOpacity style={styles.loginButtonContainer} onPress={this.handleLogin}>
                         {/* <Image source={require('../Assets/right-arrow.png')} style={styles.rightArrow}></Image> */}

@@ -170,6 +170,8 @@ const db = {
 }
 
 
+export const SERVER_URL = "http://192.168.1.163:3000";
+
 export async function getBoletins(){
     return db.boletims;
 }
@@ -209,4 +211,8 @@ export async function getPublicador(id){
 
 export async function getPublicadores(){
     return db.publicadors;
+}
+
+export async function handleLogin() {
+
 }
