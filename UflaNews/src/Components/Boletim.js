@@ -81,7 +81,6 @@ export default class Boletim extends Component {
                 <TouchableOpacity activeOpacity={1} onPress={this.props.goToBoletim}>
                     <Text style={styles.titulo}>{boletim.titulo}</Text>
                     <Image source={{uri: boletim.imagem_src}} style={{height: 200, width: "100%", marginRight: 10, resizeMode: "cover", borderRadius: 4, marginBottom: 5}}/>
-
                 </TouchableOpacity>
 
                 <ScrollSessoes sessoes={boletim.sessoes} style={{marginBottom: 5}} encurtar={this.props.encurtar} goToBoletim={this.props.goToBoletim}/>

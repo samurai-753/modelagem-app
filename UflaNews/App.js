@@ -11,6 +11,8 @@ import Registrar from './src/Views/Registrar'
 import VisualizarBoletim from './src/Views/VisualizarBoletim';
 import Feed from './src/Views/Feed';
 
+import Listagem from './src/Views/Listagem'
+
 // export default App;
 
 
@@ -21,10 +23,11 @@ const AppNavigator = createStackNavigator(
     Registrar: Registrar,
     VisualizarBoletim: VisualizarBoletim,
     Profile: Profile,
-    Publisher: Publisher
+    Publisher: Publisher,
+    Listagem: Listagem
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Feed',
     header: null,
     headerMode: 'none'
   }

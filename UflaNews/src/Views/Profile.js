@@ -38,7 +38,7 @@ export default class Profile extends Component {
                 <Toolbar/>
                 <View>
                     <ProfileHeader profile={profile}/>
-                    <FollowingInfo profile={profile}/>
+                    <FollowingInfo profile={profile} handlePress={() => this.props.navigation.navigate("Listagem")}/>
                     <ProfileInfoEdit profile={profile}/>
                 </View>
             </ScrollView>

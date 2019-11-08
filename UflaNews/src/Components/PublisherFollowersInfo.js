@@ -21,9 +21,7 @@ export default class PublishersFollowersInfo extends Component {
 
     handleFollowing = () => {
         const {following} = this.state
-        console.log(following)
         this.setState({following : !following})
-        console.log(this.state)
     }
 
 

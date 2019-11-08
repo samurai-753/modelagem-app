@@ -3,9 +3,9 @@ import{
     View,
     Text,
     Image,
-    StyleSheet
+    StyleSheet,
+    TouchableOpacity
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
@@ -16,11 +16,11 @@ export default class FollowingInfo extends Component {
 
 
     render(){
-        const {profile} = this.props
+        const {profile, handlePress} = this.props
         return (
             <View style={styles.followersContainer}>
                 <Text style={styles.followingCount}> Seguindo: {profile.followingCount} </Text>
-                <TouchableOpacity style={styles.listButton}>
+                <TouchableOpacity style={styles.listButton} onPress={handlePress}>
                     <Text style={styles.listButtonText}> Listar </Text>
                 </TouchableOpacity>
             </View>

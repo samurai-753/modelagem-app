@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
         flex: 0,
     },
     textInputComentar: {
+        flex: 1
     },
     buttonComment: {
         alignSelf: 'center'
