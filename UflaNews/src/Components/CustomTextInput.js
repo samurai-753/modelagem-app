@@ -13,7 +13,7 @@ export default class CustomTextInput extends Component {
         return (
             <TextInput 
                 {...props} 
-                style={[styles.textInputCustom,  white? styles.white : null]}
+                style={[styles.textInputCustom,  white? styles.white : null, props.style]}
                 placeholderTextColor={white? "#fff" : null}
                 underlineColorAndroid={white? "#fff" : null}
             />
@@ -23,12 +23,13 @@ export default class CustomTextInput extends Component {
 
 const styles = StyleSheet.create({
     textInputCustom: {
+        flex: 1,
         // backgroundColor: 'white',
         borderRadius: 10,
         // marginLeft: 25,
         // marginRight: 25,
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 10,
     },
     white:{
         color: "#fff",

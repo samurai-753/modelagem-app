@@ -3,8 +3,9 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 
 import Login from './src/Views/Login'
-import Register from './src/Views/Register'
-import NewsLetterDetail from './src/Views/NewsLetterDetail';
+import Registrar from './src/Views/Registrar'
+import VisualizarBoletim from './src/Views/VisualizarBoletim';
+import Feed from './src/Views/Feed';
 
 // export default App;
 
@@ -12,12 +13,13 @@ import NewsLetterDetail from './src/Views/NewsLetterDetail';
 const AppNavigator = createStackNavigator(
   {
     Login: Login,
-    Register: Register,
-    ViewNewsLetter: NewsLetterDetail,
+    Feed: Feed,
+    Registrar: Registrar,
+    VisualizarBoletim: VisualizarBoletim,
   },
   
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Feed',
     header: null,
     headerMode: 'none'
   }
