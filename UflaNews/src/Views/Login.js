@@ -22,8 +22,8 @@ export default class LoginScreen extends Component {
 
     handleLogin = () => {
         const {user, password} = this.state
-        alert(`Fazendo o login do user ${user} com a senha ${password}`)
-        this.props.navigation.navigate("ViewNewsLetter")
+        // alert(`Fazendo o login do user ${user} com a senha ${password}`)
+        this.props.navigation.navigate("Feed")
     }
 
     handleSingup = () => {
