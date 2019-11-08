@@ -27,10 +27,12 @@ As notícias dos publicadores serão em formato de boletins eletrônicos, cada u
 
 ### Preparação do ambiente
 Siga o tutorial abaixo para a preparar o ambiente de desenvolvimento:
+
 [Reactive Native - Getting Started](https://facebook.github.io/react-native/docs/getting-started)
 
 ### Git
 É necessário a instalação do git. Abaixo segue um tutorial.
+
 [Install Git](https://www.linode.com/docs/development/version-control/how-to-install-git-on-linux-mac-and-windows/)
 
 
