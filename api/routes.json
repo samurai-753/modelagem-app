@@ -2,5 +2,7 @@
   "/publicadores/:id": "/publicadors/:id",
   "/publicadores/": "/publicadors/",
   "/boletins/:id": "/boletims/:id",
-  "/boletins/": "/boletims/"
+  "/boletins/": "/boletims/",
+  "/sessoes/": "/sessoes/",
+  "/sessoes/:id": "/sessoes/:id"
 }
