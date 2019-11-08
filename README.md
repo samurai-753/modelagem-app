@@ -19,11 +19,39 @@ As notícias dos publicadores serão em formato de boletins eletrônicos, cada u
 
 ## Ferramentas Utilizadas
 
-*As ferramentas ainda não foram escolhidas*
+* JSON Server: para simular o back-end
+* React Native: para desenvolver o front-end da aplicação
+
 
 ## Modo de Instalação
 
-*Ainda não definido*
+### Preparação do ambiente
+Siga o tutorial abaixo para a preparar o ambiente de desenvolvimento:
+[Reactive Native - Getting Started](https://facebook.github.io/react-native/docs/getting-started)
+
+### Git
+É necessário a instalação do git. Abaixo segue um tutorial.
+[Install Git](https://www.linode.com/docs/development/version-control/how-to-install-git-on-linux-mac-and-windows/)
+
+
+### Execução
+Primeiramente é necessário clonar o repositório. Utilize o comando abaixo para isso.
+```
+$ git clone https://github.com/samurai-753/ufla-news-app/
+```
+Após isso acesse a pasta do repositório e execute o comando abaixo para instalar as dependências do aplicativo.
+```
+$ npm install
+```
+Execute o comando abaixo para iniciar o metro bundle.
+```
+$ npm start
+```
+Execute o comando abaixo para instalar o aplicativo no android. (OBS: é necessário que o smartphone esteja conectado ao computador)
+```
+$ reactive-native run-android
+```
+
 
 ## Desenvolvedores
 
