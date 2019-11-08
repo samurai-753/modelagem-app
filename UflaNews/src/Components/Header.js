@@ -20,13 +20,24 @@ export default class Header extends Component {
 
     render() {
         const { user, password } = this.state;
-        return (
-            <View style={[styles.container, this.props.style]}>
-                <Image source={require('../Assets/ufla-white.png')} style={styles.logo}></Image>
-                <CustomTextInput white={true} placeholder="Pesquisar" value={user} onChangeText={user => this.setState({user})} style={{flex: 1}}/>                
-                <Image source={require('../Assets/icons/search.png')} style={styles.logo}></Image>
-            </View>
-        )
+        const { pesquisar } = this.props;
+        if(pesquisar){
+            return (
+                <View style={[styles.container, this.props.style]}>
+                    <Image source={require('../Assets/ufla-white.png')} style={[styles.logo, {marginRight: 10}]}></Image>
+                    <CustomTextInput white={true} placeholder="Pesquisar" value={user} onChangeText={user => this.setState({user})} style={{flex: 1}}/>                
+                    <Image source={require('../Assets/icons/search.png')} style={styles.logo}></Image>
+                </View>
+            );
+        }
+        else{
+            return (
+                <View style={[styles.container, this.props.style]}>
+                    <Image source={require('../Assets/ufla-white.png')} style={[styles.logo, {marginRight: 10}]}></Image>
+                    <Text style={{color: "#fff", fontSize: 26, fontWeight: "700"}}>UFLA News</Text>
+                </View>
+            );
+        }
     }
 }
 
@@ -39,13 +50,13 @@ const styles = StyleSheet.create({
         // flex:1,
         height: 70,
         flexDirection: "row",
+        alignItems: "center"
     },
     
     logo: {
         height: 40,
         width: 40,
         alignSelf: "center",
-        marginRight: 10
         // marginTop: 50,
         // marginBottom: 50
     },

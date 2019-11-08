@@ -55,7 +55,11 @@ export default class ScrollSessoes extends Component {
     getTextoEncurtado(txt){
         if(txt.length > 50){
             retorno = [
-                <Text>{txt.slice(0,50)}... <Text onPress={()=>alert("TODO")} style={{color: "#1e88e5", textDecorationLine: "underline"}}>ver mais</Text></Text>,
+                <TouchableOpacity activeOpacity={1} onPress={this.props.goToBoletim}>
+                    <View>
+                        <Text>{txt.slice(0,50)}... <Text style={{color: "#1e88e5", textDecorationLine: "underline"}}>ver mais</Text></Text>
+                    </View>
+                </TouchableOpacity>
 
             ]
             return retorno;
@@ -85,11 +89,11 @@ export default class ScrollSessoes extends Component {
                         <View key={"sessao" + index} style={{width: this.state.width, minHeight: 50, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
 
                             {
-                                this.state.page == 0?
-                                <View style={{width: ARROW_SIZE}}/>
+                                index == 0?
+                                <Image source={require("../Assets/icons/arrow-head-left.png")} opacity={0.3} style={styles.arrow} />
                                 :
                                 <TouchableOpacity style={{height: "100%", width: ARROW_SIZE, paddingTop: (this.state.height/2) - (ARROW_SIZE/2)}} onPress={this.prevItem}>
-                                    <Image source={require("../Assets/icons/arrow-head-left.png")} style={{width: ARROW_SIZE, height: ARROW_SIZE,resizeMode: "contain", }} />
+                                    <Image source={require("../Assets/icons/arrow-head-left.png")} style={styles.arrow} />
                                 </TouchableOpacity>
                             }
                             <View style={{width: this.state.width - (2*ARROW_SIZE)}}>
@@ -101,11 +105,11 @@ export default class ScrollSessoes extends Component {
                                 }
                             </View>
                             {
-                                this.state.page == sessoes.length - 1?
-                                <View style={{width: ARROW_SIZE}}/>
+                                index == sessoes.length - 1?
+                                <Image source={require("../Assets/icons/arrow-head-right.png")} opacity={0.3} style={styles.arrow} />                                
                                 :
                                 <TouchableOpacity style={{height: "100%", width: ARROW_SIZE, paddingTop: (this.state.height/2) - (ARROW_SIZE/2)}} onPress={this.nextItem}>
-                                    <Image source={require("../Assets/icons/arrow-head-right.png")} style={{width: ARROW_SIZE, height: ARROW_SIZE,resizeMode: "contain", }} />
+                                    <Image source={require("../Assets/icons/arrow-head-right.png")} style={styles.arrow} />
                                 </TouchableOpacity>
                             }
                         </View>
@@ -168,5 +172,10 @@ const styles = StyleSheet.create({
     },
     data: {
         margin: 3
+    },
+    arrow: {
+        width: ARROW_SIZE, 
+        height: ARROW_SIZE,
+        resizeMode: "contain",
     }
 })

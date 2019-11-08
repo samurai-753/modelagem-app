@@ -5,6 +5,7 @@ import {
     Text,
     StyleSheet
 } from 'react-native'
+import * as Helper from "../Helper";
 
 export default class Comment extends Component {
     constructor(props) {
@@ -12,38 +13,58 @@ export default class Comment extends Component {
     }
 
     render() {
+        const { comentario } = this.props;
         return (
-            <View style={styles.comment}>
-                <View style={styles.lineone} >
+            <View style={[styles.comment, styles.card]}>
+                <View style={styles.header} >
                     <View style={styles.user}>
-                        <Image source={require('../Assets/noticia.jpg')} style={styles.logo}/>
-                        <Text style={styles.username} > Pedro Silvera</Text>
+                        <Image source={{uri: comentario.foto_url}} style={styles.logo}/>
+                        <Text style={styles.username}>{comentario.nome}</Text>
                     </View>
-                    <Text>17/09</Text>
-                    <Image source={require('../Assets/delete-icon.png')} style={styles.icon}/>
+
+                    <View style={{flexDirection: "row", alignItems: "center"}}>
+                        <Text>{Helper.formatarData(comentario.data, false)}</Text>
+                        {/* <Image source={require('../Assets/delete-icon.png')} style={styles.icon}/> */}
+                    </View>
 
                 </View>
-                <Text>Cometário sobre a notícia aqui</Text>
+                <Text>{comentario.comentario}</Text>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    card: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        // height: 100,
+        backgroundColor: "#fff",
+        margin: 5,
+        marginTop: 10,
+        padding: 10,
+    },
     comment: {
         flex: 1,
         padding: 3,
         margin: 2,
-        backgroundColor: '#fff',
     },
-    lineone: {
+    header: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: 10
     },
     user: {
         flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: "center",
     },
     logo: {
         alignSelf: 'flex-start',
@@ -51,11 +72,12 @@ const styles = StyleSheet.create({
         width: 30,
         borderRadius: 200,
         borderColor: '#000',
-        borderWidth: 2
+        borderWidth: 1
     },
     username: {
-        alignSelf: 'flex-start',
-        marginTop: 0,
+        // alignSelf: 'flex-start',
+        // includeFontPadding: false,
+        marginLeft: 5,
         color: '#365070',
         fontWeight: 'bold'
 

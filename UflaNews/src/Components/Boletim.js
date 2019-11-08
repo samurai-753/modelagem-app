@@ -11,6 +11,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ScrollSessoes from './ScrollSessoes';
 const { DEVICE_WIDTH } = Dimensions.get('window');
 
+import * as Server from "../Server";
+import * as Helper from "../Helper";
 
 export default class Boletim extends Component {
     constructor(props) {
@@ -27,15 +29,10 @@ export default class Boletim extends Component {
         this.getPublicador();
     }
 
-    getPublicador(){
-        const publicador = {
-            "nome": "DCC",
-            "num_seguidores": 10,
-            "id": 0,
-            "foto_url": "https://4.bp.blogspot.com/-TckS2ehpyDc/VQIthzSQS7I/AAAAAAAAA5w/Xq2pF5Uz3h8/s1600/ocelot%2Bpic%2B2.jpg",
-        };
-
-        this.setState({ publicador: publicador })
+    async getPublicador(){
+        let id = this.props.boletim.publicadorId;
+        let publicador = await Server.getPublicador(id);
+        this.setState({ publicador })
     }
 
     onLayout = event => {
@@ -67,16 +64,6 @@ export default class Boletim extends Component {
         // alert("foi")
     }
 
-    formatarData(data){
-        let hora = "";
-        if(data.length > 10){
-            hora = data.slice(11, 16);
-            data = data.slice(0, 10);
-        }
-        data = data.split("-");
-        data = data[2] + "/" + data[1] + "/" + data[0];
-        return data + " " + hora;
-    }
 
     // const props = this.props;
         render() {
@@ -91,16 +78,18 @@ export default class Boletim extends Component {
                     <Text>{publicador.nome}</Text>
                 </View>
 
-                <Text style={styles.titulo}>{boletim.titulo}</Text>
-                <Image source={{uri: boletim.imagem_src}} style={{height: 200, width: "100%", marginRight: 10, resizeMode: "cover", borderRadius: 4, marginBottom: 5}}/>
+                <TouchableOpacity activeOpacity={1} onPress={this.props.goToBoletim}>
+                    <Text style={styles.titulo}>{boletim.titulo}</Text>
+                    <Image source={{uri: boletim.imagem_src}} style={{height: 200, width: "100%", marginRight: 10, resizeMode: "cover", borderRadius: 4, marginBottom: 5}}/>
 
+                </TouchableOpacity>
 
-                <ScrollSessoes sessoes={boletim.sessoes} style={{marginBottom: 5}} encurtar={true} />
+                <ScrollSessoes sessoes={boletim.sessoes} style={{marginBottom: 5}} encurtar={this.props.encurtar} goToBoletim={this.props.goToBoletim}/>
 
                 <View style={{borderColor: "rgba(0,0,0,0.3)", borderBottomWidth: 1, width: "100%", marginBottom: 10}} />
 
-                <View style={{flexDirection: "row", flex: 1, justifyContent: "space-between"}}>
-                    <Text>{this.formatarData(boletim.data)}</Text>
+                <View style={{flexDirection: "row", flex: 1, justifyContent: "space-between", alignItems: "center"}}>
+                    <Text>{Helper.formatarData(boletim.data)}</Text>
 
                     <View style={{flexDirection: "row"}}>
                         
