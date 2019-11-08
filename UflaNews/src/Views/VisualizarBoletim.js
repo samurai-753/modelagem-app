@@ -62,6 +62,7 @@ export default class NewsLetterDetail extends Component {
                                 encurtar={false}
                                 boletim={this.state.boletim}
                                 goToBoletim={()=>{}}
+                                goToPublicador={()=>this.props.navigation.navigate("Publisher")}
                             />
                         }
                         <View style={styles.comments}>
@@ -73,15 +74,15 @@ export default class NewsLetterDetail extends Component {
                                     />
                                 )
                             }
-                            <View style={styles.commentField}>
-                                <CustomTextInput 
-                                    style={styles.textInputComentar}
-                                    placeholder="Comentar"
-                                />
-                                <TouchableHighlight style={styles.buttonComment}>
-                                    <Image source={require('../Assets/right-arrow.png')} style={styles.imageButton}/>
-                                </TouchableHighlight>
-                            </View>
+                        </View>
+                        <View style={styles.commentField}>
+                            <CustomTextInput 
+                                style={{flex: 1}}
+                                placeholder="Comentar"
+                            />
+                            <TouchableHighlight style={styles.buttonComment}>
+                                <Image source={require('../Assets/right-arrow.png')} style={styles.imageButton}/>
+                            </TouchableHighlight>
                         </View>
                     </View>
                 </ScrollView>
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     buttonComment: {
-        alignSelf: 'center'
+        // alignSelf: 'center'
     },
     imageButton: {
         height: 28,
@@ -121,6 +122,7 @@ const styles = StyleSheet.create({
     },
     commentField: {
         flexDirection: 'row',
-        alignItems: "center"
+        alignItems: "center",
+        width: "100%",
     }
 })

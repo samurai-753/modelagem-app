@@ -7,10 +7,10 @@ import{
     ScrollView
 } from 'react-native';
 
-import Toolbar from '../Components/Toolbar'
 import ProfileHeader from '../Components/ProfileHeader'
 import FollowingInfo from '../Components/FollowingInfo'
 import ProfileInfoEdit from '../Components/ProfileInfoEdit'
+import Header from '../Components/Header';
 
 
 
@@ -35,7 +35,7 @@ export default class Profile extends Component {
         const {profile} = this.state
         return (
             <ScrollView>
-                <Toolbar/>
+                <Header/>
                 <View>
                     <ProfileHeader profile={profile}/>
                     <FollowingInfo profile={profile} handlePress={() => this.props.navigation.navigate("Listagem")}/>
