@@ -15,6 +15,9 @@ import Boletim from '../Components/Boletim';
 import * as Server from "../Server";
 import Publicador from '../Components/PublicadorItem';
 
+import { Drawer } from 'native-base';
+import Menu from '../Components/Menu';
+
 export default class LoginScreen extends Component {
     constructor(props) {
         super(props)
@@ -26,6 +29,7 @@ export default class LoginScreen extends Component {
             publicadoresFiltrados: [],
             busca: "",
         }
+
     }
 
     componentDidMount(){
@@ -63,6 +67,15 @@ export default class LoginScreen extends Component {
     render() {
         const { busca, boletins, boletinsFiltrados, publicadoresFiltrados } = this.state;
         return (
+            <Drawer 
+                ref={(ref) => { this.drawer = ref}} 
+                content={
+                    <Menu
+                        navigation={this.props.navigation}
+                    />
+                } 
+                onClose={() => {}} 
+            >
             <View style={styles.container}>
                 <ScrollView>
                     <Header 
@@ -70,6 +83,7 @@ export default class LoginScreen extends Component {
                         pesquisar={true} 
                         onChangeText={(txt)=>this.filtrar(txt)} 
                         value={this.state.busca}
+                        openMenu={()=>this.drawer._root.open()}
                     />
                     {
                         this.state.busca == "" &&
@@ -139,6 +153,7 @@ export default class LoginScreen extends Component {
                 /> 
                 */}
             </View>
+            </Drawer> 
         )
     }
 }

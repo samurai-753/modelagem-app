@@ -11,9 +11,12 @@ import{
 
 import Toolbar from '../Components/Toolbar'
 import Header from '../Components/Header'
+import Boletim from '../Components/Boletim'
 import PublisherHeader from '../Components/PublisherHeader'
 import PublishersFollowersInfo from '../Components/PublisherFollowersInfo'
 
+import * as Server from "../Server";
+import { thisExpression } from '@babel/types';
 
 export default class Publisher extends Component {
     constructor(props) {
@@ -33,29 +36,39 @@ export default class Publisher extends Component {
         }
     }
 
-    
+    componentDidMount(){
+        this.getBoletins(2);
+    }
+
+    async getBoletins(id){
+        let boletins = await Server.getBoletins(id);
+        this.setState({ boletins });
+    }
 
 
     render(){
-        const {profile} = this.state
+        const {profile, boletins} = this.state
         return (
             <ScrollView>
                 <Header 
-                    style={{marginBottom: 10}} 
                     pesquisar={false} 
                     onChangeText={(txt)=>this.filtrar(txt)} 
                     value={this.state.busca}
                 />
                 <PublisherHeader profile={profile}/>
                 <PublishersFollowersInfo profile={profile}/>
-                <Boletim 
-                    key={"feed"+index}
-                    style={{marginLeft: 20, marginRight: 20}}
-                    boletim={boletim}
-                    encurtar={true}
-                    goToBoletim={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.id})}
-                    goToPublicador={()=>this.props.navigation.navigate("Publisher")}
-                />
+                {
+                    boletins.map((boletim, index)=>
+                        <Boletim 
+                            key={"feed"+index}
+                            style={{marginLeft: 20, marginRight: 20}}
+                            boletim={boletim}
+                            encurtar={true}
+                            goToBoletim={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.id})}
+                            // goToPublicador={()=>this.props.navigation.navigate("Publisher")}
+                        />
+                    )
+                }
             </ScrollView>
         )
     }

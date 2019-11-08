@@ -24,7 +24,7 @@ const AppNavigator = createStackNavigator(
     Publisher: Publisher
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Feed',
     header: null,
     headerMode: 'none'
   }
