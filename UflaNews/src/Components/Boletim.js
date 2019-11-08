@@ -67,6 +67,17 @@ export default class Boletim extends Component {
         // alert("foi")
     }
 
+    formatarData(data){
+        let hora = "";
+        if(data.length > 10){
+            hora = data.slice(11, 16);
+            data = data.slice(0, 10);
+        }
+        data = data.split("-");
+        data = data[2] + "/" + data[1] + "/" + data[0];
+        return data + " " + hora;
+    }
+
     // const props = this.props;
         render() {
         const {boletim, style} = this.props;
@@ -81,10 +92,26 @@ export default class Boletim extends Component {
                 </View>
 
                 <Text style={styles.titulo}>{boletim.titulo}</Text>
-                <Image source={{uri: boletim.imagem_src}} style={{height: 200, width: "100%", marginRight: 10, resizeMode: "cover", borderRadius: 4}}/>
+                <Image source={{uri: boletim.imagem_src}} style={{height: 200, width: "100%", marginRight: 10, resizeMode: "cover", borderRadius: 4, marginBottom: 5}}/>
 
 
-                <ScrollSessoes sessoes={boletim.sessoes} />
+                <ScrollSessoes sessoes={boletim.sessoes} style={{marginBottom: 5}} encurtar={true} />
+
+                <View style={{borderColor: "rgba(0,0,0,0.3)", borderBottomWidth: 1, width: "100%", marginBottom: 10}} />
+
+                <View style={{flexDirection: "row", flex: 1, justifyContent: "space-between"}}>
+                    <Text>{this.formatarData(boletim.data)}</Text>
+
+                    <View style={{flexDirection: "row"}}>
+                        
+                        <TouchableOpacity onPress={()=>{}}>
+                            <Image source={require("../Assets/icons/comment.png")} style={[styles.icon, {marginRight: 10}]} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{}}>
+                            <Image source={require("../Assets/icons/like.png")} style={styles.icon} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
 
             </View>
         )
@@ -112,5 +139,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "700",
         marginBottom: 10
+    },
+    icon: {
+        width: 30, 
+        height: 30, 
+        resizeMode: "contain"
     }
 })

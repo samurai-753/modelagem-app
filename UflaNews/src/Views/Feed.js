@@ -146,7 +146,7 @@ const db = {
             "usuarioId": 3
         }
     ],
-    "boletins": [
+    "boletims": [
         {
             "sessoes": [
                 "1",
@@ -191,7 +191,7 @@ export default class LoginScreen extends Component {
     }
 
     getBoletins(){
-        this.setState({boletins: db.boletins})
+        this.setState({boletins: db.boletims})
     }
 
     render() {

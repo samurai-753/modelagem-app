@@ -52,21 +52,37 @@ export default class ScrollSessoes extends Component {
         // alert("foi")
     }
 
+    getTextoEncurtado(txt){
+        if(txt.length > 50){
+            retorno = [
+                <Text>{txt.slice(0,50)}... <Text onPress={()=>alert("TODO")} style={{color: "#1e88e5", textDecorationLine: "underline"}}>ver mais</Text></Text>,
+
+            ]
+            return retorno;
+        }
+        else{
+            return(
+                <Text>{txt}</Text>
+            )
+        }
+    }
+
     render() {
         const { sessoes } = this.props;
         return (
             <ScrollView
                 ref={(r)=>{if(r != null) this.scroll = r}}
                 onLayout={this.onLayout} 
-                style={{width: "100%"}} 
+                style={[{width: "100%"}, this.props.style]} 
                 horizontal={true} 
                 keyboardShouldPersistTaps="always"
                 pagingEnabled
                 onMomentumScrollEnd={this.handleScrollStop}
+                showsHorizontalScrollIndicator={false}
             >
                 {
-                    sessoes.map((item)=>
-                        <View style={{width: this.state.width, minHeight: 50, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                    sessoes.map((item, index)=>
+                        <View key={"sessao" + index} style={{width: this.state.width, minHeight: 50, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
 
                             {
                                 this.state.page == 0?
@@ -77,7 +93,12 @@ export default class ScrollSessoes extends Component {
                                 </TouchableOpacity>
                             }
                             <View style={{width: this.state.width - (2*ARROW_SIZE)}}>
-                                <Text>{item}</Text>
+                                {
+                                    this.props.encurtar?
+                                    this.getTextoEncurtado(item)
+                                    :
+                                    <Text>{item}</Text>
+                                }
                             </View>
                             {
                                 this.state.page == sessoes.length - 1?
