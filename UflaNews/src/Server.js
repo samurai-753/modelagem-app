@@ -184,6 +184,9 @@ const db = {
 }
 
 
+const SERVER_URL = 'http://192.168.1.33:3000'
+
+
 export async function getBoletins(publicadorId = null){
     if(publicadorId){
         let boletins = db.boletims;
@@ -238,7 +241,18 @@ export async function getPublicadores(){
     return db.publicadors;
 }
 
-export async function login(email) {
-    let url = `${SERVER_URL}/usuarios?email=${email}`        
-    return fetch(url, { headers: { "cache-control": "no-cache" } })
+export async function login(email, password) {
+    let url = `${SERVER_URL}/usuarios?email=${email}`
+    let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
+
+    let json = await res.json()
+    let usuario = json[0]
+    
+    if(usuario.senha === password) {
+        usuario.senha = ''
+        usuario.id = ''
+        return usuario
+    }
+
+    throw 'Senha ou usário invalido'
 }
