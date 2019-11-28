@@ -10,6 +10,7 @@ import {
 
 import CustomTextInput from '../Components/CustomTextInput';
 import { ScrollView } from 'react-native-gesture-handler';
+import { cadastrar } from '../Server';
 
 
 export default class RegisterScreen extends Component {
@@ -21,22 +22,30 @@ export default class RegisterScreen extends Component {
         super(props)
 
         this.state = {
-            name: '',
-            email: '',
-            password: '',
-            passwordCheck: '',
+            name: 'Jao',
+            email: 'jao@samurai.io',
+            password: '1234',
+            passwordCheck: '1234',
         }
     }
 
     handleCadastro = () => {
-        const {email, password, passwordCheck} = this.state
+        const { name, email, password, passwordCheck } = this.state
 
         if(password !== passwordCheck) {
             alert('Digite a mesma senha');
             return;
         }
 
-        // fetch()
+        let usuario = { email, senha: password, nome: name }
+        cadastrar(usuario).then(() => {
+            alert(`Usuário ${email} cadastrado`);
+            // TODO: Setar coisas do usuario
+            this.props.navigation.navigate("Feed");
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
 
     render() {

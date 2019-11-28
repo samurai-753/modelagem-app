@@ -256,3 +256,19 @@ export async function login(email, password) {
 
     throw 'Senha ou usário invalido'
 }
+
+
+export async function cadastrar(usuario_dados) {
+    let url = `${SERVER_URL}/usuarios`
+    let res = await fetch(
+        url,
+        {
+            method: 'POST',
+            headers: { "cache-control": "no-cache", 'Content-Type': 'application/json' },
+            body: JSON.stringify(usuario_dados)
+        }
+    );
+
+    let usuario = await res.json()
+    return usuario
+}
