@@ -33,13 +33,16 @@ export default class LoginScreen extends Component {
     }
 
     componentDidMount(){
-        this.getBoletins();
+        let usuario = this.props.navigation.getParam("usuario", null);
+        let publicadores = usuario.seguidores.map((x) => x.publicadorId)
+
+        this.getBoletins(publicadores);
         this.getPublicadores();
     }
 
-    async getBoletins(){
-        let boletins = await Server.getBoletins();
-        this.setState({boletins})
+    async getBoletins(publicadores){
+        let boletins = await Server.getBoletins(publicadores);
+        this.setState({ boletins })
     }
 
     async getPublicadores(){

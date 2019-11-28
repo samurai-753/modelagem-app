@@ -54,7 +54,7 @@ export default class ScrollSessoes extends Component {
         }
         if(txt.length > 50){
             retorno = [
-                <TouchableOpacity activeOpacity={1} onPress={this.props.goToBoletim}>
+                <TouchableOpacity key={'btn'} activeOpacity={1} onPress={this.props.goToBoletim}>
                     <View>
                         <Text>{txt.slice(0,50)}... <Text style={{color: "#1e88e5", textDecorationLine: "underline"}}>ver mais</Text></Text>
                     </View>

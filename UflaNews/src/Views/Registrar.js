@@ -37,11 +37,11 @@ export default class RegisterScreen extends Component {
             return;
         }
 
-        let usuario = { email, senha: password, nome: name }
-        cadastrar(usuario).then(() => {
+        let usuario_dados = { email, senha: password, nome: name }
+        cadastrar(usuario_dados).then((usuario) => {
             alert(`Usuário ${email} cadastrado`);
             // TODO: Setar coisas do usuario
-            this.props.navigation.navigate("Feed");
+            this.props.navigation.navigate("Feed", { usuario });
         })
         .catch((err) => {
             console.log(err)

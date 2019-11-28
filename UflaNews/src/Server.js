@@ -187,24 +187,35 @@ const db = {
 const SERVER_URL = 'http://192.168.1.33:3000'
 
 
-export async function getBoletins(publicadorId = null){
-    if(publicadorId){
-        let boletins = db.boletims;
-        let retorno = [];
-        for(let i=0; i < boletins.length; i++){
-            if(boletins[i].publicadorId == publicadorId){
-                retorno.push(boletins[i]);
-            }
-        }
-        return retorno;
+export async function getBoletins(publicadores){
+    console.log('publicadores', publicadores)
 
-    }
-    else{
-        return db.boletims;
-    }
+    let ids = ''
+    publicadores.map((x) => ids += `publicadorId=${x}&`)
+    let url = `${SERVER_URL}/boletims?${ids}_sort=data&_order=desc&_embed=sessaos`
+    let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
+
+    // TODO: Colocar os boletins na tela
+    let boletins = await res.json()
+
+    return []
+    // if(publicadorId){
+    //     let boletins = db.boletims;
+    //     let retorno = [];
+    //     for(let i=0; i < boletins.length; i++){
+    //         if(boletins[i].publicadorId == publicadorId){
+    //             retorno.push(boletins[i]);
+    //         }
+    //     }
+    //     return retorno;
+
+    // }
+    // else{
+    //     return db.boletims;
+    // }
 }
 
-export async function getBoletim(id){
+export async function getBoletim(id) {
     let boletins = db.boletims;
     for(let i=0; i < boletins.length; i++){
         if(boletins[i].id == id){
@@ -242,7 +253,7 @@ export async function getPublicadores(){
 }
 
 export async function login(email, password) {
-    let url = `${SERVER_URL}/usuarios?email=${email}`
+    let url = `${SERVER_URL}/usuarios?email=${email}&_embed=seguidores`
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
     let json = await res.json()
