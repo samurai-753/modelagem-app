@@ -51,7 +51,7 @@ $ npm start
 ```
 Execute o comando abaixo para instalar o aplicativo no android. (OBS: é necessário que o smartphone esteja conectado ao computador)
 ```
-$ reactive-native run-android
+$ react-native run-android
 ```
 
 

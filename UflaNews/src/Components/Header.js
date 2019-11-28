@@ -20,11 +20,14 @@ export default class Header extends Component {
 
     render() {
         const { user, password } = this.state;
-        const { pesquisar, onChangeText } = this.props;
+        const { pesquisar, onChangeText, openMenu } = this.props;
         if(pesquisar){
             return (
                 <View style={[styles.container, this.props.style]}>
-                    <Image source={require('../Assets/ufla-white.png')} style={[styles.logo, {marginRight: 10}]}></Image>
+                    <TouchableOpacity onPress={openMenu}>
+                        <Image source={require('../Assets/icons/menu.png')} style={[styles.logo, {marginRight: 10}]}></Image>
+                    </TouchableOpacity>
+
                     <CustomTextInput 
                         white={true} 
                         placeholder="Pesquisar" 

@@ -30,10 +30,10 @@ export default class Publicador extends Component {
     // }
 
     render() {
-        const {publicador, style} = this.props;
+        const {publicador, style, goToPublicador} = this.props;
         // alert(boletim);
         return (
-            <View style={[styles.card, style]}>
+            <TouchableOpacity style={[styles.card, style]} onPress={goToPublicador}>
                 <View style={{flexDirection: "row", alignItems: "center"}}>
                     <Image source={{uri: publicador.foto_url}} style={{height: 40, width: 40, resizeMode: "cover", marginRight: 10, borderRadius: 20}}/>
                     <Text>{publicador.nome}</Text>
@@ -43,7 +43,7 @@ export default class Publicador extends Component {
                     <Text>{publicador.num_seguidores}</Text>
                 </View>
 
-            </View>
+            </TouchableOpacity>
         )
     }
 }

@@ -48,7 +48,10 @@ export default class ScrollSessoes extends Component {
         // alert("foi")
     }
 
-    getTextoEncurtado(txt){
+    getTextoEncurtado(txt, icone = ""){
+        if (icone === ""){
+            icone = "https://images.unsplash.com/photo-1544177817-454e1238e05f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+        }
         if(txt.length > 50){
             retorno = [
                 <TouchableOpacity activeOpacity={1} onPress={this.props.goToBoletim}>
@@ -62,7 +65,9 @@ export default class ScrollSessoes extends Component {
         }
         else{
             return(
-                <Text>{txt}</Text>
+                <View>
+                    <Text>{txt}</Text>
+                </View>
             )
         }
     }
@@ -93,6 +98,9 @@ export default class ScrollSessoes extends Component {
                                 </TouchableOpacity>
                             }
                             <View style={{width: this.state.width - (2*ARROW_SIZE)}}>
+                                <View style={{alignItems: 'center'}}>
+                                    <Image source={{uri: "https://images.unsplash.com/photo-1544177817-454e1238e05f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"}} style={{height: 40, width: 40, resizeMode: "cover", marginRight: 10, borderRadius: 20}}/>
+                                </View>
                                 {
                                     this.props.encurtar?
                                     this.getTextoEncurtado(item)

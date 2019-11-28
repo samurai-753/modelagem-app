@@ -13,7 +13,7 @@ const db = {
             "foto_url": "https://4.bp.blogspot.com/-TckS2ehpyDc/VQIthzSQS7I/AAAAAAAAA5w/Xq2pF5Uz3h8/s1600/ocelot%2Bpic%2B2.jpg",
         },
         {
-            "nome": "LabRI",
+            "nome": "CompJR",
             "num_seguidores": 4,
             "id": 2,
             "foto_url": "https://4.bp.blogspot.com/-TckS2ehpyDc/VQIthzSQS7I/AAAAAAAAA5w/Xq2pF5Uz3h8/s1600/ocelot%2Bpic%2B2.jpg",
@@ -165,15 +165,40 @@ const db = {
             "id": 1,
             "publicadorId": 1,
             "likes": 1
+        },
+        {
+            "sessoes": [
+                "A Polícia Federal deflagrou nesta sexta-feira (1º) uma operação com uma empresa grega apontada pelos investigadores como a responsável pela embarcação que derramou o óleo que atinge nove Estados brasileiros desde o fim de agosto.",
+                "O nome da empresa não foi divulgado. Foram cumpridos dois mandados de busca e apreensão na capital fluminense, em sedes de representantes e contatos da companhia grega no Brasil, na operação batizada de Mácula.",
+                "Segundo os investigadores, o derramamento de óleo ocorreu a cerca de 700 km na costa brasileira no fim de julho. Mais específica, um trabalho de geointeligência identificou uma mancha a 733km (395 milhas náuticas) a oeste do Estado da Paraíba.",
+                "De acordo com a Polícia Federal, \"a embarcação, de bandeira grega, atracou (no porto San José) na Venezuela em 15 de julho, permaneceu por três dias, e seguiu rumo a Singapura, pelo oceano Atlântico, vindo a aportar apenas na África do Sul. O derramamento investigado teria ocorrido nesse deslocamento\"."
+            ],
+            "imagem_src": "https://ufla.br/images/banners/congressos-ufla.jpg",
+            "titulo": "Polícia Federal faz operação contra empresa grega acusada do vazamento de óleo no litoral brasileiro",
+            "data": "2019-11-01T11:35:16.577010",
+            "id": 1,
+            "publicadorId": 2,
+            "likes": 1
         }
     ]
 }
 
 
-export const SERVER_URL = "http://192.168.1.163:3000";
+export async function getBoletins(publicadorId = null){
+    if(publicadorId){
+        let boletins = db.boletims;
+        let retorno = [];
+        for(let i=0; i < boletins.length; i++){
+            if(boletins[i].publicadorId == publicadorId){
+                retorno.push(boletins[i]);
+            }
+        }
+        return retorno;
 
-export async function getBoletins(){
-    return db.boletims;
+    }
+    else{
+        return db.boletims;
+    }
 }
 
 export async function getBoletim(id){

@@ -67,21 +67,20 @@ export default class Boletim extends Component {
 
     // const props = this.props;
         render() {
-        const {boletim, style} = this.props;
+        const {boletim, style, goToPublicador} = this.props;
         const {publicador} = this.state;
         // alert(boletim);
         return (
             <View style={[styles.card, style]}>
 
-                <View style={{flexDirection: "row", alignItems: "center", marginBottom: 10}}>
+                <TouchableOpacity onPress={goToPublicador} style={{flexDirection: "row", alignItems: "center", marginBottom: 10}} activeOpacity={1}>
                     <Image source={{uri: publicador.foto_url}} style={{height: 40, width: 40, resizeMode: "cover", marginRight: 10, borderRadius: 20}}/>
                     <Text>{publicador.nome}</Text>
-                </View>
+                </TouchableOpacity>
 
                 <TouchableOpacity activeOpacity={1} onPress={this.props.goToBoletim}>
                     <Text style={styles.titulo}>{boletim.titulo}</Text>
                     <Image source={{uri: boletim.imagem_src}} style={{height: 200, width: "100%", marginRight: 10, resizeMode: "cover", borderRadius: 4, marginBottom: 5}}/>
-
                 </TouchableOpacity>
 
                 <ScrollSessoes sessoes={boletim.sessoes} style={{marginBottom: 5}} encurtar={this.props.encurtar} goToBoletim={this.props.goToBoletim}/>

@@ -21,24 +21,10 @@ export default class LoginScreen extends Component {
         }
     }
 
-    handleLogin = async () => {
-        const {email, password} = this.state
-
-        let res = await Server.login(email)
-        if(res){
-            res.json().then((json)=> {
-                let user = json[0];
-                if(user.senha === password) {
-                    this.props.navigation.navigate("Feed");
-                    console.log('Logado')
-                } else {
-                    throw "";
-                }
-            })
-            .catch((error) => {
-                alert('Email ou senha inválidos');
-            })
-        }
+    handleLogin = () => {
+        const {user, password} = this.state
+        // alert(`Fazendo o login do user ${user} com a senha ${password}`)
+        this.props.navigation.navigate("Feed")
     }
 
     handleSingup = () => {
