@@ -18,7 +18,7 @@ export default class Boletim extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            publicador: {},
+            // publicador: {},
             width: 0,
             page: 0,
         };
@@ -26,14 +26,14 @@ export default class Boletim extends Component {
     }
 
     componentDidMount(){
-        this.getPublicador();
+        // this.getPublicador();
     }
 
-    async getPublicador(){
-        let id = this.props.boletim.publicadorId;
-        let publicador = await Server.getPublicador(id);
-        this.setState({ publicador })
-    }
+    // async getPublicador(){
+    //     let id = this.props.boletim.publicadorId;
+    //     let publicador = await Server.getPublicador(id);
+    //     this.setState({ publicador })
+    // }
 
     onLayout = event => {
         let {width, height} = event.nativeEvent.layout;
@@ -68,22 +68,23 @@ export default class Boletim extends Component {
     // const props = this.props;
         render() {
         const {boletim, style, goToPublicador} = this.props;
-        const {publicador} = this.state;
+        // const {publicador} = this.state;
+        const publicador = boletim.publicador
         // alert(boletim);
         return (
             <View style={[styles.card, style]}>
 
                 <TouchableOpacity onPress={goToPublicador} style={{flexDirection: "row", alignItems: "center", marginBottom: 10}} activeOpacity={1}>
-                    <Image source={{uri: publicador.foto_url}} style={{height: 40, width: 40, resizeMode: "cover", marginRight: 10, borderRadius: 20}}/>
+                    <Image source={{uri: publicador.fotoUrl}} style={{height: 40, width: 40, resizeMode: "cover", marginRight: 10, borderRadius: 20}}/>
                     <Text>{publicador.nome}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity activeOpacity={1} onPress={this.props.goToBoletim}>
                     <Text style={styles.titulo}>{boletim.titulo}</Text>
-                    <Image source={{uri: boletim.imagem_src}} style={{height: 200, width: "100%", marginRight: 10, resizeMode: "cover", borderRadius: 4, marginBottom: 5}}/>
+                    <Image source={{uri: boletim.imagemSrc}} style={{height: 200, width: "100%", marginRight: 10, resizeMode: "cover", borderRadius: 4, marginBottom: 5}}/>
                 </TouchableOpacity>
 
-                <ScrollSessoes sessoes={boletim.sessoes} style={{marginBottom: 5}} encurtar={this.props.encurtar} goToBoletim={this.props.goToBoletim}/>
+                <ScrollSessoes sessaos={boletim.sessaos} style={{marginBottom: 5}} encurtar={this.props.encurtar} goToBoletim={this.props.goToBoletim}/>
 
                 <View style={{borderColor: "rgba(0,0,0,0.3)", borderBottomWidth: 1, width: "100%", marginBottom: 10}} />
 

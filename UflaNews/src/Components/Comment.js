@@ -14,12 +14,13 @@ export default class Comment extends Component {
 
     render() {
         const { comentario } = this.props;
+        let usuario = comentario.usuario
         return (
             <View style={[styles.comment, styles.card]}>
                 <View style={styles.header} >
                     <View style={styles.user}>
-                        <Image source={{uri: comentario.foto_url}} style={styles.logo}/>
-                        <Text style={styles.username}>{comentario.nome}</Text>
+                        <Image source={{uri: usuario.foto_url}} style={styles.logo}/>
+                        <Text style={styles.username}>{usuario.nome}</Text>
                     </View>
 
                     <View style={{flexDirection: "row", alignItems: "center"}}>

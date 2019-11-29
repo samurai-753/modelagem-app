@@ -41,26 +41,26 @@ export default class NewsLetterDetail extends Component {
         this.setState({ boletim })
     }
 
-    async getComentarios(boletimId){
+    async getComentarios(boletimId) {
         let comentarios = await Server.getComentarios(boletimId);
+        console.log("COMENTARIO", comentarios)
         this.setState({ comentarios });
-        // alert(comentarios[0]);
     }
 
 
     render () {
-        const { comentarios } = this.state;
+        const { comentarios, boletim } = this.state;
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView>                    
                     <Header/>
                     <View style={styles.body}>
                         {
-                            this.state.boletim != null &&
+                            boletim != null &&
                             <Boletim 
                                 // style={{marginLeft: 0, marginRight: 0}}
                                 encurtar={false}
-                                boletim={this.state.boletim}
+                                boletim={boletim}
                                 goToBoletim={()=>{}}
                                 goToPublicador={()=>this.props.navigation.navigate("Publisher")}
                             />

@@ -184,59 +184,38 @@ const db = {
 }
 
 
-const SERVER_URL = 'http://192.168.1.33:3000'
+const SERVER_URL = 'http://192.168.0.120:3000'
 
 
 export async function getBoletins(publicadores){
-    console.log('publicadores', publicadores)
-
     let ids = ''
     publicadores.map((x) => ids += `publicadorId=${x}&`)
-    let url = `${SERVER_URL}/boletims?${ids}_sort=data&_order=desc&_embed=sessaos`
+    let url = `${SERVER_URL}/boletims?${ids}_sort=data&_order=desc&_embed=sessaos&_expand=publicador`
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
     // TODO: Colocar os boletins na tela
     let boletins = await res.json()
 
-    return []
-    // if(publicadorId){
-    //     let boletins = db.boletims;
-    //     let retorno = [];
-    //     for(let i=0; i < boletins.length; i++){
-    //         if(boletins[i].publicadorId == publicadorId){
-    //             retorno.push(boletins[i]);
-    //         }
-    //     }
-    //     return retorno;
-
-    // }
-    // else{
-    //     return db.boletims;
-    // }
+    return boletins
 }
 
 export async function getBoletim(id) {
-    let boletins = db.boletims;
-    for(let i=0; i < boletins.length; i++){
-        if(boletins[i].id == id){
-            return boletins[i];
-        }
-    }
+    let url = `${SERVER_URL}/boletims?id=${id}&_sort=data&_order=desc&_embed=sessaos&_embed=comentarios&_expand=publicador`
+    let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
+
+    // TODO: Colocar os boletins na tela
+    let boletins = await res.json()
     return boletins[0];
 }
 
-export async function getComentarios(boletimId){
-    let comentarios = db.comentarios;
-    let retorno = [];
-    for(let i=0; i < comentarios.length; i++){
-        if(comentarios[i].boletimId == boletimId){
-            let publicador =await getPublicador(comentarios[i].publicadorId);
-            comentarios[i].nome = publicador.nome;
-            comentarios[i].foto_url = publicador.foto_url;
-            retorno.push(comentarios[i]);
-        }
-    }
-    return retorno;
+export async function getComentarios(id){
+    let url = `${SERVER_URL}/comentarios?boletimId=${id}&_expand=usuario`
+    console.log("URL", url)
+    let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
+
+    let comentarios = await res.json()
+    console.log("comentario server", comentarios)
+    return comentarios
 }
 
 export async function getPublicador(id){
@@ -258,6 +237,7 @@ export async function login(email, password) {
 
     let json = await res.json()
     let usuario = json[0]
+    console.log(res, url)
     
     if(usuario.senha === password) {
         usuario.senha = ''

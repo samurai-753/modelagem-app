@@ -53,7 +53,8 @@ export default class ScrollSessoes extends Component {
             icone = "https://images.unsplash.com/photo-1544177817-454e1238e05f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
         }
         if(txt.length > 50){
-            retorno = [
+            
+            let retorno = [
                 <TouchableOpacity key={'btn'} activeOpacity={1} onPress={this.props.goToBoletim}>
                     <View>
                         <Text>{txt.slice(0,50)}... <Text style={{color: "#1e88e5", textDecorationLine: "underline"}}>ver mais</Text></Text>
@@ -73,7 +74,7 @@ export default class ScrollSessoes extends Component {
     }
 
     render() {
-        const { sessoes } = this.props;
+        const { sessaos } = this.props;
         return (
             <ScrollView
                 ref={(r)=>{if(r != null) this.scroll = r}}
@@ -86,7 +87,7 @@ export default class ScrollSessoes extends Component {
                 showsHorizontalScrollIndicator={false}
             >
                 {
-                    sessoes.map((item, index)=>
+                    sessaos.map((item, index)=>
                         <View key={"sessao" + index} style={{width: this.state.width, minHeight: 50, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
 
                             {
@@ -103,13 +104,13 @@ export default class ScrollSessoes extends Component {
                                 </View>
                                 {
                                     this.props.encurtar?
-                                    this.getTextoEncurtado(item)
+                                    this.getTextoEncurtado(item.texto)
                                     :
-                                    <Text>{item}</Text>
+                                    <Text>{item.texto}</Text>
                                 }
                             </View>
                             {
-                                index == sessoes.length - 1?
+                                index == sessaos.length - 1?
                                 <Image source={require("../Assets/icons/arrow-head-right.png")} opacity={0.3} style={styles.arrow} />                                
                                 :
                                 <TouchableOpacity style={styles.arrow_button} onPress={this.nextItem}>
