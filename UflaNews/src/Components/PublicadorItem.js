@@ -35,12 +35,12 @@ export default class Publicador extends Component {
         return (
             <TouchableOpacity style={[styles.card, style]} onPress={goToPublicador}>
                 <View style={{flexDirection: "row", alignItems: "center"}}>
-                    <Image source={{uri: publicador.foto_url}} style={{height: 40, width: 40, resizeMode: "cover", marginRight: 10, borderRadius: 20}}/>
+                    <Image source={{uri: publicador.fotoUrl}} style={{height: 40, width: 40, resizeMode: "cover", marginRight: 10, borderRadius: 20}}/>
                     <Text>{publicador.nome}</Text>
                 </View>
                 <View style={{flexDirection: "row", alignItems: "center"}}>
                     <Image source={require("../Assets/icons/followers.png")} style={{width: 20, height: 20, resizeMode: "contain", marginRight: 3}}/>
-                    <Text>{publicador.num_seguidores}</Text>
+                    <Text>{publicador.numSeguidores}</Text>
                 </View>
 
             </TouchableOpacity>

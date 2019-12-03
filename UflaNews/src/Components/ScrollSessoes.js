@@ -7,6 +7,9 @@ import {
     ScrollView,
     TouchableOpacity
 } from 'react-native'
+// import WebView from 'react-native-webview';
+import Markdown from 'react-native-markdown-renderer';
+
 
 const ARROW_SIZE = 30;
 
@@ -52,6 +55,7 @@ export default class ScrollSessoes extends Component {
         if (icone === ""){
             icone = "https://images.unsplash.com/photo-1544177817-454e1238e05f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
         }
+        txt =  txt.replace(/[\*\_]+/g, "")
         if(txt.length > 50){
             
             let retorno = [
@@ -68,6 +72,10 @@ export default class ScrollSessoes extends Component {
             return(
                 <View>
                     <Text>{txt}</Text>
+                    {/* <WebView
+                        source={{html: "<b>" + txt + "</b>"}}
+                        style={{marginTop: 20}}
+                    /> */}
                 </View>
             )
         }
@@ -106,7 +114,14 @@ export default class ScrollSessoes extends Component {
                                     this.props.encurtar?
                                     this.getTextoEncurtado(item.texto)
                                     :
-                                    <Text>{item.texto}</Text>
+                                    // <Text>{item.texto}</Text>
+                                    // <WebView
+                                    //     source={{html: "<p style='font-size: 70px'><b>XOXOTA</b></p>"}}
+                                    //     style={{height: 400}}
+                                    //     scalesPageToFit={false}
+                                    // />
+                                    <Markdown>{item.texto}</Markdown>
+
                                 }
                             </View>
                             {

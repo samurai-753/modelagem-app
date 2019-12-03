@@ -88,6 +88,12 @@ export default class Boletim extends Component {
 
                 <View style={{borderColor: "rgba(0,0,0,0.3)", borderBottomWidth: 1, width: "100%", marginBottom: 10}} />
 
+                {/* <WebView
+                    source={{html: "<p style='font-size: 70px'><b>XOXOTA</b></p>"}}
+                    // style={{height: 400}}
+                    scalesPageToFit={false}
+                /> */}
+
                 <View style={{flexDirection: "row", flex: 1, justifyContent: "space-between", alignItems: "center"}}>
                     <Text>{Helper.formatarData(boletim.data)}</Text>
 

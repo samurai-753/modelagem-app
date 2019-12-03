@@ -24,12 +24,12 @@ export default class Publisher extends Component {
 
         this.state = {
             profile: {
-                'name': 'Comp Júnior',
+                'name': 'ADUFLA',
                 'following' : false,
                 'posts' : [],
                 'followersCount' : 9,
-                'photo_url' : 'http://www.dcc.ufla.br/wp-content/uploads/2013/03/LogoComp.png',
-                'background_photo' : 'https://scontent.fvag6-1.fna.fbcdn.net/v/t1.0-9/18582436_1303641433037411_156218022540687440_n.png?_nc_cat=109&_nc_oc=AQlSV8szqjb5FijCvfFimcKR1ChOm-bDi1cVqTE9rrcydx1b9pTcTZRS8AZdrgLKgro&_nc_ht=scontent.fvag6-1.fna&oh=9e21f6feccfa8c59ddaa3451b6873958&oe=5E572225',
+                'photo_url' : 'http://www.adufla.org.br/site/wp-content/uploads/2015/04/Vetor-ADUFLA-fundo-branco-702x336.jpg',
+                'background_photo' : '',
             },
             boletins: []
 
@@ -37,7 +37,7 @@ export default class Publisher extends Component {
     }
 
     componentDidMount(){
-        this.getBoletins(2);
+        this.getBoletins(1);
     }
 
     async getBoletins(id){

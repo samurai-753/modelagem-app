@@ -184,7 +184,7 @@ const db = {
 }
 
 
-const SERVER_URL = 'http://192.168.0.120:3000'
+const SERVER_URL = 'https://floating-badlands-50851.herokuapp.com'
 
 
 export async function getBoletins(publicadores){
@@ -219,16 +219,19 @@ export async function getComentarios(id){
 }
 
 export async function getPublicador(id){
-    for(let i=0; i < db.publicadors.length; i++){
-        if(db.publicadors[i].id == id){
-            return db.publicadors[i];
-        }
-    }
-    return db.publicadors[0];
+    let url = `${SERVER_URL}/publicadors?id=${id}`
+    let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
+
+    let publicadores = await res.json()
+    return publicadores[0]
 }
 
 export async function getPublicadores(){
-    return db.publicadors;
+    let url = `${SERVER_URL}/publicadors`
+    let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
+
+    let publicadores = await res.json()
+    return publicadores
 }
 
 export async function login(email, password) {
