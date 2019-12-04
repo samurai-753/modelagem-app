@@ -47,9 +47,12 @@ export default class ProfileInfoEdit extends Component {
 
 
 const styles = StyleSheet.create({
+    container:{
+        paddingTop: 15
+    },
     headerText : {
         fontSize: 20,
-        margin: 10,
+        // margin: 10,
         color: '#4C4C4C'
     },
     confirmButton: {
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     fieldsContainer: {
-        marginLeft: 15,
-        marginRight: 15
+        // marginLeft: 15,
+        // marginRight: 15
     }
 })

@@ -11,9 +11,10 @@ import CustomTextInput from '../Components/CustomTextInput';
 import ProfileHeader from './ProfileHeader';
 import FollowingInfo from './FollowingInfo';
 import ProfileInfoEdit from './ProfileInfoEdit';
+import { connect } from "react-redux";
 
 
-export default class Menu extends Component {
+export class Menu extends Component {
     constructor(props) {
         super(props)
 
@@ -29,10 +30,13 @@ export default class Menu extends Component {
         }
     }
 
+    componentDidMount(){
+        console.log("PERFIL", this.props.profile)
+    }
+
     render() {
         // const { user, password } = this.state;
-        const { navigation } = this.props;
-        const { profile } = this.state;
+        const { navigation, profile } = this.props;
         return (
             <View style={{flex: 1, backgroundColor: "#fff"}}>
                 <ProfileHeader profile={profile}/>
@@ -43,7 +47,7 @@ export default class Menu extends Component {
                     </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate("Profile")} style={{height: 50, alignItems: "center", justifyContent: "center", borderBottomColor: "#000", borderBottomWidth: 1}} >
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate("Login")} style={{height: 50, alignItems: "center", justifyContent: "center", borderBottomColor: "#000", borderBottomWidth: 1}} >
                     <Text style={{}}>
                         Sair
                     </Text>
@@ -73,3 +77,11 @@ const styles = StyleSheet.create({
         // marginBottom: 50
     },
 })
+
+
+
+function mapStateToProps(state, ownProps) {
+    return {profile: state.session.profile};
+}
+
+export default connect(mapStateToProps, null)(Menu);

@@ -17,46 +17,60 @@ import PublishersFollowersInfo from '../Components/PublisherFollowersInfo'
 
 import * as Server from "../Server";
 import { thisExpression } from '@babel/types';
+import Loading from '../Components/Loading';
 
 export default class Publisher extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            profile: {
-                'name': 'ADUFLA',
-                'following' : false,
-                'posts' : [],
-                'followersCount' : 9,
-                'photo_url' : 'http://www.adufla.org.br/site/wp-content/uploads/2015/04/Vetor-ADUFLA-fundo-branco-702x336.jpg',
-                'background_photo' : '',
-            },
-            boletins: []
+            profile: null,
+            boletins: [],
+            loading: true,
 
         }
     }
 
     componentDidMount(){
-        this.getBoletins(1);
+        let id = this.props.navigation.getParam("id", null)
+        this.getPublicador(id);
+        this.getBoletins(id);
     }
 
     async getBoletins(id){
-        let boletins = await Server.getBoletins(id);
+        let boletins = await Server.getBoletins([id]);
         this.setState({ boletins });
+    }
+
+    async getPublicador(id){
+        let profile = await Server.getPublicador([id]);
+        this.setState({ profile, loading: false });
+        
     }
 
 
     render(){
-        const {profile, boletins} = this.state
+        const {profile, boletins, loading} = this.state
+        if(loading){
+            return (
+                <Loading show={loading} />
+            );
+        }
         return (
             <ScrollView>
+                <Loading show={loading} />
                 <Header 
                     pesquisar={false} 
                     onChangeText={(txt)=>this.filtrar(txt)} 
                     value={this.state.busca}
                 />
-                <PublisherHeader profile={profile}/>
-                <PublishersFollowersInfo profile={profile}/>
+                {
+                    profile &&
+                    <View>
+                        <PublisherHeader profile={profile}/>
+                        <PublishersFollowersInfo profile={profile}/>
+                    </View>
+                }
                 {
                     boletins.map((boletim, index)=>
                         <Boletim 

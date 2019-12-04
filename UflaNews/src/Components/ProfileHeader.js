@@ -15,13 +15,12 @@ export default class ProfileHeader extends Component {
 
 
     render(){
-        const {simple_name, email, photo_url, background_photo,} = this.props.profile
-        console.log(photo_url)
+        const {nome, email, foto_url, } = this.props.profile
         return (
-            <ImageBackground source={{uri: background_photo}} style={styles.backgroundImage}>
-                <Image source={{uri: photo_url}} style={styles.profilePhoto} />
+            <ImageBackground source={require("../Assets/background.jpg")} style={styles.backgroundImage}>
+                <Image source={{uri: foto_url}} style={styles.profilePhoto} />
                 <View style={styles.textContainer}>
-                    <Text style={styles.profileName}>{simple_name}</Text>
+                    <Text style={styles.profileName}>{nome}</Text>
                     <Text style={styles.profileEmail}>{email}</Text>
                 </View>
             </ImageBackground>

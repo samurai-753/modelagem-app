@@ -15,13 +15,15 @@ export default class PublisherHeader extends Component {
 
 
     render(){
-        const {name, photo_url, background_photo} = this.props.profile
-        console.log(photo_url)
+        const {nome, fotoUrl, background_photo} = this.props.profile
         return (
-            <ImageBackground source={{uri: background_photo}} style={styles.backgroundImage}>
-                <Image source={{uri: photo_url}} style={styles.profilePhoto} />
+            <ImageBackground source={require("../Assets/background.jpg")} style={styles.backgroundImage}>
+                <View style={styles.imageContainer}>
+                    <Image source={{uri: fotoUrl}} style={styles.profilePhoto} />
+
+                </View>
                 <View style={styles.textContainer}>
-                    <Text style={styles.profileName}>{name}</Text>
+                    <Text style={styles.profileName}>{nome}</Text>
                 </View>
             </ImageBackground>
 
@@ -34,24 +36,29 @@ const styles = StyleSheet.create({
     backgroundImage: {
         width: '100%', 
         height: 230,
-        borderColor: '#000',
-        borderWidth: 1
+        resizeMode: "cover"
     },
     profilePhoto: {
         alignSelf: 'center',
         height: 120,
         width: 120,
-        borderRadius: 100,
-        borderColor: '#fff',
-        borderWidth: 2,
-        marginTop: 35
+        resizeMode: "contain",
+        // borderColor: '#fff',
+        // borderWidth: 2,
+        // backgroundColor: "#fff"
+    },
+    imageContainer:{
+        marginTop: 35,
+        alignSelf:"center",
+        backgroundColor: "#fff",
+        borderRadius: 10
     },
     textContainer: {
         alignSelf: 'center',
     },
     profileName: {
-        fontSize: 25,
-        fontWeight: '900',
+        fontSize: 30,
+        fontWeight: 'bold',
         color: 'white',
         textAlign: 'center'
     },

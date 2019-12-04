@@ -13,7 +13,11 @@ import Feed from './src/Views/Feed';
 
 import Listagem from './src/Views/Listagem'
 
-// export default App;
+import { Provider } from 'react-redux';
+import Store from "./src/store";
+import React, {Component} from 'react';
+
+const store = Store();
 
 
 const AppNavigator = createStackNavigator(
@@ -34,4 +38,14 @@ const AppNavigator = createStackNavigator(
 
 );
 
-export default createAppContainer(AppNavigator);
+let Navigation = createAppContainer(AppNavigator);
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
+    );
+  }
+}

@@ -196,6 +196,7 @@ export async function getBoletins(publicadores){
     // TODO: Colocar os boletins na tela
     let boletins = await res.json()
 
+    console.log("SERVER boletins", boletins);
     return boletins
 }
 
@@ -204,17 +205,21 @@ export async function getBoletim(id) {
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
     // TODO: Colocar os boletins na tela
-    let boletins = await res.json()
-    return boletins[0];
+    let boletins = await res.json();
+    if(boletins.length > 0){
+        return boletins[0];
+    }
+    return null;
 }
 
 export async function getComentarios(id){
     let url = `${SERVER_URL}/comentarios?boletimId=${id}&_expand=usuario`
-    console.log("URL", url)
+    console.log("SERVER URL", url)
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
     let comentarios = await res.json()
-    console.log("comentario server", comentarios)
+    console.log("SERVER comentario server", comentarios)
+    console.log("SERVER comentarios", comentarios);
     return comentarios
 }
 
@@ -223,15 +228,23 @@ export async function getPublicador(id){
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
     let publicadores = await res.json()
+    console.log("SERVER publicadores[0]", publicadores[0]);
     return publicadores[0]
 }
 
-export async function getPublicadores(){
+export async function getPublicadores(publicadores){
     let url = `${SERVER_URL}/publicadors`
+    if(publicadores){
+        let ids = ''
+        publicadores.map((x) => ids += `id=${x.id}&`)
+        url = url + "?" + ids;
+    }
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
-    let publicadores = await res.json()
-    return publicadores
+    let retorno = await res.json()
+    console.log("url", url);
+    console.log("SERVER retorno", retorno);
+    return retorno
 }
 
 export async function login(email, password) {
@@ -240,11 +253,12 @@ export async function login(email, password) {
 
     let json = await res.json()
     let usuario = json[0]
-    console.log(res, url)
+    console.log("SERVER login", usuario)
     
     if(usuario.senha === password) {
         usuario.senha = ''
         usuario.id = ''
+        console.log("SERVER usuario", usuario);
         return usuario
     }
 
@@ -264,5 +278,6 @@ export async function cadastrar(usuario_dados) {
     );
 
     let usuario = await res.json()
+    console.log("SERVER usuario", usuario);
     return usuario
 }

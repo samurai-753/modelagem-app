@@ -12,11 +12,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default class PublishersFollowersInfo extends Component {
     constructor(props) {
         super(props)
-
-        this.state = {
-            followersCount: this.props.profile.followersCount,
-            following : this.props.profile.following
-        }
     }
 
     handleFollowing = () => {
@@ -26,10 +21,10 @@ export default class PublishersFollowersInfo extends Component {
 
 
     render(){
-        const {followersCount, following} = this.state
+        const {numSeguidores, following} = this.props.profile
         return (
             <View style={styles.followersContainer}>
-                <Text style={styles.followingCount}> Seguidores: {followersCount} </Text>
+                <Text style={styles.followingCount}>Seguidores: {numSeguidores} </Text>
                 <TouchableOpacity style={following ? styles.unfollowButton : styles.followButton} onPress={this.handleFollowing}>
                     <Text style={styles.listButtonText}> {following ? "Deixar de seguir" : "Seguir"} </Text>
                 </TouchableOpacity>
@@ -49,12 +44,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#a1a1a1',
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
+        marginBottom: 15
     },
     followingCount: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '800',
-        color: '#5E98DD',
+        color: '#000',
     },
     unfollowButton: {
         alignItems: 'center',
@@ -68,9 +64,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: 40,
-        width: 150,
+        paddingLeft: 20,
+        paddingRight: 20,
         borderRadius: 8,
-        backgroundColor: '#5E98DD'
+        backgroundColor: '#00B6E9'
     },
     listButtonText: {
         fontSize: 18,

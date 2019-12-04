@@ -107,9 +107,12 @@ export default class ScrollSessoes extends Component {
                                 </TouchableOpacity>
                             }
                             <View style={{width: this.state.width - (2*ARROW_SIZE)}}>
-                                <View style={{alignItems: 'center'}}>
-                                    <Image source={{uri: "https://images.unsplash.com/photo-1544177817-454e1238e05f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"}} style={{height: 40, width: 40, resizeMode: "cover", marginRight: 10, borderRadius: 20}}/>
-                                </View>
+                                {
+                                    item.imagemSrc != "" &&
+                                    <View style={{alignItems: 'center'}}>
+                                        <Image source={{uri: item.imagemSrc}} style={{height: 50, width: 50, resizeMode: "contain"}}/>
+                                    </View>
+                                }
                                 {
                                     this.props.encurtar?
                                     this.getTextoEncurtado(item.texto)

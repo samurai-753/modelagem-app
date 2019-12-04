@@ -19,7 +19,7 @@ export default class FollowingInfo extends Component {
         const {profile, handlePress} = this.props
         return (
             <View style={styles.followersContainer}>
-                <Text style={styles.followingCount}> Seguindo: {profile.followingCount} </Text>
+                <Text style={styles.followingCount}>Seguindo: {profile.seguidores.length} </Text>
                 <TouchableOpacity style={styles.listButton} onPress={handlePress}>
                     <Text style={styles.listButtonText}> Listar </Text>
                 </TouchableOpacity>
@@ -38,13 +38,13 @@ const styles = StyleSheet.create({
         height: 60,
         borderBottomWidth: 1,
         borderBottomColor: '#a1a1a1',
-        marginLeft: 10,
-        marginRight: 10
+        // marginLeft: 10,
+        // marginRight: 10
     },
     followingCount: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '800',
-        color: '#5E98DD',
+        color: '#000',
     },
     listButton: {
         alignItems: 'center',
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         height: 40,
         width: 100,
         borderRadius: 8,
-        backgroundColor: '#5E98DD'
+        backgroundColor: '#00B6E9'
     },
     listButtonText: {
         fontSize: 18,

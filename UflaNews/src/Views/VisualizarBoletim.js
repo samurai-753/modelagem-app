@@ -14,13 +14,15 @@ import { ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
 
 import * as Server from "../Server";
 import Boletim from '../Components/Boletim';
+import Loading from '../Components/Loading';
 
-export default class NewsLetterDetail extends Component {
+export default class VisualizarBoletim extends Component {
     constructor(props) {
         super(props)
         this.state = {
             boletim: null,
             comentarios: [],
+            loading: true,
         };
     }
 
@@ -38,7 +40,8 @@ export default class NewsLetterDetail extends Component {
     async getBoletim(id){
         let boletim = await Server.getBoletim(id);
         // alert(boletim.titulo)
-        this.setState({ boletim })
+        this.setState({ boletim, loading: false })
+    
     }
 
     async getComentarios(boletimId) {
@@ -49,9 +52,10 @@ export default class NewsLetterDetail extends Component {
 
 
     render () {
-        const { comentarios, boletim } = this.state;
+        const { comentarios, boletim, loading } = this.state;
         return (
             <SafeAreaView style={styles.container}>
+                <Loading show={loading} />
                 <ScrollView>                    
                     <Header/>
                     <View style={styles.body}>
@@ -62,6 +66,8 @@ export default class NewsLetterDetail extends Component {
                                 encurtar={false}
                                 boletim={boletim}
                                 goToBoletim={()=>{}}
+                                // TODO
+                                // goToPublicador={()=>this.props.navigation.navigate("Publisher"), {id: boletim.publicador.id}}
                                 goToPublicador={()=>this.props.navigation.navigate("Publisher")}
                             />
                         }

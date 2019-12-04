@@ -66,7 +66,7 @@ export default class Boletim extends Component {
 
 
     // const props = this.props;
-        render() {
+    render() {
         const {boletim, style, goToPublicador} = this.props;
         // const {publicador} = this.state;
         const publicador = boletim.publicador

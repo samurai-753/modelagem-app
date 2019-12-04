@@ -9,27 +9,41 @@ import {
 
 import CustomTextInput from '../Components/CustomTextInput';
 import * as Server from '../Server';
+import Loading from '../Components/Loading';
+import * as sessionActions from "../Actions/sessionActions";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
 
-export default class LoginScreen extends Component {
+export class LoginScreen extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             email: 'k4t0mono@samurai.io',
-            password: 'birb'
+            password: 'birb',
+            loading: false
         }
     }
 
     handleLogin = async () => {
+        this.setState({loading: true})
         const {email, password} = this.state
 
+
+
+
         Server.login(email, password).then((usuario) => {
+            this.setState({loading: false})
+
             // TODO: Setar coisas do usuario
-            console.log('&*&*&*&', usuario)
+            this.props.actions.login(usuario)
+
             this.props.navigation.navigate("Feed", { usuario });
         })
         .catch((err) => {
+            this.setState({loading: false})
+
             alert(err);
         })
     }
@@ -39,16 +53,16 @@ export default class LoginScreen extends Component {
     }
 
     render() {
-        const { email, password } = this.state;
+        const { email, password, loading } = this.state;
         return (
             <View style={styles.container}>
+                <Loading show={loading} />
                 <View style={{height: 10}}/>
                 <View style={styles.inputsContainer}>
                     <Image source={require('../Assets/ufla-white.png')} style={styles.logo}></Image>
                     <CustomTextInput white={true} placeholder="Email" value={email} onChangeText={email => this.setState({email})}/>
                     <CustomTextInput white={true} placeholder="Senha" value={password} onChangeText={password => this.setState({password})} secureTextEntry={true}/>
                     <TouchableOpacity style={styles.loginButtonContainer} onPress={this.handleLogin}>
-                        {/* <Image source={require('../Assets/right-arrow.png')} style={styles.rightArrow}></Image> */}
                         <Text style={styles.txtButton}>ENTRAR</Text>
                     </TouchableOpacity>
                 </View>
@@ -108,3 +122,19 @@ const styles = StyleSheet.create({
         color: "#00B6E9"
     }
 })
+
+
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(sessionActions, dispatch)
+    };
+}
+
+
+
+function mapStateToProps(state, ownProps) {
+    return {user: state.session};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

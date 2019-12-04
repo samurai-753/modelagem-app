@@ -17,6 +17,7 @@ import Publicador from '../Components/PublicadorItem';
 
 import { Drawer } from 'native-base';
 import Menu from '../Components/Menu';
+import Loading from '../Components/Loading';
 
 export default class LoginScreen extends Component {
     constructor(props) {
@@ -28,6 +29,7 @@ export default class LoginScreen extends Component {
             publicadores: [],
             publicadoresFiltrados: [],
             busca: "",
+            loading: true
         }
 
     }
@@ -42,7 +44,7 @@ export default class LoginScreen extends Component {
 
     async getBoletins(publicadores){
         let boletins = await Server.getBoletins(publicadores);
-        this.setState({ boletins })
+        this.setState({ boletins, loading: false })
     }
 
     async getPublicadores(){
@@ -68,7 +70,7 @@ export default class LoginScreen extends Component {
     }
 
     render() {
-        const { busca, boletins, boletinsFiltrados, publicadoresFiltrados } = this.state;
+        const { busca, boletins, boletinsFiltrados, publicadoresFiltrados, loading } = this.state;
         return (
             <Drawer 
                 ref={(ref) => { this.drawer = ref}} 
@@ -80,6 +82,7 @@ export default class LoginScreen extends Component {
                 onClose={() => {}} 
             >
             <View style={styles.container}>
+                <Loading show={loading} />
                 <ScrollView>
                     <Header 
                         style={{marginBottom: 10}} 
@@ -97,7 +100,8 @@ export default class LoginScreen extends Component {
                                 boletim={boletim}
                                 encurtar={true}
                                 goToBoletim={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.id})}
-                                goToPublicador={()=>this.props.navigation.navigate("Publisher")}
+                                // goToPublicador={()=>{console.log("TEYTEY")}}
+                                goToPublicador={()=>this.props.navigation.navigate("Publisher", {id: boletim.publicador.id})}
                             />
                         )
                     }
@@ -109,7 +113,7 @@ export default class LoginScreen extends Component {
                             <Text style={styles.tituloLista}>Publicadores:</Text>
                             {
                                 publicadoresFiltrados.map((publicador, index)=>
-                                    <Publicador publicador={publicador} goToPublicador={()=>this.props.navigation.navigate("Publisher")}/>
+                                    <Publicador publicador={publicador} goToPublicador={()=>this.props.navigation.navigate("Publisher", {id: publicador.id})}/>
                                 )
                             }
                         </View>
@@ -126,35 +130,13 @@ export default class LoginScreen extends Component {
                                         boletim={boletim}
                                         encurtar={true}
                                         goToBoletim={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.id})}
-                                        goToPublicador={()=>this.props.navigation.navigate("Publisher")}
+                                        goToPublicador={()=>this.props.navigation.navigate("Publisher", {id: boletim.publicador.id})}
                                     />
                                 )
                             }
                         </View>
                     }
                 </ScrollView>
-                {/* 
-                <FlatList 
-                    ListHeaderComponent={
-                        <Header 
-                            style={{marginBottom: 20}} 
-                            pesquisar={true} 
-                            onChangeText={(txt)=>this.filtrar(txt)} 
-                            value={this.state.busca}
-                        />
-                    }
-                    data={busca == ""? boletins : boletinsFiltrados}
-                    keyboardShouldPersistTaps="always"
-                    renderItem={(boletim)=> 
-                        <Boletim 
-                            style={{marginLeft: 20, marginRight: 20}}
-                            boletim={boletim.item}
-                            encurtar={true}
-                            goToBoletim={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.item.id})}
-                        />
-                    }
-                /> 
-                */}
             </View>
             </Drawer> 
         )
