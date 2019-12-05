@@ -13,6 +13,7 @@ import ProfileInfoEdit from '../Components/ProfileInfoEdit'
 import Header from '../Components/Header';
 
 import { connect } from "react-redux";
+import Loading from '../Components/Loading';
 
 
 export class Profile extends Component {
@@ -20,14 +21,19 @@ export class Profile extends Component {
         super(props)
 
         this.state = {
-            profile: {
-            }
+            loading: false
         }
     }
 
 
     render(){
-        const {profile} = this.props
+        const {profile} = this.props;
+        const {loading} = this.state;
+        if(loading){
+            return (
+                <Loading show={loading} />
+            );
+        }
         return (
             <ScrollView>
                 <Header/>
@@ -35,7 +41,7 @@ export class Profile extends Component {
                     <ProfileHeader profile={profile}/>
                     <View style={{marginLeft: 15, marginRight: 15}}>
                         <FollowingInfo profile={profile} handlePress={() => this.props.navigation.navigate("Listagem")}/>
-                        <ProfileInfoEdit profile={profile}/>
+                        <ProfileInfoEdit toggleLoading={(load)=>this.setState({ loading: load})} profile={profile}/>
                     </View>
                 </View>
             </ScrollView>

@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
     backgroundImage: {
         width: '100%', 
         height: 230,
-        borderColor: '#000',
-        borderWidth: 1
+        // borderColor: '#000',
+        // borderWidth: 1
     },
     profilePhoto: {
         alignSelf: 'center',

@@ -14,12 +14,14 @@ import Publicador from '../Components/PublicadorItem'
 import { connect } from "react-redux";
 
 import * as Server from "../Server";
+import Loading from '../Components/Loading';
 
 export class Listagem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            publicadores: []
+            publicadores: [],
+            loading: true
         };
     }
 
@@ -35,7 +37,12 @@ export class Listagem extends Component {
     }
 
     render(){
-        const {publicadores} = this.state
+        const {publicadores, loading} = this.state
+        if(loading){
+            return (
+                <Loading show={loading} />
+            );
+        }
         return (
             <ScrollView>
                 <Header 
@@ -44,6 +51,7 @@ export class Listagem extends Component {
                     // onChangeText={(txt)=>this.filtrar(txt)} 
                     // value={this.state.busca}
                 />
+
                 <View style={{paddingRight: 15, paddingLeft: 15}}>
 
                 {

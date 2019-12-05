@@ -1,189 +1,3 @@
-const db = {
-    "publicadors": [
-        {
-            "nome": "DCC",
-            "num_seguidores": 10,
-            "id": 0,
-            "foto_url": "https://live.staticflickr.com/3018/2421030835_a4f06cf970_b.jpg",
-        },
-        {
-            "nome": "LOOP",
-            "num_seguidores": 7,
-            "id": 1,
-            "foto_url": "https://4.bp.blogspot.com/-TckS2ehpyDc/VQIthzSQS7I/AAAAAAAAA5w/Xq2pF5Uz3h8/s1600/ocelot%2Bpic%2B2.jpg",
-        },
-        {
-            "nome": "CompJR",
-            "num_seguidores": 4,
-            "id": 2,
-            "foto_url": "https://4.bp.blogspot.com/-TckS2ehpyDc/VQIthzSQS7I/AAAAAAAAA5w/Xq2pF5Uz3h8/s1600/ocelot%2Bpic%2B2.jpg",
-        }
-    ],
-    "seguidores": [
-        {
-            "id": 0,
-            "usuarioId": 0,
-            "publicadorId": 0
-        },
-        {
-            "id": 1,
-            "usuarioId": 0,
-            "publicadorId": 1
-        },
-        {
-            "id": 2,
-            "usuarioId": 0,
-            "publicadorId": 2
-        },
-        {
-            "id": 3,
-            "usuarioId": 1,
-            "publicadorId": 0
-        },
-        {
-            "id": 4,
-            "usuarioId": 1,
-            "publicadorId": 1
-        },
-        {
-            "id": 5,
-            "usuarioId": 2,
-            "publicadorId": 0
-        },
-        {
-            "id": 6,
-            "usuarioId": 2,
-            "publicadorId": 2
-        },
-        {
-            "id": 7,
-            "usuarioId": 3,
-            "publicadorId": 0
-        },
-        {
-            "id": 8,
-            "usuarioId": 3,
-            "publicadorId": 1
-        },
-        {
-            "id": 9,
-            "usuarioId": 3,
-            "publicadorId": 2
-        }
-    ],
-    "comentarios": [
-        {
-            "comentario": "Muito legal!",
-            "boletimId": 0,
-            "data": "2019-11-01T11:35:16.834893",
-            "id": 0,
-            "usuarioId": 1
-        },
-        {
-            "comentario": "Muito legal!",
-            "boletimId": 1,
-            "data": "2019-11-01T11:35:16.834893",
-            "id": 0,
-            "usuarioId": 1
-        }
-    ],
-    "usuarios": [
-        {
-            "nome": "KatoMono",
-            "foto_url": "https://4.bp.blogspot.com/-TckS2ehpyDc/VQIthzSQS7I/AAAAAAAAA5w/Xq2pF5Uz3h8/s1600/ocelot%2Bpic%2B2.jpg",
-            "email": "k4t0mono@samurai.io",
-            "id": 0,
-            "senha": "birb"
-        },
-        {
-            "nome": "Dudei",
-            "foto_url": "https://media.licdn.com/dms/image/C4E03AQFApzGsMuTm0g/profile-displayphoto-shrink_200_200/0?e=1577923200&v=beta&t=0tpD39UUri1j71hapEVzkw1AcBxpA_BShfmdQ7l5XrI",
-            "email": "dudei@samurai.io",
-            "id": 1,
-            "senha": "123"
-        },
-        {
-            "nome": "Thuza",
-            "foto_url": "https://media.licdn.com/dms/image/C4D03AQFD2Dj4vkh4CA/profile-displayphoto-shrink_200_200/0?e=1577923200&v=beta&t=BmkwRs6xbqrx0gvWc4kFvOjfBnbehFeRh2VU-xIRBCk",
-            "email": "thuza@samurai.io",
-            "id": 2,
-            "senha": "vim"
-        },
-        {
-            "nome": "Ribolive",
-            "foto_url": "https://media.licdn.com/dms/image/C4E03AQE8AfuIcYZCGA/profile-displayphoto-shrink_200_200/0?e=1577923200&v=beta&t=Nz-JReE75u6AbORXwyEqaWG5KUaoa8qVLW_RAZzLCUY",
-            "email": "ribolive@samura.io",
-            "id": 3,
-            "senha": "asd"
-        }
-    ],
-    "likes": [
-        {
-            "boletimId": 0,
-            "id": 0,
-            "usuarioId": 0
-        },
-        {
-            "boletimId": 0,
-            "id": 1,
-            "usuarioId": 1
-        },
-        {
-            "boletimId": 0,
-            "id": 2,
-            "usuarioId": 2
-        },
-        {
-            "boletimId": 1,
-            "id": 3,
-            "usuarioId": 3
-        }
-    ],
-    "boletims": [
-        {
-            "sessoes": [
-                "1",
-                "aaaa"
-            ],
-            "imagem_src": "https://ufla.br/images/banners/congressos-ufla.jpg",
-            "titulo": "Lorem Amet Aline",
-            "data": "2019-11-01T11:35:16.576988",
-            "id": 0,
-            "publicadorId": 0,
-            "likes": 3
-        },
-        {
-            "sessoes": [
-                "A Polícia Federal deflagrou nesta sexta-feira (1º) uma operação com uma empresa grega apontada pelos investigadores como a responsável pela embarcação que derramou o óleo que atinge nove Estados brasileiros desde o fim de agosto.",
-                "O nome da empresa não foi divulgado. Foram cumpridos dois mandados de busca e apreensão na capital fluminense, em sedes de representantes e contatos da companhia grega no Brasil, na operação batizada de Mácula.",
-                "Segundo os investigadores, o derramamento de óleo ocorreu a cerca de 700 km na costa brasileira no fim de julho. Mais específica, um trabalho de geointeligência identificou uma mancha a 733km (395 milhas náuticas) a oeste do Estado da Paraíba.",
-                "De acordo com a Polícia Federal, \"a embarcação, de bandeira grega, atracou (no porto San José) na Venezuela em 15 de julho, permaneceu por três dias, e seguiu rumo a Singapura, pelo oceano Atlântico, vindo a aportar apenas na África do Sul. O derramamento investigado teria ocorrido nesse deslocamento\"."
-            ],
-            "imagem_src": "https://ufla.br/images/banners/congressos-ufla.jpg",
-            "titulo": "Polícia Federal faz operação contra empresa grega acusada do vazamento de óleo no litoral brasileiro",
-            "data": "2019-11-01T11:35:16.577010",
-            "id": 1,
-            "publicadorId": 1,
-            "likes": 1
-        },
-        {
-            "sessoes": [
-                "A Polícia Federal deflagrou nesta sexta-feira (1º) uma operação com uma empresa grega apontada pelos investigadores como a responsável pela embarcação que derramou o óleo que atinge nove Estados brasileiros desde o fim de agosto.",
-                "O nome da empresa não foi divulgado. Foram cumpridos dois mandados de busca e apreensão na capital fluminense, em sedes de representantes e contatos da companhia grega no Brasil, na operação batizada de Mácula.",
-                "Segundo os investigadores, o derramamento de óleo ocorreu a cerca de 700 km na costa brasileira no fim de julho. Mais específica, um trabalho de geointeligência identificou uma mancha a 733km (395 milhas náuticas) a oeste do Estado da Paraíba.",
-                "De acordo com a Polícia Federal, \"a embarcação, de bandeira grega, atracou (no porto San José) na Venezuela em 15 de julho, permaneceu por três dias, e seguiu rumo a Singapura, pelo oceano Atlântico, vindo a aportar apenas na África do Sul. O derramamento investigado teria ocorrido nesse deslocamento\"."
-            ],
-            "imagem_src": "https://ufla.br/images/banners/congressos-ufla.jpg",
-            "titulo": "Polícia Federal faz operação contra empresa grega acusada do vazamento de óleo no litoral brasileiro",
-            "data": "2019-11-01T11:35:16.577010",
-            "id": 1,
-            "publicadorId": 2,
-            "likes": 1
-        }
-    ]
-}
-
-
 const SERVER_URL = 'https://floating-badlands-50851.herokuapp.com'
 
 
@@ -196,7 +10,7 @@ export async function getBoletins(publicadores){
     // TODO: Colocar os boletins na tela
     let boletins = await res.json()
 
-    console.log("SERVER boletins", boletins);
+    // console.log("SERVER boletins", boletins);
     return boletins
 }
 
@@ -214,12 +28,12 @@ export async function getBoletim(id) {
 
 export async function getComentarios(id){
     let url = `${SERVER_URL}/comentarios?boletimId=${id}&_expand=usuario`
-    console.log("SERVER URL", url)
+    // console.log("SERVER URL", url)
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
     let comentarios = await res.json()
-    console.log("SERVER comentario server", comentarios)
-    console.log("SERVER comentarios", comentarios);
+    // console.log("SERVER comentario server", comentarios)
+    // console.log("SERVER comentarios", comentarios);
     return comentarios
 }
 
@@ -228,7 +42,7 @@ export async function getPublicador(id){
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
     let publicadores = await res.json()
-    console.log("SERVER publicadores[0]", publicadores[0]);
+    // console.log("SERVER publicadores[0]", publicadores[0]);
     return publicadores[0]
 }
 
@@ -242,8 +56,8 @@ export async function getPublicadores(publicadores){
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
     let retorno = await res.json()
-    console.log("url", url);
-    console.log("SERVER retorno", retorno);
+    // console.log("url", url);
+    // console.log("SERVER retorno", retorno);
     return retorno
 }
 
@@ -253,12 +67,10 @@ export async function login(email, password) {
 
     let json = await res.json()
     let usuario = json[0]
-    console.log("SERVER login", usuario)
+    // console.log("SERVER login", usuario)
     
     if(usuario.senha === password) {
-        usuario.senha = ''
-        usuario.id = ''
-        console.log("SERVER usuario", usuario);
+        // console.log("SERVER usuario", usuario);
         return usuario
     }
 
@@ -278,6 +90,171 @@ export async function cadastrar(usuario_dados) {
     );
 
     let usuario = await res.json()
-    console.log("SERVER usuario", usuario);
+    // console.log("SERVER usuario", usuario);
     return usuario
+}
+
+export async function alterarPerfil(usuario_dados) {
+    let url = `${SERVER_URL}/usuarios/${usuario_dados.id}`
+    let res = await fetch(
+        url,
+        {
+            method: 'PUT',
+            headers: { "cache-control": "no-cache", 'Content-Type': 'application/json' },
+            body: JSON.stringify(usuario_dados)
+        }
+    );
+
+    let usuario = await res.json()
+    // console.log("SERVER usuario", usuario);
+    return usuario
+}
+
+export async function postarComentario(usuario_id, boletim_id, txt_comentario){
+    let date = new Date();
+    let comentario =  {
+        usuarioId: usuario_id, 
+        boletimId: boletim_id, 
+        comentario: txt_comentario,
+        data: date.toISOString()
+    };
+    let url = `${SERVER_URL}/comentarios`
+    let res = await fetch(
+        url,
+        {
+            method: 'POST',
+            headers: { "cache-control": "no-cache", 'Content-Type': 'application/json' },
+            body: JSON.stringify(comentario)
+        }
+    );
+
+    let retorno = await res.json()
+    // console.log("SERVER comentario", retorno);
+    return retorno
+}
+
+export async function excluirComentario(comentarioId){
+    let url = `${SERVER_URL}/comentarios/${comentarioId}`
+    let res = await fetch(
+        url,
+        {
+            method: 'DELETE',
+            headers: { "cache-control": "no-cache", 'Content-Type': 'application/json' },
+            // body: JSON.stringify(like)
+        }
+    );
+
+    let retorno = await res.json()
+    // console.log("SERVER like", retorno);
+    return retorno
+}
+
+export async function getLike(boletim_id, usuario_id){
+
+    let url = `${SERVER_URL}/likes?boletimId=${boletim_id}`;
+    if(usuario_id != undefined){
+        url += `&usuarioId=${usuario_id}`;
+    }
+    let res = await fetch(
+        url,
+        {
+            method: 'GET',
+            headers: { "cache-control": "no-cache", 'Content-Type': 'application/json' },
+        }
+    );
+    let retorno = await res.json()
+    // console.log("URL LIKE", url);
+    // console.log("SERVER like", retorno);
+    return retorno
+}
+
+export async function darLike(boletimId, usuarioId){
+    let like =  {
+        usuarioId: usuarioId, 
+        boletimId: boletimId, 
+    };
+    let url = `${SERVER_URL}/likes`
+    let res = await fetch(
+        url,
+        {
+            method: 'POST',
+            headers: { "cache-control": "no-cache", 'Content-Type': 'application/json' },
+            body: JSON.stringify(like)
+        }
+    );
+
+    let retorno = await res.json()
+    // console.log("SERVER like", retorno);
+    return retorno
+}
+
+export async function tirarLike(likeId){
+    let url = `${SERVER_URL}/likes/${likeId}`
+    let res = await fetch(
+        url,
+        {
+            method: 'DELETE',
+            headers: { "cache-control": "no-cache", 'Content-Type': 'application/json' },
+            // body: JSON.stringify(like)
+        }
+    );
+
+    let retorno = await res.json()
+    // console.log("SERVER like", retorno);
+    return retorno
+}
+
+export async function ehSeguidor(publicadorId, usuario_id){
+
+    let url = `${SERVER_URL}/seguidores?publicadorId=${publicadorId}`;
+    if(usuario_id != undefined){
+        url += `&usuarioId=${usuario_id}`;
+    }
+    let res = await fetch(
+        url,
+        {
+            method: 'GET',
+            headers: { "cache-control": "no-cache", 'Content-Type': 'application/json' },
+        }
+    );
+    let retorno = await res.json()
+    console.log("URL SEGUIDORES", url);
+    console.log("SERVER SEGUIDORES", retorno);
+    return retorno
+}
+
+export async function seguir(publicadorId, usuarioId){
+    let seguir =  {
+        usuarioId: usuarioId, 
+        publicadorId: publicadorId, 
+    };
+    let url = `${SERVER_URL}/seguidores`
+    let res = await fetch(
+        url,
+        {
+            method: 'POST',
+            headers: { "cache-control": "no-cache", 'Content-Type': 'application/json' },
+            body: JSON.stringify(seguir)
+        }
+    );
+
+    let retorno = await res.json()
+    // console.log("SERVER seguir", retorno);
+    return retorno
+}
+
+export async function deixarDeSeguir(seguirId){
+    let url = `${SERVER_URL}/seguidores/${seguirId}`
+    let res = await fetch(
+        url,
+        {
+            method: 'DELETE',
+            headers: { "cache-control": "no-cache", 'Content-Type': 'application/json' },
+            // body: JSON.stringify(like)
+        }
+    );
+
+    let retorno = await res.json()
+    // console.log("SERVER like", retorno);
+    return retorno
 }

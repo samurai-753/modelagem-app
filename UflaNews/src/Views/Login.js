@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   Text,
+  StatusBar,
 } from 'react-native';
 
 import CustomTextInput from '../Components/CustomTextInput';
@@ -29,14 +30,10 @@ export class LoginScreen extends Component {
     handleLogin = async () => {
         this.setState({loading: true})
         const {email, password} = this.state
-
-
-
-
-        Server.login(email, password).then((usuario) => {
+        Server.login(email, password)
+        .then((usuario) => {
             this.setState({loading: false})
 
-            // TODO: Setar coisas do usuario
             this.props.actions.login(usuario)
 
             this.props.navigation.navigate("Feed", { usuario });
@@ -56,6 +53,7 @@ export class LoginScreen extends Component {
         const { email, password, loading } = this.state;
         return (
             <View style={styles.container}>
+                <StatusBar backgroundColor="#00B6E9" barStyle="light-content" />
                 <Loading show={loading} />
                 <View style={{height: 10}}/>
                 <View style={styles.inputsContainer}>

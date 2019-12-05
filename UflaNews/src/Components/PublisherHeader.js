@@ -15,7 +15,7 @@ export default class PublisherHeader extends Component {
 
 
     render(){
-        const {nome, fotoUrl, background_photo} = this.props.profile
+        const {nome, fotoUrl, background_photo} = this.props.publicador;
         return (
             <ImageBackground source={require("../Assets/background.jpg")} style={styles.backgroundImage}>
                 <View style={styles.imageContainer}>

@@ -19,22 +19,38 @@ import * as Server from "../Server";
 import { thisExpression } from '@babel/types';
 import Loading from '../Components/Loading';
 
-export default class Publisher extends Component {
+import { connect } from "react-redux";
+
+
+export class Publisher extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            profile: null,
+            publicador: null,
             boletins: [],
             loading: true,
-
+            follow_obj: null,
         }
+        this.id = null
     }
 
     componentDidMount(){
-        let id = this.props.navigation.getParam("id", null)
-        this.getPublicador(id);
-        this.getBoletins(id);
+        this.id = this.props.navigation.getParam("id", null)
+        this.getPublicador(this.id);
+        this.getBoletins(this.id);
+        this.ehSeguidor(this.id);
+    }
+
+    async ehSeguidor(id){
+        let follow_obj = await Server.ehSeguidor(this.id, this.props.profile.id);
+        if(follow_obj.length > 0){
+            this.setState({ follow_obj: follow_obj[0] });
+        }
+        else{
+            this.setState({ follow_obj: null });
+        }
+        
     }
 
     async getBoletins(id){
@@ -43,14 +59,23 @@ export default class Publisher extends Component {
     }
 
     async getPublicador(id){
-        let profile = await Server.getPublicador([id]);
-        this.setState({ profile, loading: false });
-        
+        let publicador = await Server.getPublicador([id]);
+        this.setState({ publicador, loading: false });
+    }
+
+    async seguir(){
+        let follow_obj = await Server.seguir(this.id, this.props.profile.id);
+        this.setState({ follow_obj: follow_obj });
+    }
+
+    async deixarDeSeguir(){
+        await Server.deixarDeSeguir(this.state.follow_obj.id);
+        this.setState({ follow_obj: null });
     }
 
 
     render(){
-        const {profile, boletins, loading} = this.state
+        const {publicador, boletins, loading} = this.state
         if(loading){
             return (
                 <Loading show={loading} />
@@ -65,10 +90,15 @@ export default class Publisher extends Component {
                     value={this.state.busca}
                 />
                 {
-                    profile &&
+                    publicador &&
                     <View>
-                        <PublisherHeader profile={profile}/>
-                        <PublishersFollowersInfo profile={profile}/>
+                        <PublisherHeader publicador={publicador}/>
+                        <PublishersFollowersInfo 
+                            publicador={publicador}
+                            following={this.state.follow_obj}
+                            seguir={()=>this.seguir()}
+                            deixarDeSeguir={()=>this.deixarDeSeguir()}
+                        />
                     </View>
                 }
                 {
@@ -92,3 +122,9 @@ export default class Publisher extends Component {
 const styles = StyleSheet.create({
 
 })
+
+function mapStateToProps(state) {
+    return {profile: state.session.profile};
+}
+
+export default connect(mapStateToProps, null)(Publisher);

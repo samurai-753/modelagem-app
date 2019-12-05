@@ -3,9 +3,9 @@ import{
     View,
     Text,
     Image,
-    StyleSheet
+    StyleSheet,
+    TouchableOpacity
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
@@ -14,20 +14,30 @@ export default class PublishersFollowersInfo extends Component {
         super(props)
     }
 
-    handleFollowing = () => {
-        const {following} = this.state
-        this.setState({following : !following})
-    }
+    // handleFollowing = () => {
+    //     const {following} = this.state
+    //     this.setState({following : !following})
+    // }
 
 
     render(){
-        const {numSeguidores, following} = this.props.profile
+        const {numSeguidores} = this.props.publicador;
+        const { seguir, deixarDeSeguir, following } = this.props;
+
         return (
             <View style={styles.followersContainer}>
                 <Text style={styles.followingCount}>Seguidores: {numSeguidores} </Text>
-                <TouchableOpacity style={following ? styles.unfollowButton : styles.followButton} onPress={this.handleFollowing}>
-                    <Text style={styles.listButtonText}> {following ? "Deixar de seguir" : "Seguir"} </Text>
-                </TouchableOpacity>
+                {
+                    following?
+                    <TouchableOpacity style={styles.unfollowButton} onPress={deixarDeSeguir}>
+                        <Text style={styles.listButtonText}>Deixar de seguir</Text>
+                    </TouchableOpacity>
+                    :
+                    <TouchableOpacity style={styles.followButton} onPress={seguir}>
+                        <Text style={styles.listButtonText}>Seguir</Text>
+                    </TouchableOpacity>
+
+                }
             </View>
 
         )

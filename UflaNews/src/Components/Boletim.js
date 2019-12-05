@@ -11,22 +11,62 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ScrollSessoes from './ScrollSessoes';
 const { DEVICE_WIDTH } = Dimensions.get('window');
 
+import { connect } from "react-redux";
+
 import * as Server from "../Server";
 import * as Helper from "../Helper";
 
-export default class Boletim extends Component {
+export class Boletim extends Component {
     constructor(props) {
         super(props)
         this.state = {
             // publicador: {},
             width: 0,
             page: 0,
+            loading_like: true,
+            like: null,
+            // likes: [],
+            numLikes: 0,
         };
         this.scroll = null;
     }
 
     componentDidMount(){
-        // this.getPublicador();
+        this.getLike();
+        this.getNumLikes();
+    }
+
+    async getLike(){
+        this.setState({ loading_like: true });
+        const {boletim, profile} = this.props;
+        let like = await Server.getLike(boletim.id, profile.id);
+        console.log("retornouuu like", like);
+        if(like.length > 0){
+            this.setState({ like: like[0] })
+        }
+        this.setState({ loading_like: false });
+    }
+
+    async getNumLikes(){
+        // this.setState({ loading_like: true });
+        const {boletim} = this.props;
+        let likes = await Server.getLike(boletim.id);
+        this.setState({ numLikes: likes.length })
+    }
+
+    async darLike(){
+        const {boletim, profile} = this.props;
+        const {numLikes} = this.state;
+        let like = await Server.darLike(boletim.id, profile.id);
+        this.setState({ like, numLikes: numLikes + 1})
+    }
+
+    async tirarLike(){
+        const {like} = this.state;
+        const {numLikes} = this.state;
+        let retorno = await Server.tirarLike(like.id);
+        this.setState({ like: null, numLikes: numLikes -1 })
+
     }
 
     // async getPublicador(){
@@ -67,8 +107,8 @@ export default class Boletim extends Component {
 
     // const props = this.props;
     render() {
-        const {boletim, style, goToPublicador} = this.props;
-        // const {publicador} = this.state;
+        const { boletim, style, goToPublicador, goToComentar, showNumLikes } = this.props;
+        const { like, loading_like, numLikes } = this.state;
         const publicador = boletim.publicador
         // alert(boletim);
         return (
@@ -88,23 +128,40 @@ export default class Boletim extends Component {
 
                 <View style={{borderColor: "rgba(0,0,0,0.3)", borderBottomWidth: 1, width: "100%", marginBottom: 10}} />
 
-                {/* <WebView
-                    source={{html: "<p style='font-size: 70px'><b>XOXOTA</b></p>"}}
-                    // style={{height: 400}}
-                    scalesPageToFit={false}
-                /> */}
-
                 <View style={{flexDirection: "row", flex: 1, justifyContent: "space-between", alignItems: "center"}}>
                     <Text>{Helper.formatarData(boletim.data)}</Text>
 
-                    <View style={{flexDirection: "row"}}>
+                    <View style={{flexDirection: "row", alignItems: "center"}}>
                         
-                        <TouchableOpacity onPress={()=>{}}>
-                            <Image source={require("../Assets/icons/comment.png")} style={[styles.icon, {marginRight: 10}]} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>{}}>
-                            <Image source={require("../Assets/icons/like.png")} style={styles.icon} />
-                        </TouchableOpacity>
+                        {
+                            goToComentar &&
+                            <TouchableOpacity onPress={goToComentar}>
+                                <Image source={require("../Assets/icons/comment.png")} style={[styles.icon, {marginRight: 10}]} />
+                            </TouchableOpacity>
+                        }
+                        {
+                            showNumLikes &&
+                            numLikes != 0 &&
+                            <Text style={{fontSize: 16, marginRight: 5}}>{numLikes}</Text>
+                        }
+
+                        {
+                            // loading_like &&
+                            // <TouchableOpacity onPress={()=>{}}>
+                            //     <Image source={require("../Assets/icons/loading_like.gif")} style={styles.icon} />
+                            // </TouchableOpacity>
+                        }
+                        {
+                            !loading_like && like?
+                            <TouchableOpacity onPress={()=>this.tirarLike()}>
+                                <Image source={require("../Assets/icons/like_filled.png")} style={styles.icon} />
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity onPress={()=>this.darLike()}>
+                                <Image source={require("../Assets/icons/like.png")} style={styles.icon} />
+                            </TouchableOpacity>
+
+                        }
                     </View>
                 </View>
 
@@ -141,3 +198,10 @@ const styles = StyleSheet.create({
         resizeMode: "contain"
     }
 })
+
+
+function mapStateToProps(state) {
+    return {profile: state.session.profile};
+}
+
+export default connect(mapStateToProps, null)(Boletim);

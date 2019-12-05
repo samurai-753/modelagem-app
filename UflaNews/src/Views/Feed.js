@@ -7,6 +7,7 @@ import {
   Text,
   FlatList,
   ScrollView,
+  RefreshControl
 } from 'react-native';
 
 import Header from '../Components/Header';
@@ -18,8 +19,9 @@ import Publicador from '../Components/PublicadorItem';
 import { Drawer } from 'native-base';
 import Menu from '../Components/Menu';
 import Loading from '../Components/Loading';
+import { connect } from "react-redux";
 
-export default class LoginScreen extends Component {
+export class Feed extends Component {
     constructor(props) {
         super(props)
 
@@ -29,20 +31,21 @@ export default class LoginScreen extends Component {
             publicadores: [],
             publicadoresFiltrados: [],
             busca: "",
-            loading: true
+            loading: true,
+            refreshing: false
         }
 
     }
 
     componentDidMount(){
-        let usuario = this.props.navigation.getParam("usuario", null);
-        let publicadores = usuario.seguidores.map((x) => x.publicadorId)
-
-        this.getBoletins(publicadores);
+        this.getBoletins();
         this.getPublicadores();
     }
 
-    async getBoletins(publicadores){
+    async getBoletins(){
+        let usuario = this.props.profile;
+        let publicadores = usuario.seguidores.map((x) => x.publicadorId)
+
         let boletins = await Server.getBoletins(publicadores);
         this.setState({ boletins, loading: false })
     }
@@ -69,8 +72,14 @@ export default class LoginScreen extends Component {
         this.setState({ boletinsFiltrados, publicadoresFiltrados });
     }
 
+    async onRefresh(){
+        this.setState({ refreshing: true });
+        await this.getBoletins()
+        this.setState({ refreshing: false });
+    }
+
     render() {
-        const { busca, boletins, boletinsFiltrados, publicadoresFiltrados, loading } = this.state;
+        const { busca, boletins, boletinsFiltrados, publicadoresFiltrados, loading, refreshing } = this.state;
         return (
             <Drawer 
                 ref={(ref) => { this.drawer = ref}} 
@@ -83,7 +92,11 @@ export default class LoginScreen extends Component {
             >
             <View style={styles.container}>
                 <Loading show={loading} />
-                <ScrollView>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={()=>this.onRefresh()} />
+                    }
+                >
                     <Header 
                         style={{marginBottom: 10}} 
                         pesquisar={true} 
@@ -95,6 +108,7 @@ export default class LoginScreen extends Component {
                         this.state.busca == "" &&
                         boletins.map((boletim, index)=>
                             <Boletim 
+                                goToComentar={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.id, comentar: true})}
                                 key={"feed"+index}
                                 style={{marginLeft: 20, marginRight: 20}}
                                 boletim={boletim}
@@ -126,6 +140,7 @@ export default class LoginScreen extends Component {
                             {
                                 boletinsFiltrados.map((boletim, index)=>
                                     <Boletim 
+                                        goToComentar={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.id, comentar: true})}
                                         key={"feed"+index}
                                         boletim={boletim}
                                         encurtar={true}
@@ -198,3 +213,10 @@ const styles = StyleSheet.create({
         marginBottom: 10
     }
 })
+
+
+function mapStateToProps(state) {
+    return {profile: state.session.profile};
+}
+
+export default connect(mapStateToProps, null)(Feed);

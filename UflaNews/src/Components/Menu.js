@@ -17,17 +17,6 @@ import { connect } from "react-redux";
 export class Menu extends Component {
     constructor(props) {
         super(props)
-
-        this.state = {
-            profile: {
-                'name': 'Eduardo F. Lima',
-                'photo_url' : 'https://media.licdn.com/dms/image/C4E03AQFApzGsMuTm0g/profile-displayphoto-shrink_200_200/0?e=1577923200&v=beta&t=0tpD39UUri1j71hapEVzkw1AcBxpA_BShfmdQ7l5XrI',
-                'email' : 'eduardo@gmail.com',
-                'simple_name': 'Eduardo F. Lima'.split(' ')[0],
-                'background_photo' : 'https://images.unsplash.com/photo-1548022401-6b11ed578cc7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-                'followingCount': 5
-            }
-        }
     }
 
     componentDidMount(){
@@ -38,17 +27,19 @@ export class Menu extends Component {
         // const { user, password } = this.state;
         const { navigation, profile } = this.props;
         return (
-            <View style={{flex: 1, backgroundColor: "#fff"}}>
-                <ProfileHeader profile={profile}/>
+            <View style={styles.container}>
+                <View>
+                    <ProfileHeader profile={profile}/>
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate("Profile")} style={styles.button} >
+                        <Image source={require("../Assets/icons/user.png")} style={styles.logo}/>
+                        <Text style={styles.txt_button}>
+                            Perfil
+                        </Text>
+                    </TouchableOpacity>
+                </View>
 
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate("Profile")} style={{height: 50, alignItems: "center", justifyContent: "center", borderBottomColor: "#000", borderBottomWidth: 1}} >
-                    <Text style={{}}>
-                        Perfil
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate("Login")} style={{height: 50, alignItems: "center", justifyContent: "center", borderBottomColor: "#000", borderBottomWidth: 1}} >
-                    <Text style={{}}>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate("Login")} style={styles.button_logout} >
+                    <Text style={{color: "#fff"}}>
                         Sair
                     </Text>
                 </TouchableOpacity>
@@ -59,20 +50,38 @@ export class Menu extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        // justifyContent: "space-between",
-        backgroundColor: '#00B6E9',
-        paddingLeft: 15,
-        paddingRight: 15,
-        // flex:1,
-        height: 70,
-        flexDirection: "row",
-        alignItems: "center"
+        flex: 1, 
+        backgroundColor: "#00B6E9", 
+        justifyContent: "space-between"
     },
-    
-    logo: {
-        height: 40,
-        width: 40,
+    button: {
+        height: 50, 
+        alignItems: "center", 
+        justifyContent: "center", 
+        flexDirection: "row",
+        // borderBottomColor: "#fff", 
+        // borderBottomWidth: 1
+        backgroundColor: "#03a7d5",
+    },
+    button_logout:{
+        padding: 7,
+        paddingLeft: 20,
+        paddingRight: 20,
+        backgroundColor: "#00789a",
+        alignItems: "center",
         alignSelf: "center",
+        marginBottom: 15,
+        borderRadius: 20
+    },
+    txt_button:{
+        color: "#fff",
+        fontSize: 16
+    },
+    logo: {
+        height: 20,
+        width: 20,
+        alignSelf: "center",
+        marginRight: 15
         // marginTop: 50,
         // marginBottom: 50
     },

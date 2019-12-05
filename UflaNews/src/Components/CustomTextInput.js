@@ -13,6 +13,7 @@ export default class CustomTextInput extends Component {
         return (
             <TextInput 
                 {...props} 
+                ref={props.inputRef}
                 style={[styles.textInputCustom,  white? styles.white : null, props.style]}
                 placeholderTextColor={white? "#fff" : null}
                 underlineColorAndroid={white? "#fff" : null}

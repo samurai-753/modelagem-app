@@ -3,33 +3,53 @@ import {
     View,
     Image,
     Text,
-    StyleSheet
+    StyleSheet,
+    TouchableOpacity,
 } from 'react-native'
 import * as Helper from "../Helper";
+import { connect } from "react-redux";
+import * as Server from "../Server";
 
-export default class Comment extends Component {
+
+
+export class Comment extends Component {
     constructor(props) {
         super(props)
     }
 
+    async excluirComentario(){
+        await Server.excluirComentario(this.props.comentario.id);
+        this.props.update();
+    }
+
     render() {
-        const { comentario } = this.props;
+        const { comentario, profile } = this.props;
         let usuario = comentario.usuario
         return (
             <View style={[styles.comment, styles.card]}>
                 <View style={styles.header} >
-                    <View style={styles.user}>
-                        <Image source={{uri: usuario.foto_url}} style={styles.logo}/>
-                        <Text style={styles.username}>{usuario.nome}</Text>
+
+                    <View style={{flex: 3}}>
+                        <View style={styles.user}>
+                            <Image source={{uri: usuario.foto_url}} style={styles.logo}/>
+                            <Text style={styles.username}>{usuario.nome}</Text>
+                        </View>
+                        <Text>{comentario.comentario}</Text>
+
                     </View>
 
-                    <View style={{flexDirection: "row", alignItems: "center"}}>
+                    <View style={{ flex:1, alignItems: "flex-end"}}>
                         <Text>{Helper.formatarData(comentario.data, false)}</Text>
-                        {/* <Image source={require('../Assets/delete-icon.png')} style={styles.icon}/> */}
+
+                        {
+                            comentario.usuarioId == profile.id &&
+                            <TouchableOpacity onPress={()=>this.excluirComentario()} style={{marginTop: 10}}>
+                                <Image source={require('../Assets/delete-icon.png')} style={styles.icon}/>
+                            </TouchableOpacity>
+                        }
                     </View>
 
                 </View>
-                <Text>{comentario.comentario}</Text>
             </View>
         )
     }
@@ -66,6 +86,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: "center",
+        marginBottom: 10
     },
     logo: {
         alignSelf: 'flex-start',
@@ -92,3 +113,10 @@ const styles = StyleSheet.create({
         margin: 2
     },
 })
+
+
+function mapStateToProps(state) {
+    return {profile: state.session.profile};
+}
+
+export default connect(mapStateToProps, null)(Comment);
