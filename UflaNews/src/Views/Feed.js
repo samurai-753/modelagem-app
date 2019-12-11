@@ -15,11 +15,13 @@ import Boletim from '../Components/Boletim';
 
 import * as Server from "../Server";
 import Publicador from '../Components/PublicadorItem';
+import * as sessionActions from "../Actions/sessionActions";
 
 import { Drawer } from 'native-base';
 import Menu from '../Components/Menu';
 import Loading from '../Components/Loading';
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 export class Feed extends Component {
     constructor(props) {
@@ -47,6 +49,8 @@ export class Feed extends Component {
         let publicadores = usuario.seguidores.map((x) => x.publicadorId)
 
         let boletins = await Server.getBoletins(publicadores);
+
+        console.log("Boletins", boletins);
         this.setState({ boletins, loading: false })
     }
 
@@ -73,9 +77,16 @@ export class Feed extends Component {
     }
 
     async onRefresh(){
-        this.setState({ refreshing: true });
+        const {email, senha} = this.props.profile;
+        console.log("REFRESHHHH");
+
+        this.setState({ refreshing: true, boletins: [] });
         await this.getBoletins()
-        this.setState({ refreshing: false });
+        Server.login(email, senha)
+        .then((usuario) => {
+            this.props.actions.login(usuario)
+            this.setState({ refreshing: false });
+        })
     }
 
     render() {
@@ -107,7 +118,8 @@ export class Feed extends Component {
                     {
                         this.state.busca == "" &&
                         boletins.map((boletim, index)=>
-                            <Boletim 
+                            <Boletim
+                                // forceRefresh={()=>this.onRefresh()} 
                                 goToComentar={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.id, comentar: true})}
                                 key={"feed"+index}
                                 style={{marginLeft: 20, marginRight: 20}}
@@ -139,7 +151,8 @@ export class Feed extends Component {
                             <Text style={styles.tituloLista}>Boletins:</Text>
                             {
                                 boletinsFiltrados.map((boletim, index)=>
-                                    <Boletim 
+                                    <Boletim
+                                        // forceRefresh={()=>this.onRefresh()} 
                                         goToComentar={()=>this.props.navigation.navigate("VisualizarBoletim", {id: boletim.id, comentar: true})}
                                         key={"feed"+index}
                                         boletim={boletim}
@@ -215,8 +228,17 @@ const styles = StyleSheet.create({
 })
 
 
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(sessionActions, dispatch)
+    };
+}
+
+
+
 function mapStateToProps(state) {
     return {profile: state.session.profile};
 }
 
-export default connect(mapStateToProps, null)(Feed);
+export default connect(mapStateToProps, mapDispatchToProps)(Feed);

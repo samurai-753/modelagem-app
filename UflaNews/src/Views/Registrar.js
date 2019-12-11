@@ -5,15 +5,22 @@ import {
   TouchableOpacity,
   Image,
   Text,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Alert
 } from 'react-native';
 
 import CustomTextInput from '../Components/CustomTextInput';
 import { ScrollView } from 'react-native-gesture-handler';
-import { cadastrar } from '../Server';
+import * as Server from '../Server';
+import Loading from '../Components/Loading';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as sessionActions from "../Actions/sessionActions";
 
 
-export default class RegisterScreen extends Component {
+
+
+export class RegisterScreen extends Component {
     static navigationOptions = {
         header: 'none'
     }
@@ -22,26 +29,41 @@ export default class RegisterScreen extends Component {
         super(props)
 
         this.state = {
-            name: 'Jao',
-            email: 'jao@samurai.io',
-            password: '1234',
-            passwordCheck: '1234',
+            name: '',
+            email: '',
+            password: '',
+            passwordCheck: '',
+            loading: false,
         }
     }
 
     handleCadastro = () => {
         const { name, email, password, passwordCheck } = this.state
 
+        if(name == "" || email == "" || password == "" || passwordCheck == ""){
+            Alert.alert("Erro!", "Preencha todos os campos antes de enviar.")
+            return;
+        }
         if(password !== passwordCheck) {
-            alert('Digite a mesma senha');
+            Alert.alert("Erro!", "Senha e confirmação de senha devem ser iguais.")
             return;
         }
 
-        let usuario_dados = { email, senha: password, nome: name }
-        cadastrar(usuario_dados).then((usuario) => {
-            alert(`Usuário ${email} cadastrado`);
+        this.setState({loading: true})
+
+
+        let usuario_dados = { email, senha: password, nome: name, foto_url: "https://icon-library.net/images/default-user-icon/default-user-icon-4.jpg" }
+        Server.cadastrar(usuario_dados).then((usuario) => {
+            Alert.alert(`Sucesso`, "Usuário cadastrado!");
+            Server.login(email, password)
+            .then((usuario) => {
+                this.setState({loading: false})
+
+                this.props.actions.login(usuario)
+
+                this.props.navigation.navigate("Feed", { usuario });
+            })
             // TODO: Setar coisas do usuario
-            this.props.navigation.navigate("Feed", { usuario });
         })
         .catch((err) => {
             console.log(err)
@@ -49,11 +71,11 @@ export default class RegisterScreen extends Component {
     }
 
     render() {
-        const { name, password, email, passwordCheck } = this.state;
+        const { name, password, email, passwordCheck, loading } = this.state;
         const { navigation } = this.props;
         return (
             <ScrollView contentContainerStyle={styles.container}>
-
+                <Loading show={loading} />
                 <TouchableOpacity onPress={()=>navigation.goBack()} style={{paddingTop: 15}}>
                     <Image source={require("../Assets/icons/arrow_left.png")} style={{width: 50, height: 50, resizeMode: "contain"}}/>
                 </TouchableOpacity>
@@ -67,7 +89,7 @@ export default class RegisterScreen extends Component {
                 </View>
                 <View style={styles.inputsContainer}>
                     <CustomTextInput white={false} placeholder="Nome" value={name} onChangeText={name => this.setState({name})}/>
-                    <CustomTextInput white={false} placeholder="E-mail" value={email} onChangeText={email => this.setState({email})}/>
+                    <CustomTextInput white={false} autoCapitalize={"none"} placeholder="E-mail" value={email} onChangeText={email => this.setState({email})}/>
                     <CustomTextInput white={false} placeholder="Senha" value={password} onChangeText={password => this.setState({password})} secureTextEntry={true}/>
                     <CustomTextInput white={false} placeholder="Confirme sua senha" value={passwordCheck} onChangeText={passwordCheck => this.setState({passwordCheck})} secureTextEntry={true}/>
                     <TouchableOpacity style={styles.loginButtonContainer} onPress={this.handleCadastro}>
@@ -129,3 +151,19 @@ const styles = StyleSheet.create({
         color: "#fff"
     }
 })
+
+
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(sessionActions, dispatch)
+    };
+}
+
+
+
+function mapStateToProps(state, ownProps) {
+    return {user: state.session};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);

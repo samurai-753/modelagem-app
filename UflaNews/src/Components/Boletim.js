@@ -59,6 +59,12 @@ export class Boletim extends Component {
         const {numLikes} = this.state;
         let like = await Server.darLike(boletim.id, profile.id);
         this.setState({ like, numLikes: numLikes + 1})
+        if(this.props.forceRefresh){
+            this.props.forceRefresh();
+        }
+        else{
+            console.log("deu ruim")
+        }
     }
 
     async tirarLike(){
@@ -66,7 +72,12 @@ export class Boletim extends Component {
         const {numLikes} = this.state;
         let retorno = await Server.tirarLike(like.id);
         this.setState({ like: null, numLikes: numLikes -1 })
-
+        if(this.props.forceRefresh){
+            this.props.forceRefresh();
+        }
+        else{
+            console.log("deu ruim")
+        }
     }
 
     // async getPublicador(){

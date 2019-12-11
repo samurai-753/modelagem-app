@@ -21,8 +21,8 @@ export class LoginScreen extends Component {
         super(props)
 
         this.state = {
-            email: 'k4t0mono@samurai.io',
-            password: 'birb',
+            email: '',
+            password: '',
             loading: false
         }
     }
@@ -58,7 +58,7 @@ export class LoginScreen extends Component {
                 <View style={{height: 10}}/>
                 <View style={styles.inputsContainer}>
                     <Image source={require('../Assets/ufla-white.png')} style={styles.logo}></Image>
-                    <CustomTextInput white={true} placeholder="Email" value={email} onChangeText={email => this.setState({email})}/>
+                    <CustomTextInput autoCapitalize={"none"} white={true} placeholder="Email" value={email} onChangeText={email => this.setState({email})}/>
                     <CustomTextInput white={true} placeholder="Senha" value={password} onChangeText={password => this.setState({password})} secureTextEntry={true}/>
                     <TouchableOpacity style={styles.loginButtonContainer} onPress={this.handleLogin}>
                         <Text style={styles.txtButton}>ENTRAR</Text>

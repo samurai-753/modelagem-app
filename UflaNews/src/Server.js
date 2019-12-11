@@ -2,6 +2,7 @@ const SERVER_URL = 'https://floating-badlands-50851.herokuapp.com'
 
 
 export async function getBoletins(publicadores){
+    console.log("publicadores", publicadores)
     let ids = ''
     publicadores.map((x) => ids += `publicadorId=${x}&`)
     let url = `${SERVER_URL}/boletims?${ids}_sort=data&_order=desc&_embed=sessaos&_expand=publicador`
@@ -21,6 +22,7 @@ export async function getBoletim(id) {
     // TODO: Colocar os boletins na tela
     let boletins = await res.json();
     if(boletins.length > 0){
+        console.log("boletin", boletins[0])
         return boletins[0];
     }
     return null;
@@ -218,8 +220,8 @@ export async function ehSeguidor(publicadorId, usuario_id){
         }
     );
     let retorno = await res.json()
-    console.log("URL SEGUIDORES", url);
-    console.log("SERVER SEGUIDORES", retorno);
+    // console.log("URL SEGUIDORES", url);
+    // console.log("SERVER SEGUIDORES", retorno);
     return retorno
 }
 

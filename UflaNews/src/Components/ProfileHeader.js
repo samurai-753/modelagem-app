@@ -44,19 +44,37 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         borderColor: '#fff',
         borderWidth: 2,
-        marginTop: 35
+        marginTop: 20,
+        marginBottom: 5
     },
     textContainer: {
         alignSelf: 'center',
+        // backgroundColor: "#fff",
+        // borderRadius: 7,
+        // padding: 5
     },
     profileName: {
         fontSize: 25,
         fontWeight: '900',
-        color: 'white',
-        textAlign: 'center'
+        color: '#000',
+        borderRadius: 7,
+        textAlign: 'center',
+
+        backgroundColor: "#fff",
+        borderRadius: 7,
+        padding: 5,
+        alignSelf: "center",
+
     },
     profileEmail: {
-        color: 'white',
-        textAlign: 'center'
+        color: '#000',
+        borderRadius: 7,
+        textAlign: 'center',
+
+        backgroundColor: "#fff",
+        borderRadius: 7,
+        padding: 5,
+        alignSelf: "center",
+        marginTop: 5
     }
 })
