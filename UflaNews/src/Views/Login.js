@@ -6,6 +6,7 @@ import {
   Image,
   Text,
   StatusBar,
+  Alert,
 } from 'react-native';
 
 import CustomTextInput from '../Components/CustomTextInput';
@@ -21,8 +22,8 @@ export class LoginScreen extends Component {
         super(props)
 
         this.state = {
-            email: '',
-            password: '',
+            email: 'k4t0mono@samurai.io',
+            password: 'birb',
             loading: false
         }
     }
@@ -41,7 +42,7 @@ export class LoginScreen extends Component {
         .catch((err) => {
             this.setState({loading: false})
 
-            alert(err);
+            Alert.alert("Erro!", "E-mail ou senha incorretos.");
         })
     }
 

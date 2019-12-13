@@ -36,6 +36,13 @@ export class Menu extends Component {
                             Perfil
                         </Text>
                     </TouchableOpacity>
+
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate("Listagem", {mostrar_todos: true})} style={styles.button} >
+                        <Image source={require("../Assets/icons/paper.png")} style={styles.logo}/>
+                        <Text style={styles.txt_button}>
+                            Publicadores
+                        </Text>
+                    </TouchableOpacity>
                 </View>
 
                 <TouchableOpacity onPress={()=>this.props.navigation.navigate("Login")} style={styles.button_logout} >
@@ -62,6 +69,7 @@ const styles = StyleSheet.create({
         // borderBottomColor: "#fff", 
         // borderBottomWidth: 1
         backgroundColor: "#03a7d5",
+        marginBottom: 5
     },
     button_logout:{
         padding: 7,

@@ -11,6 +11,9 @@ import ProfileHeader from '../Components/ProfileHeader'
 import FollowingInfo from '../Components/FollowingInfo'
 import ProfileInfoEdit from '../Components/ProfileInfoEdit'
 import Header from '../Components/Header';
+import * as sessionActions from "../Actions/sessionActions";
+import { bindActionCreators } from "redux";
+import * as Server from "../Server";
 
 import { connect } from "react-redux";
 import Loading from '../Components/Loading';
@@ -25,6 +28,22 @@ export class Profile extends Component {
         }
     }
 
+    componentDidMount(){
+        this.refresh();
+    }
+
+    refresh(){
+        const {email, senha} = this.props.profile;
+        Server.login(email, senha)
+        .then((usuario) => {
+            this.setState({loading: false})
+            this.props.actions.login(usuario)
+        })
+        .catch((err) => {
+            this.setState({loading: false})
+            Alert.alert("Ops", "Erro ao atualizar informações do perfil.");
+        })
+    }
 
     render(){
         const {profile} = this.props;
@@ -52,9 +71,15 @@ export class Profile extends Component {
 
 
 
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(sessionActions, dispatch)
+    };
+}
+
 
 function mapStateToProps(state) {
     return {profile: state.session.profile};
 }
 
-export default connect(mapStateToProps, null)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

@@ -52,7 +52,7 @@ export async function getPublicadores(publicadores){
     let url = `${SERVER_URL}/publicadors`
     if(publicadores){
         let ids = ''
-        publicadores.map((x) => ids += `id=${x.id}&`)
+        publicadores.map((x) => ids += `id=${x.publicadorId}&`)
         url = url + "?" + ids;
     }
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
@@ -114,11 +114,13 @@ export async function alterarPerfil(usuario_dados) {
 
 export async function postarComentario(usuario_id, boletim_id, txt_comentario){
     let date = new Date();
+    let mes = date.getMonth()+1;
+    let date_str = date.getFullYear() + "-" + mes + "-" + date.getDate() + "T" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     let comentario =  {
         usuarioId: usuario_id, 
         boletimId: boletim_id, 
         comentario: txt_comentario,
-        data: date.toISOString()
+        data: date_str
     };
     let url = `${SERVER_URL}/comentarios`
     let res = await fetch(
