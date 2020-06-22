@@ -1,7 +1,7 @@
-const SERVER_URL = 'http://localhost:3000'
+const SERVER_URL = 'http://192.168.0.113:3000'; // USE O IP DA SUA MÁQUINA AQUI
 
 //OK
-export async function getBoletins(publicadores){
+export async function getBoletins(publicadores) {
     console.log("publicadores", publicadores)
     let ids = ''
     publicadores.map((x) => ids += `publicadorId=${x}&`)
@@ -21,14 +21,14 @@ export async function getBoletim(id) {
 
     // TODO: Colocar os boletins na tela
     let boletins = await res.json();
-    if(boletins.length > 0){
+    if (boletins.length > 0) {
         console.log("boletin", boletins[0])
         return boletins[0];
     }
     return null;
 }
 //OK
-export async function getComentarios(id){
+export async function getComentarios(id) {
     let url = `${SERVER_URL}/comentarios?boletimId=${id}`
     // console.log("SERVER URL", url)
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
@@ -39,7 +39,7 @@ export async function getComentarios(id){
     return comentarios
 }
 //OK
-export async function getPublicador(id){
+export async function getPublicador(id) {
     let url = `${SERVER_URL}/publicadors?id=${id}`
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
@@ -48,9 +48,9 @@ export async function getPublicador(id){
     return publicadores[0]
 }
 //OK
-export async function getPublicadores(publicadores){
+export async function getPublicadores(publicadores) {
     let url = `${SERVER_URL}/publicadors`
-    if(publicadores){
+    if (publicadores) {
         let ids = ''
         publicadores.map((x) => ids += `id=${x.publicadorId}&`)
         url = url + "?" + ids;
@@ -64,7 +64,7 @@ export async function getPublicadores(publicadores){
 }
 //OK
 export async function login(email, password) {
-    console.log({email, password});
+    console.log({ email, password });
     let url = `${SERVER_URL}/usuarios?email=${email}`
     console.log(url);
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
@@ -73,8 +73,8 @@ export async function login(email, password) {
     let json = await res.json()
     let usuario = json[0]
     // console.log("SERVER login", usuario)
-    
-    if(usuario.senha === password) {
+
+    if (usuario.senha === password) {
         // console.log("SERVER usuario", usuario);
         return usuario
     }
@@ -115,13 +115,13 @@ export async function alterarPerfil(usuario_dados) {
     return usuario
 }
 //ok
-export async function postarComentario(usuario_id, boletim_id, txt_comentario){
+export async function postarComentario(usuario_id, boletim_id, txt_comentario) {
     let date = new Date();
-    let mes = date.getMonth()+1;
+    let mes = date.getMonth() + 1;
     let date_str = date.getFullYear() + "-" + mes + "-" + date.getDate() + "T" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    let comentario =  {
-        usuarioId: usuario_id, 
-        boletimId: boletim_id, 
+    let comentario = {
+        usuarioId: usuario_id,
+        boletimId: boletim_id,
         comentario: txt_comentario,
         data: date_str
     };
@@ -140,7 +140,7 @@ export async function postarComentario(usuario_id, boletim_id, txt_comentario){
     return retorno
 }
 //ok
-export async function excluirComentario(comentarioId){
+export async function excluirComentario(comentarioId) {
     let url = `${SERVER_URL}/comentarios/${comentarioId}`
     let res = await fetch(
         url,
@@ -156,10 +156,10 @@ export async function excluirComentario(comentarioId){
     return retorno
 }
 //OK WTF: USUARIOID
-export async function getLike(boletim_id, usuario_id){
+export async function getLike(boletim_id, usuario_id) {
 
     let url = `${SERVER_URL}/likes?boletimId=${boletim_id}`;
-    if(usuario_id != undefined){
+    if (usuario_id != undefined) {
         url += `&usuarioId=${usuario_id}`;
     }
     let res = await fetch(
@@ -175,10 +175,10 @@ export async function getLike(boletim_id, usuario_id){
     return retorno
 }
 //ok
-export async function darLike(boletimId, usuarioId){
-    let like =  {
-        usuarioId: usuarioId, 
-        boletimId: boletimId, 
+export async function darLike(boletimId, usuarioId) {
+    let like = {
+        usuarioId: usuarioId,
+        boletimId: boletimId,
     };
     let url = `${SERVER_URL}/likes`
     let res = await fetch(
@@ -195,7 +195,7 @@ export async function darLike(boletimId, usuarioId){
     return retorno
 }
 //ok
-export async function tirarLike(likeId){
+export async function tirarLike(likeId) {
     let url = `${SERVER_URL}/likes/${likeId}`
     let res = await fetch(
         url,
@@ -211,10 +211,10 @@ export async function tirarLike(likeId){
     return retorno
 }
 //ok
-export async function ehSeguidor(publicadorId, usuario_id){
+export async function ehSeguidor(publicadorId, usuario_id) {
 
     let url = `${SERVER_URL}/seguidores?publicadorId=${publicadorId}`;
-    if(usuario_id != undefined){
+    if (usuario_id != undefined) {
         url += `&usuarioId=${usuario_id}`;
     }
     let res = await fetch(
@@ -231,10 +231,10 @@ export async function ehSeguidor(publicadorId, usuario_id){
 }
 
 //ok
-export async function seguir(publicadorId, usuarioId){
-    let seguir =  {
-        usuarioId: usuarioId, 
-        publicadorId: publicadorId, 
+export async function seguir(publicadorId, usuarioId) {
+    let seguir = {
+        usuarioId: usuarioId,
+        publicadorId: publicadorId,
     };
     let url = `${SERVER_URL}/seguidores`
     let res = await fetch(
@@ -251,7 +251,7 @@ export async function seguir(publicadorId, usuarioId){
     return retorno
 }
 //ok
-export async function deixarDeSeguir(seguirId){
+export async function deixarDeSeguir(seguirId) {
     let url = `${SERVER_URL}/seguidores/${seguirId}`
     let res = await fetch(
         url,
