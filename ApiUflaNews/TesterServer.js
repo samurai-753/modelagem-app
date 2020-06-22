@@ -1,7 +1,26 @@
-const SERVER_URL = 'http://localhost:3000'
+//var Server = require("../UflaNews/src/Server");
+//import * as Server from "../UflaNews/src/Server.js";
+const fetch = require("node-fetch");
+//const tf = require("@tensorflow/tfjs-node");
+
+const SERVER_URL = 'localhost:3000'
+
+function main() {
+    console.log("TESTE");
+    login("ribolive", "ribolive@ribolive.com");
+}
+
+main()
+
+
+
+// -----------------------------------------------------------------
+// Server funcitons
+// -----------------------------------------------------------------
+
 
 //OK
-export async function getBoletins(publicadores){
+async function getBoletins(publicadores){
     console.log("publicadores", publicadores)
     let ids = ''
     publicadores.map((x) => ids += `publicadorId=${x}&`)
@@ -15,7 +34,7 @@ export async function getBoletins(publicadores){
     return boletins
 }
 //OK
-export async function getBoletim(id) {
+async function getBoletim(id) {
     let url = `${SERVER_URL}/boletims?id=${id}`
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
@@ -28,7 +47,7 @@ export async function getBoletim(id) {
     return null;
 }
 //OK
-export async function getComentarios(id){
+async function getComentarios(id){
     let url = `${SERVER_URL}/comentarios?boletimId=${id}`
     // console.log("SERVER URL", url)
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
@@ -39,7 +58,7 @@ export async function getComentarios(id){
     return comentarios
 }
 //OK
-export async function getPublicador(id){
+async function getPublicador(id){
     let url = `${SERVER_URL}/publicadors?id=${id}`
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
@@ -48,7 +67,7 @@ export async function getPublicador(id){
     return publicadores[0]
 }
 //OK
-export async function getPublicadores(publicadores){
+async function getPublicadores(publicadores){
     let url = `${SERVER_URL}/publicadors`
     if(publicadores){
         let ids = ''
@@ -63,12 +82,9 @@ export async function getPublicadores(publicadores){
     return retorno
 }
 //OK
-export async function login(email, password) {
-    console.log({email, password});
+async function login(email, password) {
     let url = `${SERVER_URL}/usuarios?email=${email}`
-    console.log(url);
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
-    console.log("res: " + res);
 
     let json = await res.json()
     let usuario = json[0]
@@ -83,7 +99,7 @@ export async function login(email, password) {
 }
 
 //ok
-export async function cadastrar(usuario_dados) {
+async function cadastrar(usuario_dados) {
     let url = `${SERVER_URL}/usuarios`
     let res = await fetch(
         url,
@@ -99,7 +115,7 @@ export async function cadastrar(usuario_dados) {
     return usuario
 }
 //ok
-export async function alterarPerfil(usuario_dados) {
+async function alterarPerfil(usuario_dados) {
     let url = `${SERVER_URL}/usuarios/${usuario_dados.id}`
     let res = await fetch(
         url,
@@ -115,7 +131,7 @@ export async function alterarPerfil(usuario_dados) {
     return usuario
 }
 //ok
-export async function postarComentario(usuario_id, boletim_id, txt_comentario){
+async function postarComentario(usuario_id, boletim_id, txt_comentario){
     let date = new Date();
     let mes = date.getMonth()+1;
     let date_str = date.getFullYear() + "-" + mes + "-" + date.getDate() + "T" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
@@ -140,7 +156,7 @@ export async function postarComentario(usuario_id, boletim_id, txt_comentario){
     return retorno
 }
 //ok
-export async function excluirComentario(comentarioId){
+async function excluirComentario(comentarioId){
     let url = `${SERVER_URL}/comentarios/${comentarioId}`
     let res = await fetch(
         url,
@@ -156,7 +172,7 @@ export async function excluirComentario(comentarioId){
     return retorno
 }
 //OK WTF: USUARIOID
-export async function getLike(boletim_id, usuario_id){
+async function getLike(boletim_id, usuario_id){
 
     let url = `${SERVER_URL}/likes?boletimId=${boletim_id}`;
     if(usuario_id != undefined){
@@ -175,7 +191,7 @@ export async function getLike(boletim_id, usuario_id){
     return retorno
 }
 //ok
-export async function darLike(boletimId, usuarioId){
+async function darLike(boletimId, usuarioId){
     let like =  {
         usuarioId: usuarioId, 
         boletimId: boletimId, 
@@ -195,7 +211,7 @@ export async function darLike(boletimId, usuarioId){
     return retorno
 }
 //ok
-export async function tirarLike(likeId){
+async function tirarLike(likeId){
     let url = `${SERVER_URL}/likes/${likeId}`
     let res = await fetch(
         url,
@@ -211,7 +227,7 @@ export async function tirarLike(likeId){
     return retorno
 }
 //ok
-export async function ehSeguidor(publicadorId, usuario_id){
+async function ehSeguidor(publicadorId, usuario_id){
 
     let url = `${SERVER_URL}/seguidores?publicadorId=${publicadorId}`;
     if(usuario_id != undefined){
@@ -231,7 +247,7 @@ export async function ehSeguidor(publicadorId, usuario_id){
 }
 
 //ok
-export async function seguir(publicadorId, usuarioId){
+async function seguir(publicadorId, usuarioId){
     let seguir =  {
         usuarioId: usuarioId, 
         publicadorId: publicadorId, 
@@ -251,7 +267,7 @@ export async function seguir(publicadorId, usuarioId){
     return retorno
 }
 //ok
-export async function deixarDeSeguir(seguirId){
+async function deixarDeSeguir(seguirId){
     let url = `${SERVER_URL}/seguidores/${seguirId}`
     let res = await fetch(
         url,

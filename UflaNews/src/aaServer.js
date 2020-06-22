@@ -1,11 +1,11 @@
-const SERVER_URL = 'http://localhost:3000'
+const SERVER_URL = 'https://floating-badlands-50851.herokuapp.com'
 
 //OK
 export async function getBoletins(publicadores){
     console.log("publicadores", publicadores)
     let ids = ''
     publicadores.map((x) => ids += `publicadorId=${x}&`)
-    let url = `${SERVER_URL}/boletims?${ids}`
+    let url = `${SERVER_URL}/boletims?${ids}_sort=data&_order=desc&_embed=sessaos&_expand=publicador`
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
     // TODO: Colocar os boletins na tela
@@ -16,7 +16,7 @@ export async function getBoletins(publicadores){
 }
 //OK
 export async function getBoletim(id) {
-    let url = `${SERVER_URL}/boletims?id=${id}`
+    let url = `${SERVER_URL}/boletims?id=${id}&_sort=data&_order=desc&_embed=sessaos&_embed=comentarios&_expand=publicador`
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
     // TODO: Colocar os boletins na tela
@@ -29,7 +29,7 @@ export async function getBoletim(id) {
 }
 //OK
 export async function getComentarios(id){
-    let url = `${SERVER_URL}/comentarios?boletimId=${id}`
+    let url = `${SERVER_URL}/comentarios?boletimId=${id}&_expand=usuario`
     // console.log("SERVER URL", url)
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
 
@@ -65,11 +65,9 @@ export async function getPublicadores(publicadores){
 //OK
 export async function login(email, password) {
     console.log({email, password});
-    let url = `${SERVER_URL}/usuarios?email=${email}`
-    console.log(url);
+    let url = `${SERVER_URL}/usuarios?email=${email}&_embed=seguidores`
     let res = await fetch(url, { headers: { "cache-control": "no-cache" } })
-    console.log("res: " + res);
-
+    console.log(res);
     let json = await res.json()
     let usuario = json[0]
     // console.log("SERVER login", usuario)
