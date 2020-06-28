@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"UflaNewsApp.publicadors"},{"v":{"$numberInt":"2"},"unique":true,"key":{"nome":{"$numberInt":"1"}},"name":"nome_1","ns":"UflaNewsApp.publicadors","background":true}],"uuid":"5ff94615c0f84f1b8100ef25575a2c6f"}
