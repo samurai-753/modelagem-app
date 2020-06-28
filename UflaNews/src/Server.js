@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://192.168.0.19:3000'; // USE O IP DA SUA MÁQUINA AQUI
+const SERVER_URL = 'http://192.168.0.113:3000'; // USE O IP DA SUA MÁQUINA AQUI
 
 //OK
 export async function getBoletins(publicadores) {
@@ -100,7 +100,7 @@ export async function cadastrar(usuario_dados) {
 }
 //ok
 export async function alterarPerfil(usuario_dados) {
-    let url = `${SERVER_URL}/usuarios/${usuario_dados.id}`
+    let url = `${SERVER_URL}/usuarios?id=${usuario_dados._id}`
     let res = await fetch(
         url,
         {
@@ -141,7 +141,7 @@ export async function postarComentario(usuario_id, boletim_id, txt_comentario) {
 }
 //ok
 export async function excluirComentario(comentarioId) {
-    let url = `${SERVER_URL}/comentarios/${comentarioId}`
+    let url = `${SERVER_URL}/comentarios?id=${comentarioId}`
     let res = await fetch(
         url,
         {
@@ -157,7 +157,7 @@ export async function excluirComentario(comentarioId) {
 }
 //OK WTF: USUARIOID
 export async function getLike(boletim_id, usuario_id) {
-    console.log("boletim: "+ boletim_id + "\nurusario: " + usuario_id);
+    console.log("boletim: " + boletim_id + "\nurusario: " + usuario_id);
     let url = `${SERVER_URL}/likes?boletimId=${boletim_id}`;
     if (usuario_id != undefined) {
         url += `&usuarioId=${usuario_id}`;
@@ -198,7 +198,8 @@ export async function darLike(boletimId, usuarioId) {
 }
 //ok
 export async function tirarLike(likeId) {
-    let url = `${SERVER_URL}/likes/${likeId}`
+    let url = `${SERVER_URL}/likes?id=${likeId}`
+    console.log("url", url);
     let res = await fetch(
         url,
         {
@@ -215,7 +216,7 @@ export async function tirarLike(likeId) {
 //ok
 export async function ehSeguidor(publicadorId, usuario_id) {
 
-    let url = `${SERVER_URL}/seguidores?publicadorId=${publicadorId}`;
+    let url = `${SERVER_URL}/seguidors?publicadorId=${publicadorId}`;
     if (usuario_id != undefined) {
         url += `&usuarioId=${usuario_id}`;
     }
@@ -238,7 +239,8 @@ export async function seguir(publicadorId, usuarioId) {
         usuarioId: usuarioId,
         publicadorId: publicadorId,
     };
-    let url = `${SERVER_URL}/seguidores`
+    let url = `${SERVER_URL}/seguidors`
+
     let res = await fetch(
         url,
         {
@@ -254,7 +256,7 @@ export async function seguir(publicadorId, usuarioId) {
 }
 //ok
 export async function deixarDeSeguir(seguirId) {
-    let url = `${SERVER_URL}/seguidores/${seguirId}`
+    let url = `${SERVER_URL}/seguidors?id=${seguirId}`
     let res = await fetch(
         url,
         {

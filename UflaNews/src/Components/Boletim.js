@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     View,
     Image,
@@ -31,52 +31,65 @@ export class Boletim extends Component {
         this.scroll = null;
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getLike();
         this.getNumLikes();
     }
 
-    async getLike(){
+    async getLike() {
         this.setState({ loading_like: true });
-        const {boletim, profile} = this.props;
-        let like = await Server.getLike(boletim.id, profile.id);
+        const { boletim, profile } = this.props;
+        let like = await Server.getLike(boletim._id, profile._id);
         console.log("retornouuu like", like);
-        if(like.length > 0){
+        if (like.length > 0) {
             this.setState({ like: like[0] })
         }
         this.setState({ loading_like: false });
     }
 
-    async getNumLikes(){
+    async getNumLikes() {
         // this.setState({ loading_like: true });
-        const {boletim} = this.props;
-        let likes = await Server.getLike(boletim.id);
+        const { boletim } = this.props;
+        let likes = await Server.getLike(boletim._id);
         this.setState({ numLikes: likes.length })
     }
 
-    async darLike(){
-        const {boletim, profile} = this.props;
-        const {numLikes} = this.state;
-        let like = await Server.darLike(boletim.id, profile.id);
-        this.setState({ like, numLikes: numLikes + 1})
-        if(this.props.forceRefresh){
-            this.props.forceRefresh();
+    async darLike() {
+        try {
+            const { boletim, profile } = this.props;
+            console.log("boletim", boletim);
+            const { numLikes } = this.state;
+            let like = await Server.darLike(boletim._id, profile._id);
+            this.setState({ like, numLikes: numLikes + 1 })
+            if (this.props.forceRefresh) {
+                this.props.forceRefresh();
+            }
+            else {
+                console.log("deu ruim", like)
+            }
         }
-        else{
-            console.log("deu ruim", like)
+        catch (err) {
+            console.log(err)
         }
     }
 
-    async tirarLike(){
-        const {like} = this.state;
-        const {numLikes} = this.state;
-        let retorno = await Server.tirarLike(like.id);
-        this.setState({ like: null, numLikes: numLikes -1 })
-        if(this.props.forceRefresh){
-            this.props.forceRefresh();
+    async tirarLike() {
+        try {
+            const { like } = this.state;
+            const { numLikes } = this.state;
+            console.log("like", like)
+            let retorno = await Server.tirarLike(like._id);
+            console.log("retorno", retorno)
+            this.setState({ like: null, numLikes: numLikes - 1 })
+            if (this.props.forceRefresh) {
+                this.props.forceRefresh();
+            }
+            else {
+                console.log("deu ruim", retorno)
+            }
         }
-        else{
-            console.log("deu ruim", retorno)
+        catch (err) {
+            console.log(err)
         }
     }
 
@@ -87,22 +100,22 @@ export class Boletim extends Component {
     // }
 
     onLayout = event => {
-        let {width, height} = event.nativeEvent.layout;
-        if (this.state.width == width){
+        let { width, height } = event.nativeEvent.layout;
+        if (this.state.width == width) {
             return;
         }
-        this.setState({width: width});
+        this.setState({ width: width });
     }
 
     handleScrollStop = (event) => {
-        let page = Math.ceil(event.nativeEvent.contentOffset.x/this.state.width);
+        let page = Math.ceil(event.nativeEvent.contentOffset.x / this.state.width);
         this.setState({ page });
     }
 
     nextItem = () => {
         let page = this.state.page + 1;
         let xScroll = page * this.state.width;
-        this.scroll.scrollTo({x: xScroll, y: 0, animated: true});
+        this.scroll.scrollTo({ x: xScroll, y: 0, animated: true });
         this.setState({ page });
         // alert("foi")
     }
@@ -110,7 +123,7 @@ export class Boletim extends Component {
     prevItem = () => {
         let page = this.state.page - 1;
         let xScroll = page * this.state.width;
-        this.scroll.scrollTo({x: xScroll, y: 0, animated: true});
+        this.scroll.scrollTo({ x: xScroll, y: 0, animated: true });
         this.setState({ page });
         // alert("foi")
     }
@@ -120,40 +133,40 @@ export class Boletim extends Component {
     render() {
         const { boletim, style, goToPublicador, goToComentar, showNumLikes } = this.props;
         const { like, loading_like, numLikes } = this.state;
-        const publicador = boletim.publicador
+        const publicador = boletim.publicador[0]
         // alert(boletim);
         return (
             <View style={[styles.card, style]}>
 
-                <TouchableOpacity onPress={goToPublicador} style={{flexDirection: "row", alignItems: "center", marginBottom: 10}} activeOpacity={1}>
-                    <Image source={{uri: publicador.fotoUrl}} style={{height: 40, width: 40, resizeMode: "cover", marginRight: 10, borderRadius: 20}}/>
+                <TouchableOpacity onPress={goToPublicador} style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }} activeOpacity={1}>
+                    <Image source={{ uri: publicador.fotoUrl }} style={{ height: 40, width: 40, resizeMode: "cover", marginRight: 10, borderRadius: 20 }} />
                     <Text>{publicador.nome}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity activeOpacity={1} onPress={this.props.goToBoletim}>
                     <Text style={styles.titulo}>{boletim.titulo}</Text>
-                    <Image source={{uri: boletim.imagemSrc}} style={{height: 200, width: "100%", marginRight: 10, resizeMode: "cover", borderRadius: 4, marginBottom: 5}}/>
+                    <Image source={{ uri: boletim.imagemSrc }} style={{ height: 200, width: "100%", marginRight: 10, resizeMode: "cover", borderRadius: 4, marginBottom: 5 }} />
                 </TouchableOpacity>
 
-                <ScrollSessoes sessaos={boletim.sessaos} style={{marginBottom: 5}} encurtar={this.props.encurtar} goToBoletim={this.props.goToBoletim}/>
+                <ScrollSessoes sessaos={boletim.sessaos} style={{ marginBottom: 5 }} encurtar={this.props.encurtar} goToBoletim={this.props.goToBoletim} />
 
-                <View style={{borderColor: "rgba(0,0,0,0.3)", borderBottomWidth: 1, width: "100%", marginBottom: 10}} />
+                <View style={{ borderColor: "rgba(0,0,0,0.3)", borderBottomWidth: 1, width: "100%", marginBottom: 10 }} />
 
-                <View style={{flexDirection: "row", flex: 1, justifyContent: "space-between", alignItems: "center"}}>
+                <View style={{ flexDirection: "row", flex: 1, justifyContent: "space-between", alignItems: "center" }}>
                     <Text>{Helper.formatarData(boletim.data)}</Text>
 
-                    <View style={{flexDirection: "row", alignItems: "center"}}>
-                        
+                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+
                         {
                             goToComentar &&
                             <TouchableOpacity onPress={goToComentar}>
-                                <Image source={require("../Assets/icons/comment.png")} style={[styles.icon, {marginRight: 10}]} />
+                                <Image source={require("../Assets/icons/comment.png")} style={[styles.icon, { marginRight: 10 }]} />
                             </TouchableOpacity>
                         }
                         {
                             showNumLikes &&
                             numLikes != 0 &&
-                            <Text style={{fontSize: 16, marginRight: 5}}>{numLikes}</Text>
+                            <Text style={{ fontSize: 16, marginRight: 5 }}>{numLikes}</Text>
                         }
 
                         {
@@ -163,14 +176,14 @@ export class Boletim extends Component {
                             // </TouchableOpacity>
                         }
                         {
-                            !loading_like && like?
-                            <TouchableOpacity onPress={()=>this.tirarLike()}>
-                                <Image source={require("../Assets/icons/like_filled.png")} style={styles.icon} />
-                            </TouchableOpacity>
-                            :
-                            <TouchableOpacity onPress={()=>this.darLike()}>
-                                <Image source={require("../Assets/icons/like.png")} style={styles.icon} />
-                            </TouchableOpacity>
+                            !loading_like && like ?
+                                <TouchableOpacity onPress={() => this.tirarLike()}>
+                                    <Image source={require("../Assets/icons/like_filled.png")} style={styles.icon} />
+                                </TouchableOpacity>
+                                :
+                                <TouchableOpacity onPress={() => this.darLike()}>
+                                    <Image source={require("../Assets/icons/like.png")} style={styles.icon} />
+                                </TouchableOpacity>
 
                         }
                     </View>
@@ -204,15 +217,15 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     icon: {
-        width: 30, 
-        height: 30, 
+        width: 30,
+        height: 30,
         resizeMode: "contain"
     }
 })
 
 
 function mapStateToProps(state) {
-    return {profile: state.session.profile};
+    return { profile: state.session.profile };
 }
 
 export default connect(mapStateToProps, null)(Boletim);

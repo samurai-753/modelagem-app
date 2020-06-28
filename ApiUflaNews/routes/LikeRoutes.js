@@ -147,7 +147,7 @@ routes.delete('/', async function(req, res){
         Boletins.findByIdAndUpdate(like.boletimId, {likes: newlikeValue}).exec();
 
         like.remove(); //Removes the document
-        //return res.send(like);
+        return res.send(true);
     })
 });
 

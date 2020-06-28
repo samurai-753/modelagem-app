@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     View,
     Image,
@@ -17,34 +17,34 @@ export class Comment extends Component {
         super(props)
     }
 
-    async excluirComentario(){
-        await Server.excluirComentario(this.props.comentario.id);
+    async excluirComentario() {
+        await Server.excluirComentario(this.props.comentario._id);
         this.props.update();
     }
 
     render() {
         const { comentario, profile } = this.props;
-        let usuario = comentario.usuario
+        let usuario = comentario.usuario[0]
         return (
             <View style={[styles.comment, styles.card]}>
                 <View style={styles.header} >
 
-                    <View style={{flex: 3}}>
+                    <View style={{ flex: 3 }}>
                         <View style={styles.user}>
-                            <Image source={{uri: usuario.foto_url}} style={styles.logo}/>
+                            <Image source={{ uri: usuario.foto_url }} style={styles.logo} />
                             <Text style={styles.username}>{usuario.nome}</Text>
                         </View>
                         <Text>{comentario.comentario}</Text>
 
                     </View>
 
-                    <View style={{ flex:1, alignItems: "flex-end"}}>
+                    <View style={{ flex: 1, alignItems: "flex-end" }}>
                         <Text>{Helper.formatarData(comentario.data, false)}</Text>
 
                         {
-                            comentario.usuarioId == profile.id &&
-                            <TouchableOpacity onPress={()=>this.excluirComentario()} style={{marginTop: 10}}>
-                                <Image source={require('../Assets/delete-icon.png')} style={styles.icon}/>
+                            comentario.usuarioId == profile._id &&
+                            <TouchableOpacity onPress={() => this.excluirComentario()} style={{ marginTop: 10 }}>
+                                <Image source={require('../Assets/delete-icon.png')} style={styles.icon} />
                             </TouchableOpacity>
                         }
                     </View>
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps(state) {
-    return {profile: state.session.profile};
+    return { profile: state.session.profile };
 }
 
 export default connect(mapStateToProps, null)(Comment);

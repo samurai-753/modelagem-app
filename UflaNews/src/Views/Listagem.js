@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import{
+import React, { Component } from 'react';
+import {
     View,
     Text,
     Image,
@@ -30,56 +30,56 @@ export class Listagem extends Component {
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getSeguidores()
     }
 
-    async onRefresh(){
+    async onRefresh() {
         this.setState({ refreshing: true });
 
         let mostrar_todos = this.props.navigation.getParam("mostrar_todos", false)
-        if(mostrar_todos){
+        if (mostrar_todos) {
             this.getSeguidores()
-            .then(()=>{
-                this.setState({ refreshing: false });
-            })   
-        }
-        else{
-            const {email, senha} = this.props.profile;
-            console.log("REFRESHHHH");
-            Server.login(email, senha)
-            .then((usuario) => {
-                this.props.actions.login(usuario)
-                
-                this.getSeguidores(usuario.seguidores)
-                .then(()=>{
+                .then(() => {
                     this.setState({ refreshing: false });
                 })
-                .catch((err)=>{
-                    Alert.alert("Erro", "Busca de publicadores falhou.")
-                });
-            })
+        }
+        else {
+            const { email, senha } = this.props.profile;
+            console.log("REFRESHHHH");
+            Server.login(email, senha)
+                .then((usuario) => {
+                    this.props.actions.login(usuario)
+
+                    this.getSeguidores(usuario.seguidores)
+                        .then(() => {
+                            this.setState({ refreshing: false });
+                        })
+                        .catch((err) => {
+                            Alert.alert("Erro", "Busca de publicadores falhou.")
+                        });
+                })
         }
 
     }
 
-    async getSeguidores(){
+    async getSeguidores() {
         let mostrar_todos = this.props.navigation.getParam("mostrar_todos", false)
-        if(mostrar_todos){
+        if (mostrar_todos) {
             let publicadores = await Server.getPublicadores()
             this.setState({ publicadores, loading: false })
         }
-        else{
-            const {profile} = this.props;
+        else {
+            const { profile } = this.props;
             let publicadores = await Server.getPublicadores(profile.seguidores)
             console.log("deu bom", publicadores)
             this.setState({ publicadores, loading: false })
         }
     }
 
-    render(){
-        const {publicadores, loading, refreshing} = this.state
-        if(loading){
+    render() {
+        const { publicadores, loading, refreshing } = this.state
+        if (loading) {
             return (
                 <Loading show={loading} />
             );
@@ -87,23 +87,27 @@ export class Listagem extends Component {
         return (
             <ScrollView
                 refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={()=>this.onRefresh()} />
-                }    
+                    <RefreshControl refreshing={refreshing} onRefresh={() => this.onRefresh()} />
+                }
             >
-                <Header 
-                    style={{marginBottom: 10}} 
-                    pesquisar={false} 
-                    // onChangeText={(txt)=>this.filtrar(txt)} 
-                    // value={this.state.busca}
+                <Header
+                    style={{ marginBottom: 10 }}
+                    pesquisar={false}
+                // onChangeText={(txt)=>this.filtrar(txt)} 
+                // value={this.state.busca}
                 />
 
-                <View style={{paddingRight: 15, paddingLeft: 15}}>
+                <View style={{ paddingRight: 15, paddingLeft: 15 }}>
 
-                {
-                    publicadores.map((publicador, index) =>
-                        <Publicador publicador={publicador} goToPublicador={()=>this.props.navigation.navigate("Publisher", {id: publicador.id})}/>
-                    )
-                }
+                    {
+                        publicadores.map((publicador, index) =>
+                            <Publicador
+                                publicador={publicador}
+                                goToPublicador={() => this.props.navigation.navigate("Publisher", { id: publicador._id })}
+                                key={publicador._id}
+                            />
+                        )
+                    }
                 </View>
             </ScrollView>
         )
@@ -120,7 +124,7 @@ function mapDispatchToProps(dispatch) {
 
 
 function mapStateToProps(state) {
-    return {profile: state.session.profile};
+    return { profile: state.session.profile };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Listagem);

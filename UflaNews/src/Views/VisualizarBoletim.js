@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import{
+import React, { Component } from 'react';
+import {
     View,
     Text,
     Image,
@@ -38,31 +38,31 @@ export class VisualizarBoletim extends Component {
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         let id = this.props.navigation.getParam("id", null)
-        this.id = id;
-        if(id != null){
+        this._id = id;
+        if (id != null) {
             this.getBoletim(id);
             this.getComentarios(id);
         }
-        else{
+        else {
             // TODO tratar erro
         }
     }
 
-    async getBoletim(id){
+    async getBoletim(id) {
         let boletim = await Server.getBoletim(id);
         // alert(boletim.titulo)
         this.setState({ boletim, loading_boletim: false })
-    
+
     }
 
     async getComentarios(boletimId) {
         let comentarios = await Server.getComentarios(boletimId);
         console.log("COMENTARIO", comentarios)
         this.setState({ comentarios, loading_comentarios: false });
-        
-        if(this.focar_input && this.input != null){
+
+        if (this.focar_input && this.input != null) {
             setTimeout(() => {
                 this.input.focus();
                 this.focar_input = false;
@@ -70,75 +70,76 @@ export class VisualizarBoletim extends Component {
         }
     }
 
-    async enviarComentario(){
+    async enviarComentario() {
         Keyboard.dismiss();
         const { boletim, txt_comentario } = this.state;
         const { profile } = this.props;
-        // alert(profile.id)
-        // alert(boletim.id)
+        // alert(profile._id)
+        // alert(boletim._id)
         // alert(txt_comentario)
-        this.setState({loading_boletim: true})
-        let comentario = await Server.postarComentario(profile.id, boletim.id, txt_comentario);
+        this.setState({ loading_boletim: true })
+        let comentario = await Server.postarComentario(profile._id, boletim._id, txt_comentario);
         console.log("coment", comentario)
-        await this.getComentarios(boletim.id);
-        this.setState({txt_comentario: "", loading_boletim: false})
+        await this.getComentarios(boletim._id);
+        this.setState({ txt_comentario: "", loading_boletim: false })
 
     }
 
-    async onRefresh(){
+    async onRefresh() {
         this.setState({ refreshing: true });
-        await this.getBoletim(this.id);
-        await this.getComentarios(this.id);
+        await this.getBoletim(this._id);
+        await this.getComentarios(this._id);
         this.setState({ refreshing: false });
     }
 
-    render () {
-        const { comentarios, boletim, loading_boletim, loading_comentarios, refreshing} = this.state;
+    render() {
+        const { comentarios, boletim, loading_boletim, loading_comentarios, refreshing } = this.state;
         return (
             <SafeAreaView style={styles.container}>
                 <Loading show={loading_boletim || loading_comentarios} />
-                <ScrollView 
+                <ScrollView
                     keyboardShouldPersistTaps={"always"}
                     refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={()=>this.onRefresh()} />
+                        <RefreshControl refreshing={refreshing} onRefresh={() => this.onRefresh()} />
                     }
                 >
-                    <Header/>
+                    <Header />
                     <View style={styles.body}>
                         {
                             boletim != null &&
-                            <Boletim 
+                            <Boletim
                                 // style={{marginLeft: 0, marginRight: 0}}
                                 showNumLikes
                                 encurtar={false}
                                 boletim={boletim}
-                                goToBoletim={()=>{}}
-                                goToPublicador={()=>this.props.navigation.navigate("Publisher", {id: boletim.publicador.id})}
-                                // goToPublicador={()=>this.props.navigation.navigate("Publisher")}
+                                goToBoletim={() => { }}
+                                goToPublicador={() => this.props.navigation.navigate("Publisher", { id: boletim.publicador[0]._id })}
+
+                            // goToPublicador={()=>this.props.navigation.navigate("Publisher")}
                             />
                         }
                         <View style={styles.comments}>
                             {
-                                comentarios.map((comentario, index)=>
-                                    <Comment 
-                                        update={()=>this.getComentarios(this.id)}
-                                        key={"comment" + index} 
+                                comentarios.map((comentario, index) =>
+                                    <Comment
+                                        update={() => this.getComentarios(this._id)}
+                                        key={"comment" + index}
                                         comentario={comentario}
                                     />
                                 )
                             }
                         </View>
                         <View style={styles.commentField}>
-                            <CustomTextInput 
-                                inputRef={(r)=>this.input = r}
-                                style={{flex: 1}}
-                                value={this.state.txt_comentario} 
-                                onChangeText={(txt)=>this.setState({ txt_comentario: txt  })} 
+                            <CustomTextInput
+                                inputRef={(r) => this.input = r}
+                                style={{ flex: 1 }}
+                                value={this.state.txt_comentario}
+                                onChangeText={(txt) => this.setState({ txt_comentario: txt })}
                                 placeholder="Comentar"
 
                             />
-                            <TouchableOpacity onPress={()=>this.enviarComentario()} style={styles.buttonComment}>
-                                <Image source={require('../Assets/right-arrow.png')} style={styles.imageButton}/>
+                            <TouchableOpacity onPress={() => this.enviarComentario()} style={styles.buttonComment}>
+                                <Image source={require('../Assets/right-arrow.png')} style={styles.imageButton} />
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#f0f0f0'
     },
-     
+
     body: {
         padding: 10,
     },
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps(state) {
-    return {profile: state.session.profile};
+    return { profile: state.session.profile };
 }
 
 export default connect(mapStateToProps, null)(VisualizarBoletim);
