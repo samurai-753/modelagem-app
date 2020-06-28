@@ -47,7 +47,7 @@ routes.post('/', async function(req, res){
     console.log(novoSeguidor);
     novoSeguidor.save(function(err){
         if(err) return res.status(403).send({error: err});
-        return res.send({Seguidores: novoSeguidor}); // omitir status => 200 (sucesso)
+        return res.send(novoSeguidor); // omitir status => 200 (sucesso)
     });
     //return res.status(200).send({Teste: "Chegou no fim do teste Carai"});;
 });
@@ -94,7 +94,7 @@ function RouteGetLikesPorPublicador(req, res){
             publicadorId: publicadorId
         }
     }]).exec(function(err, seguidores){
-        return res.send({seguidores}); 
+        return res.send(seguidores); 
     });
 }
 
@@ -123,7 +123,7 @@ function RouteGetLikesPorPublicadorEUsuario(req, res){
             usuarioId: usuarioId
         }
     }]).exec(function(err, Seguidores){
-        return res.send({Seguidores}); 
+        return res.send(Seguidores); 
     });
 }
 

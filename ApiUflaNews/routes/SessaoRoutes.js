@@ -34,7 +34,7 @@ routes.post('/', async function(req, res){
 
     novaSessao.save(function(err){
         if(err) return res.status(403).send({error: err});
-        return res.send({Sessao: novaSessao}); // omitir status => 200 (sucesso)
+        return res.send(novaSessao); // omitir status => 200 (sucesso)
     });
 });
 
@@ -42,7 +42,7 @@ routes.post('/', async function(req, res){
 routes.get('/', function(req, res){
     console.log("GET in SESSAO - /");
     Sessao.find().exec(function(err, sessoes){
-        return res.send({sessoes}); 
+        return res.send(sessoes); 
     });
 });
 

@@ -43,7 +43,6 @@ routes.get('/', function(req, res){
 // Retorna O boletim com seus comentarios, sessoes e publicador
 function RouteGetUsuarioPorEmail(req, res){
     var pEmail;
-    console.log(typeof(req.query.email));
     if(typeof(req.query.email) === 'string')
     {
         pEmail = req.query.email;
@@ -67,7 +66,7 @@ function RouteGetUsuarioPorEmail(req, res){
             as: "seguidores"
         }
     }]).sort({data: -1}).exec(function(err, usuarios){
-        return res.send({usuarios}); 
+        return res.send(usuarios); 
     });
 }
 

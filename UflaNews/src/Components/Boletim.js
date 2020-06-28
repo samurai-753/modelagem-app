@@ -63,7 +63,7 @@ export class Boletim extends Component {
             this.props.forceRefresh();
         }
         else{
-            console.log("deu ruim")
+            console.log("deu ruim", like)
         }
     }
 
@@ -76,7 +76,7 @@ export class Boletim extends Component {
             this.props.forceRefresh();
         }
         else{
-            console.log("deu ruim")
+            console.log("deu ruim", retorno)
         }
     }
 

@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://192.168.0.113:3000'; // USE O IP DA SUA MÁQUINA AQUI
+const SERVER_URL = 'http://192.168.0.19:3000'; // USE O IP DA SUA MÁQUINA AQUI
 
 //OK
 export async function getBoletins(publicadores) {
@@ -157,7 +157,7 @@ export async function excluirComentario(comentarioId) {
 }
 //OK WTF: USUARIOID
 export async function getLike(boletim_id, usuario_id) {
-
+    console.log("boletim: "+ boletim_id + "\nurusario: " + usuario_id);
     let url = `${SERVER_URL}/likes?boletimId=${boletim_id}`;
     if (usuario_id != undefined) {
         url += `&usuarioId=${usuario_id}`;
@@ -180,6 +180,8 @@ export async function darLike(boletimId, usuarioId) {
         usuarioId: usuarioId,
         boletimId: boletimId,
     };
+    console.log("like: ", like);
+
     let url = `${SERVER_URL}/likes`
     let res = await fetch(
         url,

@@ -10,6 +10,10 @@ var schemaPublicadores = new mongoose.Schema({
     nome:{
         type: String,
         unique: true
+    },
+    senha:{
+        type: String,
+        require: true
     }
 });
 

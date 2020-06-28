@@ -34,6 +34,7 @@ routes.post('/', async function(req, res){
     }
     let objIdUsuario = ObjectId(req.body.usuarioId);
     let objIdBoletim = ObjectId(req.body.boletimId);
+    console.log("usuario: "+ objIdUsuario + "\tboletim: " + objIdBoletim);
     
     objLikes = await Like.find({usuarioId: objIdUsuario,
                                     boletimId: objIdBoletim}).exec();
@@ -46,7 +47,7 @@ routes.post('/', async function(req, res){
     });
     novoLike.save(function(err){
         if(err) return res.status(403).send({error: err});
-        return res.send({Like: novoLike}); // omitir status => 200 (sucesso)
+        return res.send(novoLike); // omitir status => 200 (sucesso)
     });
 });
 
@@ -77,6 +78,7 @@ function RouteGetLikesPorBoletim(req, res){
     console.log("Get like por boletim")
 
     var boletimId;
+    console.log(req.query.boletimId);
     if(typeof(req.query.boletimId) === 'string')
     {
         if(ObjectId.isValid(req.query.boletimId))
@@ -85,14 +87,14 @@ function RouteGetLikesPorBoletim(req, res){
     }
     else return res.status(403).send({error: "informar apenas um boletim por vez"});
 
-        
+    console.log("boletim: " + boletimId);
     Like.aggregate([
     {
         $match: {
             boletimId: boletimId
         }
-    }]).exec(function(err, boletins){
-        return res.send({boletins}); 
+    }]).exec(function(err, likes){
+        return res.send(likes); 
     });
 }
 
@@ -103,6 +105,8 @@ function RouteGetLikesPorBoletimEUsuario(req, res){
 
     var boletimId;
     var usuarioId;
+    console.log("b: " + req.query.boletimId);
+    console.log("u: " + req.query.usuarioId);
     if(typeof(req.query.boletimId) === 'string' && typeof(req.query.usuarioId) === 'string')
     {
         if(ObjectId.isValid(req.query.boletimId))
@@ -121,8 +125,8 @@ function RouteGetLikesPorBoletimEUsuario(req, res){
             boletimId: boletimId,
             usuarioId: usuarioId
         }
-    }]).exec(function(err, boletins){
-        return res.send({boletins}); 
+    }]).exec(function(err, likes){
+        return res.send(likes); 
     });
 }
 // --------------------------------------------------------------

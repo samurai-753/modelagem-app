@@ -31,7 +31,7 @@ routes.post('/', async function(req, res){
     });
     novoBoletim.save(function(err){
         if(err) return res.status(403).send({error: err});
-        return res.send({Boletim: novoBoletim}); // omitir status => 200 (sucesso)
+        return res.send(novoBoletim); // omitir status => 200 (sucesso)
     });
 });
 
@@ -41,7 +41,7 @@ routes.get('/', function(req, res){
     {
         // Retorna todos os boletins existentes
         Boletim.find().exec(function(err, boletims){
-            return res.send({boletims}); 
+            return res.send(boletims); 
         });
     }
     else if(req.query.publicadorId && Object.keys(req.query).length == 1)
@@ -80,7 +80,7 @@ function RouteGetBoletimPorPublicador(req, res){
             }
         }
     }
-    console.log("publicadoes: " + publicadores);
+    console.log("publicadores: " + publicadores);
     
     Boletim.aggregate([
     {
@@ -92,7 +92,7 @@ function RouteGetBoletimPorPublicador(req, res){
             from: "sessaos",
             localField: "_id",
             foreignField: "boletimId",
-            as: "sessoes"
+            as: "sessaos"
         }
     },{
         $lookup: {
@@ -102,7 +102,7 @@ function RouteGetBoletimPorPublicador(req, res){
             as: "publicador"
         }
     }]).sort({data: -1}).exec(function(err, boletins){
-        return res.send({boletins}); 
+        return res.send(boletins); 
     });
 }
 
@@ -133,7 +133,7 @@ function RouteGetBoletimPorId(req, res){
             from: "sessaos",
             localField: "_id",
             foreignField: "boletimId",
-            as: "sessoes"
+            as: "sessaos"
         }
     },{
         $lookup: {
@@ -150,7 +150,7 @@ function RouteGetBoletimPorId(req, res){
             as: "publicador"
         }
     }]).sort({data: -1}).exec(function(err, boletins){
-        return res.send({boletins}); 
+        return res.send(boletins); 
     });
 }
 

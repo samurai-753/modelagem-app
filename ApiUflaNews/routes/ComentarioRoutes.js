@@ -63,6 +63,7 @@ routes.post('/', async function(req, res){
 // Controla as rotas de get na raiz
 routes.get('/', function(req, res){
     console.log("\nGet em Comentarios")
+    console.log("req: " + req);
     if(!Object.keys(req.query).length)
     {
         // Retorna todos os comentarios  existentes
@@ -111,7 +112,7 @@ function RouteGetComentariosPorBoletim(req, res){
             as: "usuario"
         }
     }]).sort({data: -1}).exec(function(err, comentarios){
-        return res.send({comentarios}); 
+        return res.send(comentarios); 
     });
 }
 
@@ -126,7 +127,7 @@ routes.delete('/', function(req, res){
 
     Comentario.findByIdAndDelete(req.query.id, function (comentario, err){
         if(err) return res.status(403).send({error: err});
-        return res.send({comentario});
+        return res.send(comentario);
     });
 });
 
