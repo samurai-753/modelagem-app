@@ -26,3 +26,17 @@ body {
 .label-like{
     font-size: medium !important;
 }
+.collection-item{
+    padding-left: 130px !important; 
+    padding-right: 60px !important;
+}
+.text-justify{
+    text-align: justify;
+}
+li>img.circle {
+    height: 100px !important;
+    width: 100px !important;
+}
+.collection .collection-item.avatar {
+    min-height: 130px !important;
+}
