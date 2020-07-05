@@ -70,6 +70,7 @@ function RouteGetPublicadorAdmin(req, res){
     Publicador.aggregate([
         { $match: { _id: id } }
     ]).exec(function(err, publicador){
+        res.setHeader('Access-Control-Allow-Origin', '*');
         return res.send(publicador); 
     });
 }

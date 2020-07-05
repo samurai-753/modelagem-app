@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>SIGPUN</title>
+    <link rel="stylesheet" href="css/materialize.css" type="text/css"/>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+
+            $('#modalNovoBoletim').modal();
+
+            $("#getData").click(function(){
+                //alert("TEste");
+
+                var bColletction  = document.getElementById("boletinsCollection").innerHTML;
+                var title = "Titulo do meu Boletim";
+                var idBoletim = "dams190as=1aslc=221cx0";
+                bColletction += "<li id=\""+idBoletim+"\"class=\"collection-item\"><div>"+title+"<a href=\"#!\" class=\"secondary-content\"><i class=\"material-icons\">mode_edit</i></a></div></li>";
+                document.getElementById("boletinsCollection").innerHTML = bColletction;
+
+            });
+        });
+
+        
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                $('#boletim-image')
+                    .attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function encodeImageFileAsURL() {
+            var filesSelected = $("#inputFileToLoad").files;
+            if (filesSelected.length > 0) {
+            var fileToLoad = filesSelected[0];
+
+            var fileReader = new FileReader();
+
+            fileReader.onload = function(fileLoadedEvent) {
+                var srcData = fileLoadedEvent.target.result; // <--- data: base64
+
+                var newImage = document.createElement('img');
+                newImage.src = srcData;
+
+                $("#imgTest").innerHTML = newImage.outerHTML;
+                alert("Converted Base64 version is " + $("#imgTest").innerHTML);
+                console.log("Converted Base64 version is " + $("#imgTest").innerHTML);
+            }
+            fileReader.readAsDataURL(fileToLoad);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="navbar-fixed">
+        <nav class="light-blue darken-1" role="navigation">
+            <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Publicador X</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#">Quantidade de Seguidores: 30</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="row main-title">
+            <div class="col s12"><p class="boletins">Boletins</p><hr/></div>
+        </div>
+        <!-- <div class="first-content"> <button id="getData">New</button></div> -->
+        <div class="table">
+            <ul id="boletinsCollection" class="collection">
+                <li class="collection-item"><div>Titulo do meu Boletim<a href="#!" class="secondary-content"><i class="material-icons">mode_edit</i></a></div></li>
+                <li class="collection-item"><div>Titulo do meu Boletim<a href="#!" class="secondary-content"><i class="material-icons">mode_edit</i></a></div></li>
+              </ul>
+        </div>
+        <a id="getData" class="addBoletim btn-floating btn-large waves-effect waves-light btn light-blue darken-1"><i class="material-icons">add</i>></a>
+        <a id="modall" class="waves-effect waves-light btn modal-trigger" href="#modalNovoBoletim">Modal</a>
+
+        <!-- Modal Structure -->
+        <div id="modalNovoBoletim" class="modal modal-fixed-footer">
+            <div class="modal-content center">
+                <h1 class="textBoletim">Novo Boletim</h1>
+                <div class="row">
+                    <div class="input-field col s8 offset-s2">
+                        <input id="last_name" type="text" class="validate">
+                        <label for="last_name">Título</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6 offset-s3"> 
+                        <div clsss="input-image">
+                            <div class="file-field input-field">
+                                <div class="btn">
+                                    <span>Escolher Imagem</span>
+                                    <input id="get-image" type="file" onchange="readURL(this);"/>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s6 offset-s3"> 
+                        <img id="boletim-image" src="./assets/images/default_image.jpg" alt="Imagem do boletim" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="boletim-cancel modal-close waves-effect waves-red btn-flat">Cancelar</a>
+                <a href="#!" class="boletim-save modal-close waves-effect waves-green btn-flat">Salvar</a>
+            </div>
+        </div> <!-- Modal Structure -->
+
+    </div>
+
+    <footer class="page-footer black">
+        <div class="footer-copyright">
+            <div class="container">
+                Created by <a class="red-text text-lighten-3" href="https://www.linkedin.com/in/gabriel-ribeiro-oliveira-725805145/?originalSubdomain=br">Ribolive</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

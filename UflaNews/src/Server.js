@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://192.168.0.113:3000'; // USE O IP DA SUA MÁQUINA AQUI
+const SERVER_URL = 'http://192.168.0.19:3000'; // USE O IP DA SUA MÁQUINA AQUI
 
 //OK
 export async function getBoletins(publicadores) {

@@ -1,0 +1,28 @@
+body {
+    background-color: hsl(0, 0%, 97%);
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+.titulo-boletim {
+    text-align: center;
+    font-family: "Arial Black", Gadget, sans-serif;
+    font-size: xx-large;
+    margin-bottom: 10px;
+}
+.main-title {
+    margin-top: 5vh;
+    margin-bottom: 3vh;
+}
+.footer-copyright {
+    text-align: center;
+}
+.container {
+    flex: 1 0 auto;
+}
+#boletim-image {
+    max-height: 300px;
+}
+.label-like{
+    font-size: medium !important;
+}

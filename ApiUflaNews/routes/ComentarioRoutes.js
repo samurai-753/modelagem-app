@@ -63,7 +63,7 @@ routes.post('/', async function(req, res){
 // Controla as rotas de get na raiz
 routes.get('/', function(req, res){
     console.log("\nGet em Comentarios")
-    console.log("req: " + req);
+    console.log("req: ", req.params);
     if(!Object.keys(req.query).length)
     {
         // Retorna todos os comentarios  existentes

@@ -1,0 +1,49 @@
+body {
+    background-color: hsl(0, 0%, 97%);
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+.container {
+    flex: 1 0 auto;
+}
+.footer-copyright {
+    text-align: center;
+}
+.main-title {
+    margin-top: 5vh;
+    margin-bottom: 3vh;
+}
+p.boletins {
+    text-align: center;
+    font-family: "Arial Black", Gadget, sans-serif;
+    font-size: xx-large;
+    margin-bottom: 10px;
+}
+.textBoletim {
+    text-align: center;
+    font-family: "Arial Black", Gadget, sans-serif;
+    font-size: xx-large;
+}
+hr {
+    border: 1px solid silver;
+    width: 85%;
+}
+.modal-close:hover {
+    box-shadow: -2px 1px #e4e4e4;
+    color: white
+}
+.boletim-cancel:hover{
+    background-color: #f79e9e;
+}
+.boletim-save:hover{
+    background-color: #5fd961;
+}
+.modal-content{
+    padding: 50px !important;
+}
+
+#boletim-image {
+    height: 100%;
+    width: 100%;
+}
