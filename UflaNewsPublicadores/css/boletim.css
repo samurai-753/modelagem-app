@@ -20,7 +20,13 @@ body {
 .container {
     flex: 1 0 auto;
 }
+.delete-section{
+    top: 60px !important;
+}
 #boletim-image {
+    max-height: 300px;
+}
+#section-image{
     max-height: 300px;
 }
 .label-like{
@@ -39,4 +45,7 @@ li>img.circle {
 }
 .collection .collection-item.avatar {
     min-height: 130px !important;
+}
+.icon-boletim{
+    top: 15px !important;
 }

@@ -12,9 +12,15 @@
 
     <script>
         $(document).ready(function(){
+            $('delete-section').click(function(){ 
+                alert("TODO: Deletar"); 
+                return false; 
+            });
+
+            $('#modal-edit-section').modal();
+
             $("#btnNewSection").click(function(){
 
-                
                 var text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla faucibus dolor et lacinia. Donec ut eleifend metus, quis vestibulum elit. Vestibulum vestibulum lacus quis rutrum cursus. Suspendisse interdum quam felis, id fermentum orci lobortis eget. Fusce enim diam, tincidunt et vestibulum non, semper non neque. Nunc nulla velit, rutrum ut erat ac, fringilla sagittis ligula. Suspendisse potenti. Sed augue sem, fermentum et leo sed, congue condimentum orci. Pellentesque id hendrerit sapien. Maecenas maximus semper felis non blandit. In a dapibus justo. Sed mi tortor, convallis sed hendrerit a, interdum eu mauris. Maecenas at semper sem, nec ornare massa. Donec lobortis nulla eu tortor ornare luctus. Praesent sit amet risus quis tortor faucibus vestibulum quis a orci. Proin placerat, augue ac porta auctor, dui justo vehicula urna, eu gravida justo diam in leo. Aliquam vel elementum tortor, quis consectetur mi. Morbi placerat lacinia semper. Integer tincidunt, libero ac imperdiet volutpat, nisl massa imperdiet nisi, sed vestibulum eros arcu nec quam. Nam consequat tellus in elementum lobortis. Quisque porttitor faucibus fringilla. Pellentesque in nunc et eros egestas bibendum et id turpis.";
                 var image = "Imagem do banco";
                 var bCollection = "";
@@ -24,11 +30,27 @@
                 bCollection += "<a href=\"#!\" class=\"secondary-content\">";
                 bCollection += "<i class=\"material-icons\">mode_edit</i>";
                 bCollection += "</a>";
+                bCollection += "<a href=\"#modal-edit-section\" class=\"secondary-content delete-section\">";
+                bCollection += "<i id=\"section-edit\" class=\"material-icons red-text\">delete_forever</i>";
+                bCollection += "</a>";
                 bCollection += "</li>";
                                                 
                 $("#section-collection").append(bCollection);
             });
         });
+        function DeleteSection() {
+            alert("TODO: Deletar");
+        }
+        function GetImageInput(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                $('#section-image')
+                    .attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 </head>
 <body>
@@ -51,11 +73,26 @@
                     <img id="boletim-image" src="./assets/images/default_image.jpg" alt="Imagem do boletim" />
                 </div>
                 <div class="col s12 center-align">
-                    <p>
-                        <span class="label-like">Curtidas: </span>
-                        <span id="like-value" class="label-like">30</span>
-                        <i class="label-like material-icons">favorite_border</i>
-                    </p>
+                    <div class="col s4 offset-s4">
+                        <div class="col s4">
+                            <a href="#modal-edit-section" class="icon-boletim">
+                                <i id="section-edit" class="material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                        <div class="col s4">
+                            <p>
+                                <span class="label-like">Curtidas: </span>
+                                <span id="like-value" class="label-like">30</span>
+                                <i class="label-like material-icons">favorite_border</i>
+                            </p>
+                        </div>
+                        <div class="col s4">
+                            <a href="#modal-edit-section" class="icon-boletim">
+                                <i id="section-edit" class="material-icons red-text">delete_forever</i>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -70,8 +107,11 @@
                     <p class="text-justify"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla faucibus dolor et lacinia. Donec ut eleifend metus, quis vestibulum elit. Vestibulum vestibulum lacus quis rutrum cursus. Suspendisse interdum quam felis, id fermentum orci lobortis eget. Fusce enim diam, tincidunt et vestibulum non, semper non neque. Nunc nulla velit, rutrum ut erat ac, fringilla sagittis ligula. Suspendisse potenti. Sed augue sem, fermentum et leo sed, congue condimentum orci.
 
                         Pellentesque id hendrerit sapien. Maecenas maximus semper felis non blandit. In a dapibus justo. Sed mi tortor, convallis sed hendrerit a, interdum eu mauris. Maecenas at semper sem, nec ornare massa. Donec lobortis nulla eu tortor ornare luctus. Praesent sit amet risus quis tortor faucibus vestibulum quis a orci. Proin placerat, augue ac porta auctor, dui justo vehicula urna, eu gravida justo diam in leo. Aliquam vel elementum tortor, quis consectetur mi. Morbi placerat lacinia semper. Integer tincidunt, libero ac imperdiet volutpat, nisl massa imperdiet nisi, sed vestibulum eros arcu nec quam. Nam consequat tellus in elementum lobortis. Quisque porttitor faucibus fringilla. Pellentesque in nunc et eros egestas bibendum et id turpis.</p>
-                    <a href="#!" class="secondary-content">
-                        <i class="material-icons">mode_edit</i>
+                    <a href="#modal-edit-section" class="secondary-content modal-trigger">
+                        <i id="section-edit" class="material-icons">mode_edit</i>
+                    </a>
+                    <a href="#modal-edit-section" class="secondary-content delete-section">
+                        <i id="section-edit" class="material-icons red-text">delete_forever</i>
                     </a>
                 </li>
             </ul>
@@ -85,5 +125,46 @@
             </div>
         </div>
     </footer>
+
+
+    <!-- Modal Structure -->
+    <div id="modal-edit-section" class="modal modal-fixed-footer">
+        <div class="modal-content center">
+            <h1 class="textBoletim">Sessão</h1>
+            <div class="row">
+                <div class="col s6 offset-s3"> 
+                    <div clsss="input-image">
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Escolher Imagem</span>
+                                <input id="get-image" type="file" onchange="GetImageInput(this);"/>
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6 offset-s3"> 
+                    <img id="section-image" src="./assets/images/default_image.jpg" alt="Imagem do boletim" />
+                </div>
+            </div>
+            <div class="row">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <textarea id="textarea1" class="materialize-textarea text-justify"></textarea>
+                      <label for="textarea1">Texto da sessão</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="boletim-cancel modal-close waves-effect waves-red btn-flat">Cancelar</a>
+            <a href="#!" class="boletim-save modal-close waves-effect waves-green btn-flat">Salvar</a>
+        </div>
+    </div> <!-- Modal Structure -->
+
 </body>
 </html>
